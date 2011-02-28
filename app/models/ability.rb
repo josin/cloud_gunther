@@ -9,9 +9,8 @@ class Ability
     if user.admin?
       can :manage, :all
     else
-      can :update, User, ["user_id = ?", user.id]
+      can :update, User, :user_id => user.id
       
-      # can :manage, [Task, Algorithm, AlgorithmBinary, Attachment], ["user_id = ?", user.id]
       can :manage, [Task, Algorithm, AlgorithmBinary, Attachment], :user_id => user.id
     end
 
