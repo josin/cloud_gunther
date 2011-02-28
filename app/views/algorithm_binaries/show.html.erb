@@ -1,0 +1,35 @@
+<p>
+  <b>Algorithm:</b>
+  <%= @algorithm_binary.algorithm.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @algorithm_binary.description %>
+</p>
+
+<p>
+  <b>Version:</b>
+  <%= @algorithm_binary.version %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%= @algorithm_binary.state %>
+</p>
+
+<p>
+  <b>Launch params:</b>
+  <%= @algorithm_binary.launch_params %>
+</p>
+
+<p>
+	<b>Binary:</b>
+	<%= link_to @algorithm_binary.attachment.data_file_name, 
+				attachment_path(@algorithm_binary.attachment) if @algorithm_binary.attachment %>
+	<%= "(empty)" if @algorithm_binary.attachment.blank? %>
+</p>
+
+
+<%= link_to 'Edit', edit_algorithm_algorithm_binary_path(@algorithm, @algorithm_binary) %> |
+<%= link_to 'Back', algorithm_path(@algorithm) %>

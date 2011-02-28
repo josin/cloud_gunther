@@ -1,0 +1,26 @@
+<table>
+	<thead>
+	  <tr>
+	    <th>Version</th>
+	    <th>Description</th>
+	    <th>State</th>
+	    <th>Launch params</th>
+	    <th>Actions</th>
+	  </tr>
+	</thead>
+
+	<tbody>
+	<% algorithm_binaries.each do |algorithm_binary| %>
+	  <tr>
+	    <td><%= link_to algorithm_binary.version, [algorithm_binary.algorithm, algorithm_binary] %></td>
+	    <td><%= algorithm_binary.description %></td>
+	    <td><%= algorithm_binary.state %></td>
+	    <td><%= algorithm_binary.launch_params %></td>
+	    <td>
+				<%= link_to 'Edit', edit_algorithm_algorithm_binary_path(algorithm_binary.algorithm, algorithm_binary) %>
+				<%= link_to 'Destroy', algorithm_algorithm_binary_path(algorithm_binary.algorithm, algorithm_binary), :confirm => 'Are you sure?', :method => :delete %>
+			</td>
+	  </tr>
+	<% end %>
+	</tbody>
+</table>

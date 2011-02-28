@@ -1,0 +1,42 @@
+<p>
+  <b>Algorithm:</b>
+  <%= "#{@task.algorithm.name} #{@task.algorithm_binary.version}" %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @task.user.name %>
+</p>
+
+<p>
+  <b>Inputs:</b>
+  <%= @task.inputs %>
+</p>
+
+<p>
+  <b>Params:</b>
+  <%= @task.params %>
+</p>
+
+<p>
+	<b>Create at:</b>
+	<%= @task.created_at %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%= @task.state %>
+</p>
+
+<p>
+  <b>Started at:</b>
+  <%= @task.started_at %>
+</p>
+
+<p>
+  <b>Finished at:</b>
+  <%= @task.finished_at %>
+</p>
+
+<%= link_to 'Edit', edit_task_path(@task) %> |
+<%= link_to 'Back to list', tasks_path %>

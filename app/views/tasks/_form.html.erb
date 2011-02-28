@@ -1,0 +1,51 @@
+<script type="text/javascript" charset="utf-8">
+	$(function() {
+		$("#algorithm").change(function() {
+			var algorithm_id = $(this).find("option:selected").val();
+			if (algorithm_id.length == 0) { return; }
+			
+			$.ajax({
+				url: '<%= algorithm_binaries_path %>',
+				type: 'GET',
+				dataType: 'text',
+				data: 'algorithm_id=' + algorithm_id,
+				success: function(data, status, jqXhr) {
+					var select = $("#task_algorithm_binary_id");
+					select.empty();
+					select.append($(data));
+				}
+			});
+		});
+	});
+</script>
+
+<%= form_for(@task) do |f| %>
+  <% if @task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+      <ul>
+      <% @task.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :algorithm_binary_id %><br />
+	<%= select_tag :algorithm, options_from_collection_for_select(current_user.algorithms, :id, :name), { :include_blank => true} %>
+    <%= select :task, :algorithm_binary_id, [] %>
+  </div>
+  <div class="field">
+    <%= f.label :params %><br />
+    <%= f.text_area :params %>
+  </div>
+  <div class="field">
+    <%= f.label :inputs %><br />
+    <%= f.text_area :inputs %>
+  </div>
+  <div class="actions">
+    <%= f.submit %> or <%= link_to "Cancel", :back %>
+  </div>
+<% end %>

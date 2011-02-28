@@ -1,0 +1,25 @@
+<script type="text/javascript" charset="utf-8">
+	$(function() {
+		$("a#replace_attachment").click(function() {
+			$("div.attachment").hide();
+			$("input#algorithm_binary_attachment_data").removeClass("nodisplay");
+			return false;
+		})
+	});
+</script>
+<%= form.fields_for :attachment do |attachment_form| %>
+<div class="field">
+	<%= attachment_form.label :data %><br />
+
+	<% unless @algorithm_binary.attachment.blank? %>
+	<div class="attachment">
+		<%= link_to @algorithm_binary.attachment.data_file_name,
+		 			attachment_path(@algorithm_binary.attachment.id) %>
+		<%= link_to "Replace?", {}, :id => "replace_attachment" %>
+	</div>
+	<% end %>
+
+	<% file_field_class = @algorithm_binary.attachment.blank? ? "" : "nodisplay" %>
+	<%= attachment_form.file_field :data, :class => file_field_class %>
+</div>
+<% end %>

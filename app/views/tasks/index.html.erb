@@ -1,0 +1,39 @@
+<h1>Listing tasks</h1>
+
+<div class="field">
+	<%= link_to 'New Task', new_task_path %>
+</div>
+
+<table>
+	<thead>
+		<tr>
+			<th><%= sort_link @search, :id, "#" %></th>
+			<th><%= sort_link @search, :algorithm_binary_id, "Algorithm binary" %></th>
+			<th><%= sort_link @search, :created_at %></th>
+			<th><%= sort_link @search, :user_last_name, "User" %></th>
+			<th><%= sort_link @search, :state %></th>
+			<th><%= sort_link @search, :started_at %></th>
+			<th><%= sort_link @search, :finished_at %></th>
+			<th>Action</th>
+		</tr>
+	</thead>
+
+	<tbody>
+	<% @tasks.each do |task| %>
+		<tr>
+			<td><%= task.id %></td>
+			<td><%= "#{task.algorithm.name} #{task.algorithm_binary.version}" %></td>
+			<td><%= task.created_at %></td>
+			<td><%= task.user.name %></td>
+			<td><%= task.state %></td>
+			<td><%= task.started_at %></td>
+			<td><%= task.finished_at %></td>
+			<td>
+				<%= link_to 'Detail', task %>
+				<%= link_to 'Edit', edit_task_path(task) %>
+				<%= link_to 'Destroy', task, :confirm => 'Are you sure?', :method => :delete %>
+			</td>
+		</tr>
+	<% end %>
+	</tbody>
+</table>

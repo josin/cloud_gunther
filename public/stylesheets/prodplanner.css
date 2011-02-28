@@ -1,0 +1,98 @@
+body {
+  background-color: #4B7399;
+}
+
+div#container, div#sign_up_container {
+  width: 75%;
+  margin: 0 auto;
+  background-color: #FFF;
+  padding: 20px 40px;
+  border: solid 1px black;
+  margin-top: 20px;
+}
+
+div#sign_up_container { 
+	width: 40%; 
+}
+
+div#user_login_box {
+	float:right;
+}
+
+div#footer { 
+	text-align: right;
+	margin-top: 3em;
+}
+
+div#menu {
+	margin-bottom:2em;
+}
+
+ul.navigation {
+	padding:0;
+	margin:0;
+}
+
+ul.navigation > li {
+	display:inline;
+	margin-right:2em;
+	padding:0.25em;
+}
+
+ul.navigation > li.current a { 
+	color: red; 
+}
+
+ul.navigation > li:hover { 
+	background-color: #eee;
+}
+
+/* Common Classes */
+.clear { clear: both; height: 0; overflow: hidden; }
+.nodisplay { display:none; }
+.device_links { margin:1em 0;}
+
+/* Forms */
+div.field { margin: 0 0 1.5em; }
+input.long { width: 600px; }
+
+.field_with_errors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#error_explanation {
+  width: 400px;
+  border: 2px solid #CF0000;
+  padding: 0px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#error_explanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: 0;
+  background-color: #c00;
+  color: #fff;
+}
+
+#error_explanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 8px;
+}
+
+#error_explanation ul {
+  margin: 2px 24px;
+}
+
+#error_explanation ul li {
+  color: #333;
+  font-size: 12px;
+  list-style: disc;
+}

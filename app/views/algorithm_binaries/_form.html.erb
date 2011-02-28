@@ -1,0 +1,39 @@
+<%= form_for([@algorithm, @algorithm_binary], :html => { :multipart => true }) do |f| %>
+	<% if @algorithm_binary.errors.any? %>
+		<div id="error_explanation">
+			<h2><%= pluralize(@algorithm_binary.errors.count, "error") %> prohibited this algorithm_binary from being saved:</h2>
+
+			<ul>
+				<% @algorithm_binary.errors.full_messages.each do |msg| %>
+				<li><%= msg %></li>
+				<% end %>
+			</ul>
+		</div>
+	<% end %>
+
+	<div class="field">
+		<%= f.label :version %><br />
+		<%= f.text_field :version, :class => "title",  %>
+	</div>
+	
+	<%= render :partial => "attachments", :locals => { :form => f } %>
+	
+	<div class="field">
+		<%= f.label :state %><br />
+		<%= select :algorithm_binary, :state, options_for_select(["enabled", "disabled"]) %>
+	</div>
+	
+	<div class="field">
+		<%= f.label :launch_params %><br />
+		<%= f.text_field :launch_params, :class => "text long",  %>
+	</div>
+
+	<div class="field">
+		<%= f.label :description %><br />
+		<%= f.text_area :description %>
+	</div>
+	
+	<div class="actions">
+		<%= f.submit %> or <%= link_to "Cancel", :back %>
+	</div>
+<% end %>

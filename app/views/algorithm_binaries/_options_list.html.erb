@@ -1,0 +1,3 @@
+<% @algorithm_binaries.active.each do |binary| %>
+	<%= content_tag(:option, binary.version, :value => binary.id) %>
+<% end %>

@@ -1,0 +1,33 @@
+<p>
+  <b>Name:</b>
+  <%= @algorithm.name %>
+</p>
+
+<p>
+  <b>Author:</b>
+  <%= @algorithm.user.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @algorithm.description %>
+</p>
+
+<p>
+  <b>Launch params:</b>
+  <%= @algorithm.launch_params %>
+</p>
+
+<div class="field">
+	<%= link_to 'Edit', edit_algorithm_path(@algorithm) %> |
+	<%= link_to 'Back', algorithms_path %>
+</div>
+
+<h2>Algorithm Binaries</h2>
+
+<div class="field">
+	<%= link_to "New binary", new_algorithm_algorithm_binary_path(@algorithm) %>	
+</div>
+
+<%= render :partial => "algorithm_binaries/list", :locals => { :algorithm_binaries => @algorithm.algorithm_binaries }%>
+

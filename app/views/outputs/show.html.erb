@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Task:</b>
+  <%= @output.task_id %>
+</p>
+
+<p>
+  <b>Output:</b>
+  <%= @output.output %>
+</p>
+
+
+<%= link_to 'Edit', edit_output_path(@output) %> |
+<%= link_to 'Back', outputs_path %>

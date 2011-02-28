@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ProdPlanner</title>
+  <%= stylesheet_link_tag %w{typography forms prodplanner} %>
+  <%= javascript_include_tag %w{jquery-1.5} %>
+  <%= javascript_include_tag %w{application rails} %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+	<div id="container">
+		<% if user_signed_in? %>
+		  <div id="user_login_box">
+		    <%= current_user.email %> |
+		    <%= link_to 'My info', edit_user_registration_path %> |
+		    <%= link_to 'Sign out', destroy_user_session_path %>
+		  </div>
+		<% end %>
+		<div style="clear:both"></div>
+
+		<div id="menu">
+			<%= render :partial => 'shared/menu' %>
+		</div><!-- #menu -->
+		
+		<% flash.each do |name, msg| %>
+      <%= content_tag :div, msg, :class => "#{name}" if msg.is_a?(String) %>
+    <% end %>
+
+		<div id="content">
+			<%= yield %>	
+		</div><!-- #content -->
+
+		<div id="footer">
+			&copy; Josef Sin 2011
+		</div><!-- #footer -->
+	</div><!-- #container -->
+</body>
+</html>
