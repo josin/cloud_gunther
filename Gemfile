@@ -11,6 +11,7 @@ group :development, :test do
 end
 
 gem 'devise'
+gem 'cancan'
 
 gem 'paperclip'
 # gem 'will_paginate'

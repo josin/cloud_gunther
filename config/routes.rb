@@ -8,7 +8,7 @@ ProdPlanner::Application.routes.draw do
              :path => "account"
   match "/account" => redirect("/account/sign_in")
 
-  # resources :users
+  resources :users
   resources :tasks
   resources :outputs
   resources :algorithm_binaries

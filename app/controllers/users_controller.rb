@@ -1,9 +1,11 @@
 class UsersController < ApplicationController
+  before_filter :authenticate_user!
   
   # GET /users
   # GET /users.xml
   def index
-    @users = User.all
+    @search = User.metasearch(params[:search])
+    @users = @search.all
 
     respond_to do |format|
       format.html # index.html.erb

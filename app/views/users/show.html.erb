@@ -14,20 +14,21 @@
 </p>
 
 <p>
-  <b>Username:</b>
-  <%= @user.username %>
+	<b>Admin:</b>
+	<%= @user.admin? %>
 </p>
 
 <p>
-  <b>Password:</b>
-  <%= @user.password %>
+	<b>Account status:</b>
+	<%= @user.state %>
 </p>
 
+<% if @user.locked_at %>
 <p>
-  <b>Salt:</b>
-  <%= @user.salt %>
+	<b>Account locked at:</b>
+	<%= @user.locked_at %>
 </p>
 
-
+<% end %>
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

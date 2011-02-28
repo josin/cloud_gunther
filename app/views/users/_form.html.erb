@@ -13,29 +13,25 @@
 
   <div class="field">
     <%= f.label :first_name %><br />
-    <%= f.text_field :first_name %>
+    <%= f.text_field :first_name, :class => "text" %>
   </div>
   <div class="field">
     <%= f.label :last_name %><br />
-    <%= f.text_field :last_name %>
+    <%= f.text_field :last_name, :class => "text" %>
   </div>
   <div class="field">
     <%= f.label :email %><br />
-    <%= f.text_field :email %>
+    <%= f.text_field :email, :class => "text" %>
   </div>
-  <div class="field">
-    <%= f.label :username %><br />
-    <%= f.text_field :username %>
-  </div>
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.text_field :password %>
-  </div>
-  <div class="field">
-    <%= f.label :salt %><br />
-    <%= f.text_field :salt %>
-  </div>
+	<div class="field">
+		<%= f.label :admin %>
+		<%= f.check_box :admin %>
+	</div>
+	<div class="field">
+		<%= f.label :state %>
+		<%= select :user, :state, options_for_select(["enabled", "disabled"], @user.state) %>
+	</div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit %> or <%= link_to "Cancel", :back %>
   </div>
 <% end %>

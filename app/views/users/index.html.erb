@@ -1,33 +1,36 @@
 <h1>Listing users</h1>
 
-<table>
-  <tr>
-    <th>First name</th>
-    <th>Last name</th>
-    <th>Email</th>
-    <th>Username</th>
-    <th>Password</th>
-    <th>Salt</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<div class="field">
+	<%#= link_to 'New User', new_user_path %>
+</div>
 
-<% @users.each do |user| %>
-  <tr>
-    <td><%= user.first_name %></td>
-    <td><%= user.last_name %></td>
-    <td><%= user.email %></td>
-    <td><%= user.username %></td>
-    <td><%= user.password %></td>
-    <td><%= user.salt %></td>
-    <td><%= link_to 'Show', user %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+<table>
+	<thead>
+	  <tr>
+			<th><%= sort_link @search, :id, "#"%></th>
+	    <th><%= sort_link @search, :last_name, "Name" %></th>
+	    <th><%= sort_link @search, :email %></th>
+			<th><%= sort_link @search, :admin %></th>
+			<th><%= sort_link @search, :state %></th>
+	    <th>Actions</th>
+	  </tr>
+	</thead>
+
+	<tbody>
+	<% @users.each do |user| %>
+	  <tr>
+			<td><%= user.id %></td>
+	    <td><%= link_to user.name, user %></td>
+	    <td><%= user.email %></td>
+	    <td><%= user.admin? %></td>
+	    <td><%= user.state %></td>
+	    <td>
+		    <%= link_to 'Edit', edit_user_path(user) %>
+		    <%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %>
+			</td>
+	  </tr>
+	<% end %>
+	</tbody>
 </table>
 
-<br />
 
-<%= link_to 'New User', new_user_path %>

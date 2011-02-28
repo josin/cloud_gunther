@@ -8,10 +8,10 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.database_authenticatable :null => false
       t.rememberable
       t.trackable
+      t.lockable :lock_strategy => :failed_attempts, :unlock_strategy => :none
 
       # t.recoverable
       # t.confirmable
-      # t.lockable :lock_strategy => :failed_attempts, :unlock_strategy => :both
       # t.token_authenticatable
     end
     

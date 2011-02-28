@@ -3,5 +3,7 @@
 	<%= navigation_link "tasks" %>
 	<%= navigation_link "algorithms" %>
 	<%= navigation_link "outputs" %>
-	<%#= navigation_link "users" %>
+	<% if can? :manage, User %>
+	<%= navigation_link "users" %>
+	<% end %>
 </ul>
