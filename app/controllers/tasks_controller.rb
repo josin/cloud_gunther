@@ -1,10 +1,15 @@
 class TasksController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :find_task, :except => [:index, :new, :create]
+
   
   # GET /tasks
   # GET /tasks.xml
   def index
-    @search = Task.metasearch(params[:search])
+    @search = Task.where(nil) if current_user.admin?
+    @search = current_user.tasks unless current_user.admin?
+
+    @search = @search.metasearch(params[:search])
     @tasks = @search.all
 
     respond_to do |format|
@@ -16,7 +21,6 @@ class TasksController < ApplicationController
   # GET /tasks/1
   # GET /tasks/1.xml
   def show
-    @task = Task.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -37,13 +41,12 @@ class TasksController < ApplicationController
 
   # GET /tasks/1/edit
   def edit
-    @task = Task.find(params[:id])
   end
 
   # POST /tasks
   # POST /tasks.xml
   def create
-    @task = Task.new(params[:task])
+    @task = Algorithm.new(params[:task])
     @task.user = current_user
 
     respond_to do |format|
@@ -60,7 +63,6 @@ class TasksController < ApplicationController
   # PUT /tasks/1
   # PUT /tasks/1.xml
   def update
-    @task = Task.find(params[:id])
 
     respond_to do |format|
       if @task.update_attributes(params[:task])
@@ -76,12 +78,17 @@ class TasksController < ApplicationController
   # DELETE /tasks/1
   # DELETE /tasks/1.xml
   def destroy
-    @task = Task.find(params[:id])
     @task.destroy
 
     respond_to do |format|
       format.html { redirect_to(tasks_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  private
+  def find_task
+    @task = Task.find(params[:id])
+    authorize! :manage, @task
   end
 end

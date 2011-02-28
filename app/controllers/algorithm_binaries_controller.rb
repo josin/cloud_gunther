@@ -44,11 +44,14 @@ class AlgorithmBinariesController < ApplicationController
   # POST /algorithm_binaries
   # POST /algorithm_binaries.xml
   def create
-    @algorithm_binary = AlgorithmBinary.new(params[:algorithm_binary])
+    @algorithm_binary = AlgorithmBinary.new
     @algorithm_binary.algorithm = @algorithm
-
+    @algorithm_binary.user = current_user
+    
+    process_attachments
+    
     respond_to do |format|
-      if @algorithm_binary.save
+      if @algorithm_binary.update_attributes(params[:algorithm_binary])
         format.html { redirect_to(@algorithm, :notice => 'Algorithm binary was successfully created.') }
         format.xml  { render :xml => @algorithm_binary, :status => :created, :location => @algorithm_binary }
       else
@@ -64,7 +67,7 @@ class AlgorithmBinariesController < ApplicationController
     @algorithm_binary = AlgorithmBinary.find(params[:id])
     
     process_attachments
-
+    
     respond_to do |format|
       if @algorithm_binary.update_attributes(params[:algorithm_binary])
         format.html { redirect_to(@algorithm, :notice => 'Algorithm binary was successfully updated.') }
@@ -91,11 +94,13 @@ class AlgorithmBinariesController < ApplicationController
   private
   def find_algorithm
     @algorithm = Algorithm.find(params[:algorithm_id])
+    authorize! :manage, @algorithm
   end
   
   def process_attachments
     if params[:algorithm_binary].present? and params[:algorithm_binary][:attachment].present?
       @algorithm_binary.attachment = Attachment.new params[:algorithm_binary].delete :attachment
+      @algorithm_binary.attachment.user = current_user
     end
   end
 end

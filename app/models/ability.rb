@@ -2,12 +2,17 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    user ||= User.new # guest user (not logged in)
+    # user ||= User.new # guest user (not logged in)
+    cannot :manage, :all
+    return unless user
+    
     if user.admin?
       can :manage, :all
     else
-      cannot :manage, User
       can :update, User, ["user_id = ?", user.id]
+      
+      # can :manage, [Task, Algorithm, AlgorithmBinary, Attachment], ["user_id = ?", user.id]
+      can :manage, [Task, Algorithm, AlgorithmBinary, Attachment], :user_id => user.id
     end
 
     # Define abilities for the passed in user here. For example:

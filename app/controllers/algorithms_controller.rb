@@ -1,11 +1,15 @@
 class AlgorithmsController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :find_algorithm, :except => [:index, :new, :create]
   
   
   # GET /algorithms
   # GET /algorithms.xml
   def index
-    @search = Algorithm.metasearch(params[:search])
+    @search = Algorithm.where(nil) if current_user.admin?
+    @search = current_user.algorithms unless current_user.admin?
+
+    @search = @search.metasearch(params[:search])
     @algorithms = @search.all
 
     respond_to do |format|
@@ -17,7 +21,6 @@ class AlgorithmsController < ApplicationController
   # GET /algorithms/1
   # GET /algorithms/1.xml
   def show
-    @algorithm = Algorithm.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -38,7 +41,6 @@ class AlgorithmsController < ApplicationController
 
   # GET /algorithms/1/edit
   def edit
-    @algorithm = Algorithm.find(params[:id])
   end
 
   # POST /algorithms
@@ -77,7 +79,6 @@ class AlgorithmsController < ApplicationController
   # DELETE /algorithms/1
   # DELETE /algorithms/1.xml
   def destroy
-    @algorithm = Algorithm.find(params[:id])
     @algorithm.destroy
 
     respond_to do |format|
@@ -85,4 +86,11 @@ class AlgorithmsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  private
+  def find_algorithm
+    @algorithm = Algorithm.find(params[:id])
+    authorize! :manage, @algorithm
+  end
+  
 end

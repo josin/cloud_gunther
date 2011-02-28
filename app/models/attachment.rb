@@ -3,6 +3,8 @@
 # Fields: id, attachable_id, attachable_type, data_file_name, data_content_type, 
 #         data_file_size, created_at, updated_at, user_id, #
 
+# TODO: max attachment size
+# TODO: attachment presence validation
 class Attachment < ActiveRecord::Base
   has_attached_file :data, # Paperclip::Attachment instance
                     :url  => "/attachments/:id/:basename.:extension",

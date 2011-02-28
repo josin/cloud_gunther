@@ -23,5 +23,6 @@ class AttachmentsController < ApplicationController
   private
   def find_attachment
     @attachment = Attachment.find params[:id]
+    authorize! :manage, @attachment
   end
 end
