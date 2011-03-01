@@ -24,19 +24,36 @@ div#footer {
 	margin-top: 3em;
 }
 
+div#notifications {
+	margin-top:1em;
+}
+
 div#menu {
-	margin-bottom:2em;
+	margin:1em 0;
 }
 
 ul.navigation {
+	float:left;
 	padding:0;
 	margin:0;
 }
 
+
+ul.admin_navigation {
+	padding:0;
+	margin:0;
+	float:right;
+}
+
 ul.navigation > li {
 	display:inline;
-	margin-right:2em;
+	margin-right:1.5em;
 	padding:0.25em;
+}
+
+ul.admin_navigation > li {
+	margin-right:0;
+	margin-left:1.5em;
 }
 
 ul.navigation > li.current a { 

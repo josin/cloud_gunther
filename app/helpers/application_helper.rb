@@ -4,8 +4,10 @@ module ApplicationHelper
     
     controller_klass = "#{name}_controller".camelize.constantize
     current = "current" if !controller_klass.blank? and controller.class == controller_klass 
-      
-    link = link_to(name.titleize, public_send("#{name}_path"))
+
+    link_name = options[:title].presence || name.titleize
+    
+    link = link_to(link_name, public_send("#{name}_path"))
     
     html_class = "tab #{name} #{current}"
     content_tag(:li, link, :class => html_class)

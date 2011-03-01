@@ -3,5 +3,12 @@
 	<%= navigation_link "tasks" %>
 	<%= navigation_link "algorithms" %>
 	<%= navigation_link "outputs" %>
-	<%= navigation_link "users" if can? :manage, User %>
+</ul>	
+
+<% if current_user.admin? %>
+<ul class="navigation admin_navigation">
+	<%= navigation_link "users" %>
+	<%= navigation_link "users", :title => "Quotas" %>
+	<%= navigation_link "users", :title => "Environments" %>
 </ul>
+<% end -%>

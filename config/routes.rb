@@ -8,7 +8,6 @@ ProdPlanner::Application.routes.draw do
              :path => "account"
   match "/account" => redirect("/account/sign_in")
 
-  resources :users
   resources :tasks
   resources :outputs
   resources :algorithm_binaries
@@ -16,6 +15,11 @@ ProdPlanner::Application.routes.draw do
   resources :algorithms do
     resources :binaries, :as => :algorithm_binaries, :controller => :algorithm_binaries
   end
+  
+  scope "/admin" do
+    resources :users
+  end
+  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
