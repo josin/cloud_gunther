@@ -1,3 +1,23 @@
 <h1>Dashboard</h1>
 
-<h2>Welcome to ProdPlanning application!</h2>
+<h2>Queue status</h2>
+
+<script type="text/javascript" charset="utf-8">
+	// $(function() {
+	// 	$.ajax({
+	// 		url: "http://localhost:55672/api/queues",
+	// 		username: "guest",
+	// 		password: "guest",
+	// 		success: function (data, status, jqXHR) {
+	// 			console.log(data);
+	// 		}
+	// 	});
+	// });
+</script>
+
+<div style="display:block;">
+	<div class="highlight">
+		Waiting tasks
+		<strong><%= @waiting_tasks %></strong>
+	</div>
+</div>

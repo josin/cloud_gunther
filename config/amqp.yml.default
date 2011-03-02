@@ -1,7 +1,7 @@
 # AMQP settings
 development:
   host: localhost
-  port: 5672
+  port: 55672
   user: guest
   pass: guest
   vhost: /
@@ -11,7 +11,7 @@ development:
 
 test:
   host: localhost
-  port: 5672
+  port: 55672
   user: guest
   pass: guest
   vhost: /
@@ -21,7 +21,7 @@ test:
 
 production:
   host: localhost
-  port: 5672
+  port: 55672
   user: guest
   pass: guest
   vhost: /

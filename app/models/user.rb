@@ -9,6 +9,10 @@ class User < ActiveRecord::Base
   extend ActiveModel::Callbacks
   before_save :action_before_save
   
+  ENABLED = "enabled"
+  DISABLED = "disabled"
+  STATES = [ENABLED, DISABLED]
+  
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable and :timeoutable, :recoverable, 
   # :registerable
@@ -37,9 +41,9 @@ class User < ActiveRecord::Base
   def action_before_save
     if state_changed?
       case self.state
-        when "enabled"
+        when ENABLED
           self.locked_at = nil
-        when "disabled"
+        when DISABLED
           self.locked_at = Time.now
       end
     end

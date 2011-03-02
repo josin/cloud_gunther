@@ -5,3 +5,4 @@
 /public/uploads/
 /tmp/
 /.idea/
+/config/amqp.yml

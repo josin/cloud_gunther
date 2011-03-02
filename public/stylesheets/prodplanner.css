@@ -113,3 +113,15 @@ input.long { width: 600px; }
   font-size: 12px;
   list-style: disc;
 }
+
+/* Dashboard */
+.highlight, .mini-highlight {
+    background: -moz-linear-gradient(center top, #f0f0f0 0%,#e0e0e0 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f0f0f0),color-stop(1, #e0e0e0));
+    border: 2px solid #e0e0e0;
+}
+
+.highlight, .highlight-right { width: 120px; font-size: 120%; text-align:center; padding:10px; background-color: #ddd; margin: 0 20px 0 0; color: #888; border-radius: 10px; -moz-border-radius: 10px; }
+.highlight strong, .highlight-right strong { font-size: 2em; display: block; color: #444; font-weight: normal; }
+.highlight { float: left; }
+.highlight-right { float: right; }
