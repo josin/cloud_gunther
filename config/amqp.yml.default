@@ -1,0 +1,30 @@
+# AMQP settings
+development:
+  host: localhost
+  port: 5672
+  user: guest
+  pass: guest
+  vhost: /
+  timeout: 3600
+  logging: false
+  ssl: false
+
+test:
+  host: localhost
+  port: 5672
+  user: guest
+  pass: guest
+  vhost: /
+  timeout: 3600
+  logging: false
+  ssl: false
+
+production:
+  host: localhost
+  port: 5672
+  user: guest
+  pass: guest
+  vhost: /
+  timeout: 3600
+  logging: false
+  ssl: false
