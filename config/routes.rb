@@ -8,10 +8,14 @@ ProdPlanner::Application.routes.draw do
              :path => "account"
   match "/account" => redirect("/account/sign_in")
 
-  resources :tasks
-  resources :outputs
-  resources :algorithm_binaries
+  resources :tasks do
+    resources :outputs
+    resources :results
+  end
+  
+  resources :algorithm_binaries, :only => [:index]
   resources :attachments, :only => [:show, :destroy]
+  
   resources :algorithms do
     resources :binaries, :as => :algorithm_binaries, :controller => :algorithm_binaries
   end

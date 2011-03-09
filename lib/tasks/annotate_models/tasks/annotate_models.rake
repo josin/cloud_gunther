@@ -5,16 +5,16 @@ task :annotate_models do
    AnnotateModels.do_annotations
 end
 
-namespace :db do
-  task :migrate do
-    AnnotateModels.do_annotations
-  end
-
-  namespace :migrate do
-    [:up, :down, :reset, :redo].each do |t|
-      task t do
-        AnnotateModels.do_annotations
-      end
-    end
-  end
-end
+# namespace :db do
+#   task :migrate do
+#     AnnotateModels.do_annotations
+#   end
+# 
+#   namespace :migrate do
+#     [:up, :down, :reset, :redo].each do |t|
+#       task t do
+#         AnnotateModels.do_annotations
+#       end
+#     end
+#   end
+# end

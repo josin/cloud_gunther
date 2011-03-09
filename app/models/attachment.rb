@@ -8,7 +8,7 @@
 class Attachment < ActiveRecord::Base
   has_attached_file :data, # Paperclip::Attachment instance
                     :url  => "/attachments/:id/:basename.:extension",
-                    :path => ":rails_root/public/sustem/uploads/:id/:basename.:extension"
+                    :path => ":rails_root/public/system/attachments/:id/:basename.:extension"
   
   belongs_to :attachable, :polymorphic => true
   belongs_to :user

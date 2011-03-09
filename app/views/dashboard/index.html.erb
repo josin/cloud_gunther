@@ -1,23 +1,18 @@
 <h1>Dashboard</h1>
 
-<h2>Queue status</h2>
-
-<script type="text/javascript" charset="utf-8">
-	// $(function() {
-	// 	$.ajax({
-	// 		url: "http://localhost:55672/api/queues",
-	// 		username: "guest",
-	// 		password: "guest",
-	// 		success: function (data, status, jqXHR) {
-	// 			console.log(data);
-	// 		}
-	// 	});
-	// });
-</script>
+<h2>Status info</h2>
 
 <div style="display:block;">
 	<div class="highlight">
 		Waiting tasks
 		<strong><%= @waiting_tasks %></strong>
+	</div>
+	<div class="highlight">
+		Elapsed hours
+		<strong><%= 22 %></strong>
+	</div>
+	<div class="highlight">
+		Hours remaining
+		<strong><%= 3 %></strong>
 	</div>
 </div>
