@@ -20,7 +20,7 @@
 	
 	<div class="field">
 		<%= f.label :state %><br />
-		<%= select :algorithm_binary, :state, options_for_select(["enabled", "disabled"]) %>
+		<%= select :algorithm_binary, :state, options_for_select(["enabled", "disabled"], @algorithm_binary.state) %>
 	</div>
 	
 	<div class="field">

@@ -26,7 +26,7 @@ class AlgorithmBinary < ActiveRecord::Base
   end
   
   def to_param
-    "#{self.id}-#{self.name.parameterize}"
+    "#{self.id}-#{self.version.parameterize}"
   end
   
   private

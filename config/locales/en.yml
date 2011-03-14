@@ -3,3 +3,14 @@
 
 en:
   hello: "Hello world"
+  # date:
+  #   formats:
+  #     default: "aaa %Y-%m-%d aaa"
+  #     short: "%b %d" 
+  #     long: "%B %d, %Y"
+  time:
+    formats:
+      default: "%Y-%m-%d %H:%M"
+      # defualt: "%a %d. %B %Y %H:%M %z"
+      # long: "%A %d. %B"    
+  

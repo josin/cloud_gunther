@@ -46,7 +46,7 @@ class TasksController < ApplicationController
   # POST /tasks
   # POST /tasks.xml
   def create
-    @task = Algorithm.new(params[:task])
+    @task = Task.new(params[:task])
     @task.user = current_user
 
     respond_to do |format|
@@ -86,9 +86,19 @@ class TasksController < ApplicationController
     end
   end
   
+  def run
+    @task.run!
+    
+    respond_to do |format|
+      format.html { redirect_to(@task, :notice => 'Task is running.') }
+      format.xml  { head :ok }
+    end
+  end
+  
   private
   def find_task
-    @task = Task.find(params[:id])
+    task_id = params[:id] || params[:task_id]
+    @task = Task.find(task_id)
     authorize! :manage, @task
   end
 end

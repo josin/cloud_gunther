@@ -1,4 +1,4 @@
-<h1>Listing algorithms</h1>
+<h1>Algorithms</h1>
 
 <div class="field">
 	<%= link_to 'New Algorithm', new_algorithm_path %>
@@ -8,9 +8,8 @@
 	<thead>
 		<tr>
 			<th><%= sort_link @search, :name %></th>
-			<th><%= sort_link @search, :user_last_name, "Author" %></th>
-			<th>Description</th>
 			<th>Launch params</th>
+			<th><%= sort_link @search, :user_last_name, "Author" %></th>
 			<th><%= sort_link @search, :updated_at, "Last Update" %></th>
 			<th>Actions</th>
 		</tr>
@@ -20,10 +19,9 @@
 		<% @algorithms.each do |algorithm| %>
 		<tr>
 			<td><%= link_to algorithm.name, algorithm %></td>
-			<td><%= algorithm.user.name %></td>
-			<td><%= truncate(algorithm.description) %></td>
 			<td><%= truncate(algorithm.launch_params) %></td>
-			<td><%= algorithm.updated_at %></td>
+			<td><%= link_to algorithm.user.name, algorithm.user %></td>
+			<td><%= l algorithm.updated_at %></td>
 			<td>
 				<%= link_to 'Edit', edit_algorithm_path(algorithm) %>
 				<%= link_to 'Destroy', algorithm, :confirm => 'Are you sure?', :method => :delete %>

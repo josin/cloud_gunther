@@ -19,7 +19,7 @@
 </p>
 
 <p>
-	<b>Create at:</b>
+	<b>Created at:</b>
 	<%= @task.created_at %>
 </p>
 
@@ -38,5 +38,11 @@
   <%= @task.finished_at %>
 </p>
 
+<%= button_to "Run!", task_run_path(@task) %>
+
 <%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back to list', tasks_path %>
+
+<h2>Outputs</h2>
+
+<%= render :partial => "outputs/list", :locals => { :outputs => @task.outputs }%>

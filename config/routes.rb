@@ -9,6 +9,8 @@ ProdPlanner::Application.routes.draw do
   match "/account" => redirect("/account/sign_in")
 
   resources :tasks do
+    post :run
+    
     resources :outputs
     resources :results
   end

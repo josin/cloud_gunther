@@ -21,6 +21,8 @@ gem 'meta_search'
 
 gem 'amqp'
 gem 'right_aws'
+gem 'delayed_job'
+gem 'popen4'
 
 
 group :development do

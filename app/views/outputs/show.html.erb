@@ -1,15 +1,20 @@
-<p id="notice"><%= notice %></p>
+<h1>Output detail</h1>
 
 <p>
-  <b>Task:</b>
-  <%= @output.task_id %>
+	<strong>Output #<%= @output.id %> for task #<%= @output.task_id %></strong>
 </p>
 
 <p>
-  <b>Output:</b>
-  <%= @output.output %>
+  <strong>Stdout:</strong>
+	<pre><%= @output.stdout %></pre>
+  
 </p>
 
+<p>
+  <strong>Stderr:</strong>
+  <pre><%= @output.stderr %></pre>
+</p>
 
-<%= link_to 'Edit', edit_output_path(@output) %> |
-<%= link_to 'Back', outputs_path %>
+<%= link_to 'Back to task', task_path(@output.task) %> |
+<%= link_to 'Delete', task_output_path(@output), :confirm => 'Are you sure?', :method => :delete %>
+

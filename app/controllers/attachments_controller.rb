@@ -1,5 +1,5 @@
 class AttachmentsController < ApplicationController
-  before_filter :authenticate_user!
+  # before_filter :authenticate_user! # TODO: add ACL
   before_filter :find_attachment
   
   # TODO: add AC for Attachments
