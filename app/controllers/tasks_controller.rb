@@ -101,4 +101,8 @@ class TasksController < ApplicationController
     @task = Task.find(task_id)
     authorize! :manage, @task
   end
+  
+  def setup
+    @title << "Tasks"
+  end
 end

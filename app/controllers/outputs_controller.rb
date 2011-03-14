@@ -82,4 +82,10 @@ class OutputsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  private
+  def setup
+    @title << "Tasks"
+    @title << "Outputs"
+  end
 end

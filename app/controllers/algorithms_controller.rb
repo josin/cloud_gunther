@@ -93,4 +93,8 @@ class AlgorithmsController < ApplicationController
     authorize! :manage, @algorithm
   end
   
+  def setup
+    @title << "Algorithms"
+  end
+  
 end

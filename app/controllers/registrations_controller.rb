@@ -5,4 +5,14 @@ class RegistrationsController < Devise::RegistrationsController
     ["edit", "update"].include?(controller.request.params[:action]) ? 'application' : 'login'
   }
   
+  def new
+    @title = ["Sign up"]
+    super
+  end
+  
+  private
+  def setup
+    @title << "My Account"
+  end
+  
 end

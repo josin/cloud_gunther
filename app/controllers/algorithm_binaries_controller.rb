@@ -103,4 +103,9 @@ class AlgorithmBinariesController < ApplicationController
       @algorithm_binary.attachment.user = current_user
     end
   end
+  
+  def setup
+    @title << "Algorithms"
+    @title << "Binaries"
+  end
 end

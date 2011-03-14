@@ -1,3 +1,6 @@
+/******************************************************************************
+********* Layout
+******************************************************************************/
 body {
   background-color: #4B7399;
 }
@@ -64,12 +67,18 @@ ul.navigation > li:hover {
 	background-color: #eee;
 }
 
-/* Common Classes */
+
+/******************************************************************************
+********* Common Classes
+******************************************************************************/
 .clear { clear: both; height: 0; overflow: hidden; }
 .nodisplay { display:none; }
 .device_links { margin:1em 0;}
 
-/* Forms */
+
+/******************************************************************************
+********* Forms
+******************************************************************************/
 div.field { margin: 0 0 1.5em; }
 input.long { width: 600px; }
 
@@ -114,7 +123,10 @@ input.long { width: 600px; }
   list-style: disc;
 }
 
-/* Dashboard */
+
+/******************************************************************************
+********* Dashboard
+******************************************************************************/
 .highlight, .mini-highlight {
     background: -moz-linear-gradient(center top, #f0f0f0 0%,#e0e0e0 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f0f0f0),color-stop(1, #e0e0e0));
@@ -125,3 +137,14 @@ input.long { width: 600px; }
 .highlight strong, .highlight-right strong { font-size: 2em; display: block; color: #444; font-weight: normal; }
 .highlight { float: left; }
 .highlight-right { float: right; }
+
+
+/******************************************************************************
+********* Outputs
+******************************************************************************/
+pre.output {
+	padding:0.5em;
+	border:1px solid #ddd;
+	background-color: #ffd;
+}
+

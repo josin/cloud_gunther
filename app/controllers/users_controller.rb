@@ -84,4 +84,10 @@ class UsersController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  private
+  def setup
+    @title << "Admin"
+    @title << "Users"
+  end
 end

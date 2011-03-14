@@ -3,7 +3,6 @@ require 'uri'
 
 class DashboardController < ApplicationController
   before_filter :authenticate_user!
-  
   before_filter :get_queue_status, :only => [:index]
   
   # GET /
@@ -29,5 +28,9 @@ class DashboardController < ApplicationController
     rescue
       @waiting_tasks ||= 0
     end
+  end
+  
+  def setup
+    @title << "Dashboard"
   end
 end
