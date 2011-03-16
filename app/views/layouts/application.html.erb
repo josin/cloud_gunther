@@ -13,12 +13,12 @@
 		  <div id="user_login_box">
 		    <%= link_to current_user.name, edit_user_registration_path %> |
 		    <%= link_to 'Sign out', destroy_user_session_path %>
-		  </div>
+		  </div><!-- #user_login_box -->
 		<% end %>
 		<div class="clear"></div>
-
+		
 		<div id="menu">
-			<%= render :partial => 'shared/menu' %>
+			<%= render_navigation %>
 		</div><!-- #menu -->
 		<div class="clear"></div>
 		
@@ -26,7 +26,7 @@
 			<% flash.each do |name, msg| %>
 	      <%= content_tag :div, msg, :class => "#{name}" if msg.is_a?(String) %>
 	    <% end %>
-		</div>
+		</div><!-- #notifications -->
 		
 		<div id="content">
 			<%= yield %>	

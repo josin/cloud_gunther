@@ -1,6 +1,6 @@
 <p>
   <b>Algorithm:</b>
-  <%= "#{@task.algorithm.name} #{@task.algorithm_binary.version}" %>
+ 	<%= @task.algorithm_binary.nil? ? "not found" : "#{@task.algorithm_binary.name}" %>
 </p>
 
 <p>

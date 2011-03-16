@@ -41,22 +41,13 @@ ul.navigation {
 	margin:0;
 }
 
-
-ul.admin_navigation {
-	padding:0;
-	margin:0;
-	float:right;
-}
-
 ul.navigation > li {
 	display:inline;
 	margin-right:1.5em;
 	padding:0.25em;
 }
 
-ul.admin_navigation > li {
-	margin-right:0;
-	margin-left:1.5em;
+ul.navigation > li a {
 }
 
 ul.navigation > li.current a { 

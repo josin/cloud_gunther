@@ -22,7 +22,7 @@
 	<% @tasks.each do |task| %>
 		<tr>
 			<td><%= link_to task.id, task %></td>
-			<td><%= "#{task.algorithm.name} #{task.algorithm_binary.version}" %></td>
+			<td><%= task.algorithm_binary.nil? ? "not found" : "#{task.algorithm_binary.name}" %></td>
 			<td><%= l task.created_at %></td>
 			<td><%= task.user.name %></td>
 			<td><%= task.state %></td>

@@ -86,7 +86,7 @@ class AlgorithmBinariesController < ApplicationController
     @algorithm_binary.destroy
 
     respond_to do |format|
-      format.html { redirect_to(@algorithm) }
+      format.html { redirect_to(@algorithm, :notice => 'Algorithm binary was deleted.') }
       format.xml  { head :ok }
     end
   end

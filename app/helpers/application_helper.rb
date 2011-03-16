@@ -13,9 +13,9 @@ module ApplicationHelper
     content_tag(:li, link, :class => html_class)
   end
   
+  # Return a title on a per-page basis
   def title
-    # Return a title on a per-page basis
-    base_title = "ProPlanner App"
+    base_title = t("app_name")
     if @title.blank?
       base_title
     else

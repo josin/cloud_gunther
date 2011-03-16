@@ -2,7 +2,7 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  app_name: "ProPlanner App"
   # date:
   #   formats:
   #     default: "aaa %Y-%m-%d aaa"

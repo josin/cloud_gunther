@@ -6,6 +6,8 @@
 
 require "popen4"
 
+MACRO_REGEXP = /\{{2}(\w+)\}{2}/
+
 class Task < ActiveRecord::Base
   extend ActiveModel::Callbacks
   before_save :action_before_save
@@ -33,7 +35,19 @@ class Task < ActiveRecord::Base
 
     # run appropriate task
     stdout, stderr = "", ""
-    cmd = "cd #{task_home_dir} && #{self.algorithm_binary.launch_params}"
+    launch_cmd = self.algorithm_binary.prepare_launch_cmd
+    
+    launch_cmd.gsub!(MACRO_REGEXP) do |m|
+      all, macro = $&, $1
+      case macro
+        when "BINARY"
+          self.attachment.data_file_name
+        when "INPUTS"
+          self.inputs
+      end
+    end
+    
+    cmd = "cd #{task_home_dir} && #{launch_cmd}"
     status = POpen4::popen4(cmd) do |out, err|
       out.each_line { |line| stdout << line }
       err.each_line { |line| stderr << line }

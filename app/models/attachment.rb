@@ -15,6 +15,12 @@ class Attachment < ActiveRecord::Base
   
   validates_presence_of :user_id, :on => :create
   
+  validates_attachment_presence :data
+  validates_attachment_size :data, :less_than => 1.megabyte
+  validates_attachment_content_type :data, 
+      :content_type => ['application/java-archive', 'application/zip', 'application/x-gzip']
+  
+  
   def to_param
     "#{self.id}-#{self.data.original_filename.parameterize}"
   end
