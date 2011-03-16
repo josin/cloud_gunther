@@ -1,5 +1,4 @@
 ProdPlanner::Application.routes.draw do
-
   root :to => "dashboard#index"
   match "/", :to => "dashboard#index", :as => :dashboard
 
@@ -22,6 +21,8 @@ ProdPlanner::Application.routes.draw do
   
   scope "/admin" do
     resources :users
+    resources :images
+    resources :cloud_engines
   end
   
 

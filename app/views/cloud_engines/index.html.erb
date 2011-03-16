@@ -1,0 +1,34 @@
+<h1><%= t('cloud_engine.title').pluralize %></h1>
+
+<p>
+	<%= link_to 'New Cloud engine', new_cloud_engine_path %>	
+</p>
+
+<table>
+	<thead>
+	  <tr>
+			<th><%= sort_link @search, :id %></th>
+	    <th><%= sort_link @search, :engine_type %></th>
+	    <th><%= sort_link @search, :endpoint_url %></th>
+	    <th><%= sort_link @search, :updated_at, "Last update" %></th>
+			<th>Actions</th>
+	  </tr>
+	</thead>
+	
+	<tbody>
+	<% @cloud_engines.each do |cloud_engine| %>
+	  <tr>
+			<td><%= cloud_engine.id %></td>
+			<td><%= cloud_engine.engine_type %></td>
+			<td><%= cloud_engine.endpoint_url %></td>
+			<td><%= l cloud_engine.updated_at %></td>
+	    <td>
+				<%= link_to 'Show', cloud_engine %>
+		    <%= link_to 'Edit', edit_cloud_engine_path(cloud_engine) %>
+		    <%= link_to 'Destroy', cloud_engine, :confirm => 'Are you sure?', :method => :delete %>
+			</td>
+	  </tr>
+	<% end %>
+	</tbody>
+</table>
+

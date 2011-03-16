@@ -3,10 +3,19 @@
 
 en:
   app_name: "ProPlanner App"
-  
+  default:
+    back: Back to list
   task:
     title: Task
     new: New Task
+  user:
+    title: User
+  cloud_engine:
+    title: Cloud Engine
+  image:
+    title: Image
+    
+  
   
   # date:
   #   formats:

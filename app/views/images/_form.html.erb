@@ -1,0 +1,37 @@
+<%= form_for(@image) do |f| %>
+  <% if @image.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@image.errors.count, "error") %> prohibited this image from being saved:</h2>
+
+      <ul>
+      <% @image.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+	<div class="field">
+		<%= f.label :name %><br />
+		<%= f.text_field :name, :class => "text title" %>
+	</div>
+	
+	<div class="field">
+		<%= f.label :cloud_engine_id %><br />
+		<%= select :image, :cloud_engine_id, options_from_collection_for_select(CloudEngine.all, :id, :engine_type, @image.cloud_engine_id) %>
+	</div>
+
+	<div class="field">
+		<%= f.label :image_type %><br />
+		<%= f.text_field :image_type, :class => "text" %>
+	</div>
+
+	<div class="field">
+		<%= f.label :description %><br />
+		<%= f.text_area :description, :class => "text" %>
+	</div>
+
+  <div class="actions">
+    <%= f.submit %> or <%= link_to "Cancel", :back %>
+  </div>
+<% end %>
