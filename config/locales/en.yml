@@ -3,6 +3,11 @@
 
 en:
   app_name: "ProPlanner App"
+  
+  task:
+    title: Task
+    new: New Task
+  
   # date:
   #   formats:
   #     default: "aaa %Y-%m-%d aaa"

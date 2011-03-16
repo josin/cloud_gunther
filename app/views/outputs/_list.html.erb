@@ -12,7 +12,7 @@
 	<tbody>
 	<% outputs.each do |output| %>
 	  <tr>
-	    <td><%= link_to output.id, task_output_path(output.task, output) %></td>
+	    <td><%= output.id %></td>
 	    <td><%= truncate(output.stdout) %></td>
 	    <td><%= truncate(output.stderr) %></td>
 			<td><%= l output.updated_at %></td>

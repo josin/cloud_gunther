@@ -32,7 +32,7 @@ class TasksController < ApplicationController
   # GET /tasks/new.xml
   def new
     @task = Task.new
-
+    
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @task }

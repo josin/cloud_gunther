@@ -11,11 +11,9 @@ ProdPlanner::Application.routes.draw do
   resources :tasks do
     post :run
     
-    resources :outputs
-    resources :results
+    resources :outputs, :only => [:index, :show, :destroy]
   end
   
-  resources :algorithm_binaries, :only => [:index]
   resources :attachments, :only => [:show, :destroy]
   
   resources :algorithms do

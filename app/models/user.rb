@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
 
   has_many :tasks
   has_many :algorithms
-  has_many :algorithms_binaries
+  has_many :algorithm_binaries
   
   def name
     "#{self.first_name} #{self.last_name}"

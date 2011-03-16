@@ -1,7 +1,7 @@
-<h1>Listing tasks</h1>
+<h1><%= t('task.title').pluralize %></h1>
 
 <div class="field">
-	<%= link_to 'New Task', new_task_path %>
+	<%= link_to t('task.new'), new_task_path %>
 </div>
 
 <table>
@@ -21,7 +21,7 @@
 	<tbody>
 	<% @tasks.each do |task| %>
 		<tr>
-			<td><%= link_to task.id, task %></td>
+			<td><%= task.id %></td>
 			<td><%= task.algorithm_binary.nil? ? "not found" : "#{task.algorithm_binary.name}" %></td>
 			<td><%= l task.created_at %></td>
 			<td><%= task.user.name %></td>

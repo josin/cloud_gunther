@@ -133,9 +133,5 @@ input.long { width: 600px; }
 /******************************************************************************
 ********* Outputs
 ******************************************************************************/
-pre.output {
-	padding:0.5em;
-	border:1px solid #ddd;
-	background-color: #ffd;
-}
-
+pre.output { padding:0.5em; border:1px solid #ddd; background-color: #ffd; }
+pre.stderr { background: #fbe3e4; color: #8a1f11; border-color: #fbc2c4; }
