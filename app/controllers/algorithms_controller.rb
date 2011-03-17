@@ -21,6 +21,9 @@ class AlgorithmsController < ApplicationController
   # GET /algorithms/1
   # GET /algorithms/1.xml
   def show
+    
+    @search = @algorithm.algorithm_binaries.metasearch(params[:search])
+    @algorithm_binaries = @search.all.paginate(:page => @page, :per_page => @per_page)
 
     respond_to do |format|
       format.html # show.html.erb

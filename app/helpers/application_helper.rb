@@ -22,4 +22,11 @@ module ApplicationHelper
       "#{@title.reverse.to_sentence(:words_connector => " | ", :last_word_connector => " | ", :two_words_connector => " | ")} | #{base_title}"
     end
   end
+  
+  def pagination(resource)
+    output = ActiveSupport::SafeBuffer.new
+    output.safe_concat will_paginate(resource).to_s # .to_s => prevent nil error
+    output.safe_concat page_entries_info(resource)
+    output
+  end
 end # of module

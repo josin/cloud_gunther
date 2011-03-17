@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   # GET /users.xml
   def index
     @search = User.metasearch(params[:search])
-    @users = @search.all
+    @users = @search.all.paginate(:page => @page, :per_page => @per_page)
 
     respond_to do |format|
       format.html # index.html.erb

@@ -6,7 +6,7 @@ class CloudEnginesController < ApplicationController
   # GET /cloud_engines.xml
   def index
     @search = CloudEngine.metasearch(params[:search])
-    @cloud_engines = @search.all
+    @cloud_engines = @search.all.paginate(:page => @page, :per_page => @per_page)
 
     respond_to do |format|
       format.html # index.html.erb
