@@ -7,6 +7,7 @@
 
 class User < ActiveRecord::Base
   extend ActiveModel::Callbacks
+  before_create :action_before_create
   before_save :action_before_save
   
   ENABLED = "enabled"
@@ -14,9 +15,8 @@ class User < ActiveRecord::Base
   STATES = [ENABLED, DISABLED]
   
   # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable, :lockable and :timeoutable, :recoverable, 
-  # :registerable
-  devise :database_authenticatable,
+  # :timeoutable, :recoverable, :confirmable,
+  devise :database_authenticatable, :token_authenticatable, 
          :rememberable, :trackable, :validatable, :registerable, :lockable
         
   # Setup accessible (or protected) attributes for your model
@@ -38,8 +38,13 @@ class User < ActiveRecord::Base
   end
   
   private
+  def action_before_create
+    self.state = 'new'
+    self.locked_at = Time.now
+  end
+  
   def action_before_save
-    if state_changed?
+    if self.state_changed?
       case self.state
         when ENABLED
           self.locked_at = nil

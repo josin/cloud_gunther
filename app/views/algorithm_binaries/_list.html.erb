@@ -1,10 +1,10 @@
 <table>
 	<thead>
 	  <tr>
-	    <th>Version</th>
-	    <th>State</th>
-	    <th>Launch params</th>
-			<th>Last update</th>
+	    <th><%= sort_link @search, :version %></th>
+	    <th><%= sort_link @search, :state %></th>
+	    <th><%= sort_link @search, :launch_params %></th>
+			<th><%= sort_link @search, :updated_at, "Last Update" %></th>
 	    <th>Actions</th>
 	  </tr>
 	</thead>

@@ -7,7 +7,9 @@ class UsersController < ApplicationController
   def index
     @search = User.metasearch(params[:search])
     @users = @search.all.paginate(:page => @page, :per_page => @per_page)
-
+    
+    @pending_activations = User.where(:state => 'new')
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @users }

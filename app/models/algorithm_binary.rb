@@ -5,6 +5,10 @@
 
 class AlgorithmBinaryValidator < ActiveModel::Validator
   def validate(record)
+    if record.attachment and !record.attachment.valid?
+      record.attachment.errors.each_value { |error| record.errors[:base] << error }
+    end
+    
     options[:fields].presence.each do |field|
       if field == :state
         if record.state == "enabled" and record.state_changed? and record.attachment.nil?
@@ -35,7 +39,7 @@ class AlgorithmBinary < ActiveRecord::Base
   scope :active, where(:state => "enabled")
   
   def name
-    "#{self.algorithm.name} #{self.version}"
+    "#{self.algorithm.name} - #{self.version}"
   end
   
   # def to_param

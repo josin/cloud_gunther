@@ -1,36 +1,9 @@
-<h1>Users</h1>
+<h1>Users management</h1>
 
 <div class="field">
-	<%#= link_to 'New User', new_user_path %>
+	<ul>
+		<li><%= link_to 'New User', new_user_path %></li>
+	</ul>
 </div>
 
-<table>
-	<thead>
-	  <tr>
-			<th><%= sort_link @search, :id, "#"%></th>
-	    <th><%= sort_link @search, :last_name, "Name" %></th>
-	    <th><%= sort_link @search, :email %></th>
-			<th><%= sort_link @search, :admin %></th>
-			<th><%= sort_link @search, :state %></th>
-	    <th>Actions</th>
-	  </tr>
-	</thead>
-
-	<tbody>
-	<% @users.each do |user| %>
-	  <tr>
-			<td><%= user.id %></td>
-	    <td><%= link_to user.name, user %></td>
-	    <td><%= auto_link user.email %></td>
-	    <td><%= user.admin? %></td>
-	    <td><%= user.state %></td>
-	    <td>
-		    <%= link_to 'Edit', edit_user_path(user) %>
-		    <%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %>
-			</td>
-	  </tr>
-	<% end %>
-	</tbody>
-</table>
-
-<%= pagination(@users) %>
+<%= render :partial => "list", :locals => { :search => @search, :users => @users } %>

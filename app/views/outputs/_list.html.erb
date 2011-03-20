@@ -1,10 +1,10 @@
 <table>
 	<thead>
 	  <tr>
-	    <th>#</th>
-	    <th>stdout</th>
-	    <th>stderr</th>
-			<th>Created at</th>
+	    <th><%= sort_link @search, :id, "#" %></th>
+	    <th><%= sort_link @search, :stdout %></th>
+	    <th><%= sort_link @search, :stderr %></th>
+			<th><%= sort_link @search, :created_at %></th>
 			<th>Actions</th>
 	  </tr>
 	</thead>

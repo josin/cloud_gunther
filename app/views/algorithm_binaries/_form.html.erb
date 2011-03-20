@@ -1,15 +1,5 @@
 <%= form_for([@algorithm, @algorithm_binary], :html => { :multipart => true }) do |f| %>
-	<% if @algorithm_binary.errors.any? %>
-		<div id="error_explanation">
-			<h2><%= pluralize(@algorithm_binary.errors.count, "error") %> prohibited this algorithm_binary from being saved:</h2>
-
-			<ul>
-				<% @algorithm_binary.errors.full_messages.each do |msg| %>
-				<li><%= msg %></li>
-				<% end %>
-			</ul>
-		</div>
-	<% end %>
+	<%= render :partial => 'shared/form_errors', :locals => {:resource => @algorithm_binary} %>
 
 	<div class="field">
 		<%= f.label :version %><br />

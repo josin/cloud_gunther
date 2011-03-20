@@ -73,46 +73,16 @@ ul.navigation > li:hover {
 div.field { margin: 0 0 1.5em; }
 input.long { width: 600px; }
 
-.field_with_errors {
-  padding: 2px;
-  background-color: red;
-  display: table;
-}
 
-#error_explanation {
-  width: 400px;
-  border: 2px solid #CF0000;
-  padding: 0px;
-  padding-bottom: 12px;
-  margin-bottom: 20px;
-  background-color: #f0f0f0;
-}
-
-#error_explanation h2 {
-  text-align: left;
-  font-weight: bold;
-  padding: 5px 5px 5px 15px;
-  font-size: 12px;
-  margin: 0;
-  background-color: #c00;
-  color: #fff;
-}
-
-#error_explanation p {
-  color: #333;
-  margin-bottom: 0;
-  padding: 8px;
-}
-
-#error_explanation ul {
-  margin: 2px 24px;
-}
-
-#error_explanation ul li {
-  color: #333;
-  font-size: 12px;
-  list-style: disc;
-}
+/* RoR validations */
+.field_with_errors { padding: 0.5em; background: #fbe3e4; border: 2px solid #fbc2c4; }
+.field_with_errors label { color: #8a1f11; }
+.field_with_errors input { border-color: red; }
+#error_explanation { padding: 0.8em; margin-bottom: 1em; border: 2px solid #fbc2c4; background: #fbe3e4; color: #8a1f11; }
+#error_explanation h2 { font-weight: bold; color:#8a1f11; font-size: 120%; }
+#error_explanation p { color: #333; margin-bottom: 0; padding: 8px; }
+#error_explanation ul { margin: 2px 24px; }
+#error_explanation ul li { list-style: disc; }
 
 
 /******************************************************************************

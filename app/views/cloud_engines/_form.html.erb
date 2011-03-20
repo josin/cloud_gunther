@@ -1,15 +1,5 @@
 <%= form_for(@cloud_engine) do |f| %>
-  <% if @cloud_engine.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@cloud_engine.errors.count, "error") %> prohibited this cloud_engine from being saved:</h2>
-
-      <ul>
-      <% @cloud_engine.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+	<%= render :partial => 'shared/form_errors', :locals => {:resource => @cloud_engine} %>
 
 	<div class="field">
 		<%= f.label :type %><br />

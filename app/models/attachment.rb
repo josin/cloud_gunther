@@ -15,12 +15,20 @@ class Attachment < ActiveRecord::Base
   
   validates_presence_of :user_id, :on => :create
   
+  MAX_FILE_UPLOAD_SIZE = 1.megabyte
+  VALID_FILE_TYPES = {
+    :zip => { :label => "*.zip", :content_type => "application/zip" },
+    :gzip => { :label => "*.gzip, *.tar.gz", :content_type => "application/x-gzip" },
+    :java => { :label => "*.jar", :content_type => "application/java-archive" }
+  }
+  
   validates_attachment_presence :data
-  validates_attachment_size :data, :less_than => 1.megabyte
+  validates_attachment_size :data, :less_than => MAX_FILE_UPLOAD_SIZE,
+      :message => "Attachment is bigger than allowed file size."
   validates_attachment_content_type :data, 
-      :content_type => ['application/java-archive', 'application/zip', 'application/x-gzip']
-  
-  
+      :content_type => VALID_FILE_TYPES.each_value.collect { |val| val[:content_type] },
+      :message => "File type is not supported."
+      
   def to_param
     "#{self.id}-#{self.data.original_filename.parameterize}"
   end

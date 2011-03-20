@@ -1,6 +1,9 @@
 <h1>Dashboard</h1>
 
-<h2>Status info</h2>
+<h2>Running tasks info</h2>
+<%= render :partial => 'tasks/list', :locals => { :tasks => @tasks } %>
+
+<h2>Queues info</h2>
 
 <div style="display:block;">
 	<div class="highlight">

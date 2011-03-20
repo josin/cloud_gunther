@@ -7,9 +7,10 @@ ProdPlanner::Application.routes.draw do
              :path => "account"
   match "/account" => redirect("/account/sign_in")
 
+  resources :token_authentications, :only => [:create, :destroy]
+
   resources :tasks do
     post :run
-    
     resources :outputs, :only => [:index, :show, :destroy]
   end
   
@@ -20,7 +21,8 @@ ProdPlanner::Application.routes.draw do
   end
   
   scope "/admin" do
-    resources :users
+    resources :users do
+    end
     resources :images
     resources :cloud_engines
   end

@@ -1,0 +1,38 @@
+<table>
+	<thead>
+	  <tr>
+			<% if defined? search %>
+			<th><%= sort_link search, :id, "#"%></th>
+	    <th><%= sort_link search, :last_name, "Name" %></th>
+	    <th><%= sort_link search, :email %></th>
+			<th><%= sort_link search, :admin %></th>
+			<th><%= sort_link search, :state %></th>
+			<% else %>
+			<th>#</th>  
+			<th>Name</th>  
+			<th>Email</th>  
+			<th>Admin</th>  
+			<th>State</th>  
+			<% end %>
+	    <th>Actions</th>
+	  </tr>
+	</thead>
+
+	<tbody>
+	<% users.each do |user| %>
+	  <tr>
+			<td><%= user.id %></td>
+	    <td><%= link_to user.name, user %></td>
+	    <td><%= auto_link user.email %></td>
+	    <td><%= user.admin? %></td>
+	    <td><%= user.state %></td>
+	    <td>
+		    <%= link_to 'Edit', edit_user_path(user) %>
+		    <%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %>
+			</td>
+	  </tr>
+	<% end %>
+	</tbody>
+</table>
+
+<%= pagination(users) %>

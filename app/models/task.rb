@@ -24,6 +24,8 @@ class Task < ActiveRecord::Base
   validates_presence_of :user_id, :on => :create
   validates_presence_of :state, :on => :save
   
+  scope :running, where((:state - ["new", "finished"]))
+  
   def run!(*args)
     self.started_at = Time.now
     

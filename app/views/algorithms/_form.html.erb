@@ -1,15 +1,5 @@
 <%= form_for(@algorithm) do |f| %>
-  <% if @algorithm.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@algorithm.errors.count, "error") %> prohibited this algorithm from being saved:</h2>
-
-      <ul>
-      <% @algorithm.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+	<%= render :partial => 'shared/form_errors', :locals => {:resource => @algorithm} %>
 
   <div class="field">
     <%= f.label :name %><br />
