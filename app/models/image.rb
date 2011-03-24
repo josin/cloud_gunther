@@ -6,4 +6,11 @@
 class Image < ActiveRecord::Base
   belongs_to :cloud_engine
   
+  before_save :action_before_save
+  
+  private
+  def action_before_save
+    raise "This entity couldn't be saved."
+  end
+  
 end

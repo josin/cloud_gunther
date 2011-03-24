@@ -11,7 +11,6 @@ MACRO_REGEXP = /\{{2}(\w+)\}{2}/
 class Task < ActiveRecord::Base
   extend ActiveModel::Callbacks
   before_save :action_before_save
-  # after_save :action_after_save
   
   # attr_accessible :id, :started_at, :finished_at, :params, :inputs, :state, :user_id, :algorithm_binary_id, :created_at, :updated_at
   
@@ -27,6 +26,13 @@ class Task < ActiveRecord::Base
   scope :running, where((:state - ["new", "finished"]))
   
   def run!(*args)
+    # options = {
+    #   :resources => nil,
+    #   :today => true, 
+    # }
+    # options.merge!(args.extract_options!)
+    options = args.extract_options!
+    
     self.started_at = Time.now
     
     task_home_dir = "#{::Rails.root}/tmp/tasks/#{self.id}/"
@@ -35,8 +41,7 @@ class Task < ActiveRecord::Base
     FileUtils.mkpath(task_home_dir)
     FileUtils.cp(self.algorithm_binary.attachment.data.path, task_home_dir)
 
-    # run appropriate task
-    stdout, stderr = "", ""
+    # prepare run command
     launch_cmd = self.algorithm_binary.prepare_launch_cmd
     
     launch_cmd.gsub!(MACRO_REGEXP) do |m|
@@ -49,6 +54,8 @@ class Task < ActiveRecord::Base
       end
     end
     
+    # run appropriate task
+    stdout, stderr = "", ""
     cmd = "cd #{task_home_dir} && #{launch_cmd}"
     status = POpen4::popen4(cmd) do |out, err|
       out.each_line { |line| stdout << line }
@@ -73,7 +80,4 @@ class Task < ActiveRecord::Base
     self.state = "new" if self.state.blank?
   end
   
-  def action_after_save
-    # self.delay.run!(self)
-  end
 end

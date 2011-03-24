@@ -1,42 +1,36 @@
-<p>
-  <b>Algorithm:</b>
- 	<%= @task.algorithm_binary.nil? ? "not found" : "#{@task.algorithm_binary.name}" %>
-</p>
+<h1>Task  #<%= @task.id %></h1>
 
-<p>
-  <b>User:</b>
-  <%= @task.user.name %>
-</p>
+<div class="resource_detail">
+	<table>
+		<tr>
+			<th>Algorithm:</th>
+			<td><%= @task.algorithm_binary.nil? ? "not found" : "#{@task.algorithm_binary.name}" %></td>
+			<th>User:</th>
+			<td><%= @task.user.name %></td>
+		</tr>
+		<tr>
+			<th>Created at:</th>
+			<td><%= @task.created_at %></td>
+			<th>State:</th>
+			<td><%= @task.state %></td>
+		</tr>
+		<tr>
+			<th>Started at:</th>
+			<td><%= @task.started_at %></td>
+			<th>Finished at:</th>
+			<td><%= @task.finished_at %></td>
+		</tr>
+	</table>
 
-<p>
-  <b>Inputs:</b>
-  <%= @task.inputs %>
-</p>
-
-<p>
-  <b>Params:</b>
-  <%= @task.params %>
-</p>
-
-<p>
-	<b>Created at:</b>
-	<%= @task.created_at %>
-</p>
-
-<p>
-  <b>State:</b>
-  <%= @task.state %>
-</p>
-
-<p>
-  <b>Started at:</b>
-  <%= @task.started_at %>
-</p>
-
-<p>
-  <b>Finished at:</b>
-  <%= @task.finished_at %>
-</p>
+	<hr />
+	<div>
+		<p><strong>Inputs:</strong> <%= @task.inputs %></p>
+	</div>
+	<hr />
+	<div>
+		<p><strong>Params:</strong> <%= @task.params %></p>
+	</div>
+</div>
 
 <%= button_to "Run!", task_run_path(@task) %>
 

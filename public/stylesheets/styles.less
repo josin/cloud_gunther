@@ -33,30 +33,22 @@ div#notifications {
 
 div#menu {
 	margin:1em 0;
+
+	ul.navigation {
+		float:left;
+		padding:0;
+		margin:0;
+
+		li {
+			display:inline;
+			margin-right:1.5em;
+			padding:0.25em;
+		}
+		li.current a { color: red; }
+		li:hover { background-color: #eee; }
+	}
 }
 
-ul.navigation {
-	float:left;
-	padding:0;
-	margin:0;
-}
-
-ul.navigation > li {
-	display:inline;
-	margin-right:1.5em;
-	padding:0.25em;
-}
-
-ul.navigation > li a {
-}
-
-ul.navigation > li.current a { 
-	color: red; 
-}
-
-ul.navigation > li:hover { 
-	background-color: #eee;
-}
 
 
 /******************************************************************************
@@ -74,7 +66,9 @@ div.field { margin: 0 0 1.5em; }
 input.long { width: 600px; }
 
 
-/* RoR validations */
+/******************************************************************************
+********* RoR validations
+******************************************************************************/
 .field_with_errors { padding: 0.5em; background: #fbe3e4; border: 2px solid #fbc2c4; }
 .field_with_errors label { color: #8a1f11; }
 .field_with_errors input { border-color: red; }
@@ -105,3 +99,33 @@ input.long { width: 600px; }
 ******************************************************************************/
 pre.output { padding:0.5em; border:1px solid #ddd; background-color: #ffd; }
 pre.stderr { background: #fbe3e4; color: #8a1f11; border-color: #fbc2c4; }
+
+
+/******************************************************************************
+********* Resource detail
+******************************************************************************/
+.resource_detail {
+	background-color: #ffd;
+	border: 1px solid #d7d7d7;
+	margin: 2em 0;
+	padding: 1em;
+	
+	table { tr {
+		td { background: none; }
+		th { text-align: left; }
+	} } 
+	
+	hr { background: #ccc; border:none; height:1px; width:100%; }
+	div { display: block; }
+	div p { margin:1em 0px; }
+}
+
+
+
+
+
+
+
+
+
+

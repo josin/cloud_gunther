@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title><%= title %></title>
-  <%= stylesheet_link_tag %w{typography forms prodplanner} %>
-  <%= javascript_include_tag "jquery-1.5" %>
-  <%= javascript_include_tag %w{application rails} %>
-  <%= csrf_meta_tag %>
-</head>
+<%= render :partial => "layouts/head" %>
 <body>
 	<div id="sign_up_container">
 		<% flash.each do |name, msg| %>
