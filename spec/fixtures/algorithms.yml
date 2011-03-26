@@ -3,3 +3,8 @@
 # Fields: id, name, group, user_id, description, 
 #         launch_params, created_at, updated_at, #
 
+algorithm_1:
+  name: Testing algorithm
+  user_id: test_user1
+  description: Lorem ipsum dolor sit amet.
+  launch_params: "{{BINARY}} {{INPUT}}"

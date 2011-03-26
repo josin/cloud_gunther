@@ -1,0 +1,12 @@
+# == Schema Information
+# Table name: algorithm_binaries
+# Fields: id, algorithm_id, user_id, description, version, 
+#         state, launch_params, created_at, updated_at, #
+
+binary_1:
+  algorithm_id: algorithm_1
+  user_id: test_user1
+  description: Lorem ipsum dolor sit amet.
+  version: 0.0.1
+  state: disabled
+  launch_params: java -jar {{BINARY}}

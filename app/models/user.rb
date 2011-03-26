@@ -1,9 +1,9 @@
 # == Schema Information
 # Table name: users
-# Fields: id, first_name, last_name, email, encrypted_password, 
-#         password_salt, remember_token, remember_created_at, sign_in_count, current_sign_in_at, 
-#         last_sign_in_at, current_sign_in_ip, last_sign_in_ip, failed_attempts, locked_at, 
-#         admin, state, #
+# Fields: id, first_name, last_name, admin, state, 
+#         email, encrypted_password, password_salt, remember_token, remember_created_at, 
+#         sign_in_count, current_sign_in_at, last_sign_in_at, current_sign_in_ip, last_sign_in_ip, 
+#         failed_attempts, locked_at, authentication_token, reset_password_token, #
 
 class User < ActiveRecord::Base
   extend ActiveModel::Callbacks

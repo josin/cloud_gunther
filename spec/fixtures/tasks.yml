@@ -4,3 +4,11 @@
 #         state, user_id, algorithm_binary_id, created_at, updated_at, 
 #         #
 
+task_1:
+  started_at: <%= Time.now %>
+  finished_at: <%= Time.now %>
+  params: --debug
+  inputs: /Users/deployer/.ssh
+  state: new
+  user_id: test_user1
+  algorithm_binary_id: binary_1

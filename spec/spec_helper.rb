@@ -34,7 +34,12 @@ Spork.prefork do
     # If you're not using ActiveRecord, or you'd prefer not to run each of your
     # examples within a transaction, remove the following line or assign false
     # instead of true.
-    config.use_transactional_fixtures = true
+    config.use_transactional_fixtures = false
+    
+    # include Devise helper
+    config.include Devise::TestHelpers, :type => :controller
+    
+    
   end
 end
 
