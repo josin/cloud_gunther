@@ -18,9 +18,9 @@ module Qusion
     end
     
     def load_framework_config
-      if defined?(RAILS_ROOT)
-        @config_path = RAILS_ROOT + "/config/amqp.yml"
-        @framework_env = RAILS_ENV
+      if defined?(::Rails)
+        @config_path = ::Rails.root.to_s + "/config/amqp.yml"
+        @framework_env = ::Rails.env
       elsif defined?(Merb)
         @config_path = Merb.root + "/config/amqp.yml"
         @framework_env = Merb.environment
