@@ -52,9 +52,9 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :algorithms, 'Algorithms', algorithms_path, :highlights_on => /^\/algorithms/
     
     # Navigation only for admins
-    primary.item :users, "Users", users_path, :highlights_on => /^\/admin\/users/, :if => Proc.new { current_user.admin? }
-    primary.item :users, "Cloud Engines", cloud_engines_path, :highlights_on => /^\/admin\/cloud_engines/, :if => Proc.new { current_user.admin? }
-    primary.item :users, "Images", images_path, :highlights_on => /^\/admin\/images/, :if => Proc.new { current_user.admin? }
+    primary.item :users, "Users", users_path, :highlights_on => /^\/admin\/users/, :if => Proc.new { current_user.admin? }, :class => "admin"
+    primary.item :users, "Cloud Engines", cloud_engines_path, :highlights_on => /^\/admin\/cloud_engines/, :if => Proc.new { current_user.admin? }, :class => "admin"
+    primary.item :users, "Images", images_path, :highlights_on => /^\/admin\/images/, :if => Proc.new { current_user.admin? }, :class => "admin"
     
     # Add an item which has a sub navigation (same params, but with block)
     # primary.item :key_2, 'name', url, options do |sub_nav|

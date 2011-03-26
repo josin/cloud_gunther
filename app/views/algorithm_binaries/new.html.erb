@@ -1,4 +1,8 @@
-<h1>New algorithm_binary</h1>
+<% content_for :header do %>
+	<%= link_to @algorithm_binary.algorithm.name, @algorithm_binary.algorithm %>
+	&raquo;
+	New binary
+<% end %>
 
 <%= render 'form' %>
 

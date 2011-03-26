@@ -6,6 +6,7 @@
 		<% if user_signed_in? %>
 		  <div id="user_login_box">
 		    <%= link_to current_user.name, edit_user_registration_path %> |
+				<%= content_tag(:span, current_user.role, :class => "user_role") %> |
 		    <%= link_to 'Sign out', destroy_user_session_path %>
 		  </div><!-- #user_login_box -->
 		<% end %>
@@ -23,6 +24,7 @@
 		</div><!-- #notifications -->
 		
 		<div id="content">
+			<h1><%= yield :header %></h1>
 			<%= yield %>	
 		</div><!-- #content -->
 		<div class="clear"></div>

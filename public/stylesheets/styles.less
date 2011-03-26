@@ -1,6 +1,12 @@
-/******************************************************************************
+/********************
+********* Mixins
+*********************/
+.nopa { padding:0; }
+.noma { margin:0; }
+
+/********************
 ********* Layout
-******************************************************************************/
+*********************/
 body {
   background-color: #4B7399;
 }
@@ -35,40 +41,48 @@ div#menu {
 	margin:1em 0;
 
 	ul.navigation {
+		width:100%;
 		float:left;
 		padding:0;
 		margin:0;
 
 		li {
+			float:left;
 			display:inline;
 			margin-right:1.5em;
 			padding:0.25em;
 		}
 		li.current a { color: red; }
 		li:hover { background-color: #eee; }
+		li.admin { float:right; margin-right: 0; margin-left:1.5em; }
 	}
 }
 
+/*********************
+********* Standard tags
+*********************/
+h1 { font-size: 2.5em; }
 
 
-/******************************************************************************
+/*********************
 ********* Common Classes
-******************************************************************************/
+*********************/
 .clear { clear: both; height: 0; overflow: hidden; }
 .nodisplay { display:none; }
 .device_links { margin:1em 0;}
+.inline { display:inline; }
 
 
-/******************************************************************************
+/*********************
 ********* Forms
-******************************************************************************/
+*********************/
 div.field { margin: 0 0 1.5em; }
 input.long { width: 600px; }
 
 
-/******************************************************************************
+/*********************
 ********* RoR validations
-******************************************************************************/
+*********************/
 .field_with_errors { padding: 0.5em; background: #fbe3e4; border: 2px solid #fbc2c4; }
 .field_with_errors label { color: #8a1f11; }
 .field_with_errors input { border-color: red; }
@@ -79,9 +93,9 @@ input.long { width: 600px; }
 #error_explanation ul li { list-style: disc; }
 
 
-/******************************************************************************
+/*********************
 ********* Dashboard
-******************************************************************************/
+*********************/
 .highlight, .mini-highlight {
     background: -moz-linear-gradient(center top, #f0f0f0 0%,#e0e0e0 100%);
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f0f0f0),color-stop(1, #e0e0e0));
@@ -94,16 +108,9 @@ input.long { width: 600px; }
 .highlight-right { float: right; }
 
 
-/******************************************************************************
-********* Outputs
-******************************************************************************/
-pre.output { padding:0.5em; border:1px solid #ddd; background-color: #ffd; }
-pre.stderr { background: #fbe3e4; color: #8a1f11; border-color: #fbc2c4; }
-
-
-/******************************************************************************
+/*********************
 ********* Resource detail
-******************************************************************************/
+*********************/
 .resource_detail {
 	background-color: #ffd;
 	border: 1px solid #d7d7d7;
@@ -115,11 +122,14 @@ pre.stderr { background: #fbe3e4; color: #8a1f11; border-color: #fbc2c4; }
 		th { text-align: left; }
 	} } 
 	
-	hr { background: #ccc; border:none; height:1px; width:100%; }
+	hr { background: #ccc; border: none; height: 1px; width: 100%; }
 	div { display: block; }
-	div p { margin:1em 0px; }
+	div p { margin: 1em 0px; }
 }
+div span.label { display: block; font-weight: bold; }
 
+pre.output { padding:0.5em; border:1px solid #ddd; background-color: #ffd; }
+pre.stderr { background: #fbe3e4; color: #8a1f11; border-color: #fbc2c4; }
 
 
 

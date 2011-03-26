@@ -1,34 +1,36 @@
-<h1>Task  #<%= @task.id %></h1>
+<% content_for :header do %>
+	Task  #<%= @task.id %>
+<% end %>
 
 <div class="resource_detail">
 	<table>
 		<tr>
 			<th>Algorithm:</th>
-			<td><%= @task.algorithm_binary.nil? ? "not found" : "#{@task.algorithm_binary.name}" %></td>
+			<td><%= link_to_unless @task.algorithm_binary.nil?, @task.algorithm_binary.name, [@task.algorithm_binary.algorithm, @task.algorithm_binary] %></td>
+			<th>Created at:</th>
+			<td><%= l @task.created_at %></td>
+		</tr>
+		<tr>
 			<th>User:</th>
 			<td><%= @task.user.name %></td>
+			<th>Started at:</th>
+			<td><%= l @task.started_at %></td>
 		</tr>
 		<tr>
-			<th>Created at:</th>
-			<td><%= @task.created_at %></td>
 			<th>State:</th>
 			<td><%= @task.state %></td>
-		</tr>
-		<tr>
-			<th>Started at:</th>
-			<td><%= @task.started_at %></td>
 			<th>Finished at:</th>
-			<td><%= @task.finished_at %></td>
+			<td><%= l @task.finished_at %></td>
 		</tr>
 	</table>
 
 	<hr />
 	<div>
-		<p><strong>Inputs:</strong> <%= @task.inputs %></p>
+		<p><span class="label">Inputs:</span><%= @task.inputs %></p>
 	</div>
 	<hr />
 	<div>
-		<p><strong>Params:</strong> <%= @task.params %></p>
+		<p><span class="label">Params:</span><%= @task.params %></p>
 	</div>
 </div>
 

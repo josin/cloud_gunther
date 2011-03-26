@@ -23,7 +23,8 @@ class User < ActiveRecord::Base
   attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :remember_me,
                   :admin, :state
   
-  validates_presence_of :first_name, :last_name
+  validates_presence_of :first_name, :last_name, :email
+  
 
   has_many :tasks
   has_many :algorithms
@@ -35,6 +36,10 @@ class User < ActiveRecord::Base
   
   def to_param
     "#{self.id}-#{self.name.parameterize}"
+  end
+  
+  def role
+    self.admin? ? "Administrator" : ""
   end
   
   private

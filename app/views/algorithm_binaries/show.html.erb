@@ -1,35 +1,44 @@
-<p>
-  <b>Algorithm:</b>
-  <%= @algorithm_binary.algorithm.name %>
-</p>
+<% content_for :header do %>
+	<%= link_to @algorithm_binary.algorithm.name, @algorithm_binary.algorithm %>
+	&raquo;
+	<%= @algorithm_binary.version %>
+<% end %>
 
-<p>
-  <b>Description:</b>
-  <%= @algorithm_binary.description %>
-</p>
+<div class="resource_detail">
+	<table>
+		<tr>
+			<th>Version:</th>
+			<td><%= @algorithm_binary.version %></td>
+			<th>Created:</th>
+			<td><%= l @algorithm_binary.created_at %></td>
+		</tr>
+		<tr>
+			<th>State:</th>
+			<td><%= @algorithm_binary.state %></td>
+			<th>Last Update:</th>
+			<td><%= l @algorithm_binary.updated_at %></td>
+		</tr>
+		<tr>
+			<th>Binary:</th>
+			<td>
+				<%= link_to_if @algorithm_binary.attachment, @algorithm_binary.attachment.data_file_name, 
+							attachment_path(@algorithm_binary.attachment) %>
+				<%= "(empty)" if @algorithm_binary.attachment.blank? %>
+			</td>
+		</tr>
+		</tr>
+	</table>
 
-<p>
-  <b>Version:</b>
-  <%= @algorithm_binary.version %>
-</p>
+	<hr />
+	<div>
+		<p><span class="label">Description:</span><%= @algorithm_binary.description %></p>
+	</div>
 
-<p>
-  <b>State:</b>
-  <%= @algorithm_binary.state %>
-</p>
-
-<p>
-  <b>Launch params:</b>
-  <%= @algorithm_binary.launch_params %>
-</p>
-
-<p>
-	<b>Binary:</b>
-	<%= link_to @algorithm_binary.attachment.data_file_name, 
-				attachment_path(@algorithm_binary.attachment) if @algorithm_binary.attachment %>
-	<%= "(empty)" if @algorithm_binary.attachment.blank? %>
-</p>
-
+	<hr />
+	<div>
+		<p><span class="label">Launch params:</span><pre><%= @algorithm_binary.launch_params %></pre></p>
+	</div>
+</div>
 
 <%= link_to 'Edit', edit_algorithm_algorithm_binary_path(@algorithm, @algorithm_binary) %> |
 <%= link_to 'Back', algorithm_path(@algorithm) %>

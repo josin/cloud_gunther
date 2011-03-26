@@ -8,7 +8,7 @@
 	
 	<div class="field">
 		<%= f.label :cloud_engine_id %><br />
-		<%= select :image, :cloud_engine_id, options_from_collection_for_select(CloudEngine.all, :id, :engine_type, @image.cloud_engine_id) %>
+		<%= f.select :cloud_engine_id, options_from_collection_for_select(CloudEngine.all, :id, :engine_type, @image.cloud_engine_id) %>
 	</div>
 
 	<div class="field">

@@ -1,27 +1,38 @@
-<p>
-  <b>Name:</b>
-  <%= @algorithm.name %>
-</p>
+<%= content_for :header, "Algorithm - #{@algorithm.name}" %>
 
-<p>
-  <b>Author:</b>
-  <%= @algorithm.user.name %>
-</p>
+<div class="resource_detail">
+	<table>
+		<tr>
+			<th>Author:</th>
+			<td><%= @algorithm.user.name %></td>
+			<th>Created:</th>
+			<td><%= l @algorithm.created_at %></td>
+		</tr>
+		<tr>
+			<th>&nbsp;</th>
+			<td>&nbsp;</td>
+			<th>Last update:</th>
+			<td><%= l @algorithm.updated_at %></td>
+		</tr>
+	</table>
 
-<p>
-  <b>Description:</b>
-  <%= @algorithm.description %>
-</p>
+	<hr />
 
-<p>
-  <b>Launch params:</b>
-  <%= @algorithm.launch_params %>
-</p>
+	<div>
+	  <p><span class="label">Description:</span><%= @algorithm.description %></p>
+	</div>
+	<hr />
+
+	<div>
+		<p><span class="label">Launch params:</span><pre><%= @algorithm.launch_params %></pre></p>
+	</div>
+</div>
 
 <div class="field">
 	<%= link_to 'Edit', edit_algorithm_path(@algorithm) %> |
 	<%= link_to t('default.back'), algorithms_path %>
 </div>
+
 
 <h2>Algorithm Binaries</h2>
 

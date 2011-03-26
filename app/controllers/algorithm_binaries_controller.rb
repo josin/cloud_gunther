@@ -28,7 +28,8 @@ class AlgorithmBinariesController < ApplicationController
   # GET /algorithm_binaries/new
   # GET /algorithm_binaries/new.xml
   def new
-    @algorithm_binary = AlgorithmBinary.new(:algorithm => @algorithm)
+    @algorithm_binary = AlgorithmBinary.new
+    @algorithm_binary.algorithm = @algorithm
 
     respond_to do |format|
       format.html # new.html.erb

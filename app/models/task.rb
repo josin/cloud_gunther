@@ -48,7 +48,7 @@ class Task < ActiveRecord::Base
       all, macro = $&, $1
       case macro
         when "BINARY"
-          self.attachment.data_file_name
+          self.algorithm_binary.attachment.data_file_name
         when "INPUTS"
           self.inputs
       end
