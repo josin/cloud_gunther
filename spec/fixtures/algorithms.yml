@@ -1,0 +1,5 @@
+# == Schema Information
+# Table name: algorithms
+# Fields: id, name, group, user_id, description, 
+#         launch_params, created_at, updated_at, #
+

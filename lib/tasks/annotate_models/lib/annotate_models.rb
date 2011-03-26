@@ -2,7 +2,8 @@ require "config/environment" unless RUBY_VERSION == "1.9.2"
 require "./config/environment" if RUBY_VERSION == "1.9.2"
 
 MODEL_DIR   = File.join(Rails.root, "app/models")
-FIXTURE_DIR = File.join(Rails.root, "test/fixtures")
+# FIXTURE_DIR = File.join(Rails.root, "test/fixtures")
+FIXTURE_DIR = File.join(Rails.root, "spec/fixtures")
 
 module AnnotateModels
 

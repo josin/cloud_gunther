@@ -39,6 +39,7 @@ end
 
 group :test, :development do
   gem 'rspec-rails', '>= 2.4.1'
+  gem 'spork', '~> 0.9.0.rc'
 end
 
 # Use * as the web server
@@ -47,9 +48,4 @@ gem 'thin'
 # Deploy with Capistrano
 gem 'capistrano'
 
-# Bundle the extra gems:
-# gem 'bj'
-# gem 'nokogiri'
-# gem 'sqlite3-ruby', :require => 'sqlite3'
-# gem 'aws-s3', :require => 'aws/s3'
 
