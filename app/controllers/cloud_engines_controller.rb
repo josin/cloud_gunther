@@ -18,6 +18,10 @@ class CloudEnginesController < ApplicationController
   # GET /cloud_engines/1.xml
   def show
     @cloud_engine = CloudEngine.find(params[:id])
+    
+    @search = @cloud_engine.images.metasearch(params[:search])
+    @images = @search.all.paginate(:page => @page, :per_page => @per_page)
+    
 
     respond_to do |format|
       format.html # show.html.erb
@@ -82,6 +86,25 @@ class CloudEnginesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(cloud_engines_url) }
       format.xml  { head :ok }
+    end
+  end
+  
+  # POST /cloud_engines/1/test_connection
+  def test_connection
+    @output = ""
+    @error = false
+    begin
+      @connection = @cloud_engine.connect!
+      @connection.describe_images
+      @output = "Connection successfully estabilished."
+    rescue Exception => e
+      @error = true
+      @output = "Connection could not be estabilished due to following errors: #{e.message}"
+    end    
+    
+    respond_to do |format|
+      format.html { redirect_to(@cloud_engine, :notice => @output) } unless @error
+      format.html { redirect_to(@cloud_engine, :alert => @output) } if @error
     end
   end
   

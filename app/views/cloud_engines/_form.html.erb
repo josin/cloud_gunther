@@ -2,8 +2,13 @@
 	<%= render :partial => 'shared/form_errors', :locals => {:resource => @cloud_engine} %>
 
 	<div class="field">
+		<%= f.label :title %><br />
+		<%= f.text_field :title, :class => "text title long" %>
+	</div>
+
+	<div class="field">
 		<%= f.label :engine_type %><br />
-		<%= f.select :engine_type, options_for_select(["AWS", "Eucaliptus"], @cloud_engine.engine_type) %>
+		<%= f.select :engine_type, options_for_select(CloudEngine::ENGINE_TYPES, @cloud_engine.engine_type) %>
 	</div>
 	
 	<div class="field">

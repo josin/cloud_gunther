@@ -85,6 +85,25 @@ class ImagesController < ApplicationController
     end
   end
   
+  # POST /images/1/verify_availability
+  def verify_availability
+    @output = ""
+    @error = false
+    
+    begin
+      image_description = @image.describe_image!
+      @output = "Image description: #{image_description.pretty_inspect}"
+    rescue Exception => e
+      @error = true
+      @output = "Image could not be estabilished due to following errors: #{e.message}"
+    end    
+
+    respond_to do |format|
+      format.html { redirect_to(@image, :notice => @output) } unless @error
+      format.html { redirect_to(@image, :alert => @output) } if @error
+    end
+  end
+  
   private
   def setup
     @title << "Admin"

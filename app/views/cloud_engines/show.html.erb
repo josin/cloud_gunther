@@ -1,3 +1,41 @@
+<%= content_for :header, "Cloud Engine - #{@cloud_engine.title}" %>
 
-<%= link_to 'Edit', edit_cloud_engine_path(@cloud_engine) %> |
-<%= link_to t('default.back'), cloud_engines_path %>
+<div class="resource_detail">
+	<table>
+		<tr>
+			<th>Engine type:</th>
+			<td><%= @cloud_engine.engine_type %></td>
+			<th>Created:</th>
+			<td><%= l @cloud_engine.created_at %></td>
+		</tr>
+		<tr>
+			<th>Endpoint URL:</th>
+			<td><%= @cloud_engine.endpoint_url %></td>
+			<th>Last update:</th>
+			<td><%= l @cloud_engine.updated_at %></td>
+		</tr>
+		<tr>
+			<th>Access Key:</th>
+			<td><%= @cloud_engine.access_key %></td>
+			<th>&nbsp;</th>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+
+</div>
+
+<div class="field">
+	<%= link_to 'Edit', edit_cloud_engine_path(@cloud_engine) %> |
+	<%= link_to 'Test connection', test_connection_cloud_engine_path(@cloud_engine), :method => :post %> |
+	<%= link_to t('default.back'), cloud_engines_path %>
+</div>
+
+<h2>Assigned Images</h2>
+
+<div class="field">
+	<%= link_to "New image", new_image_path %>	
+</div>
+
+<%= render :partial => 'images/list', :locals => {:images => @images} %>
+
+

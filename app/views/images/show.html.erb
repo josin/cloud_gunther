@@ -1,4 +1,33 @@
+<%= content_for :header, "Detail of #{@image.title}" %>
+
+<div class="resource_detail">
+	<table>
+		<tr>
+			<th>Engine title:</th>
+			<td><%= link_to @image.cloud_engine.title, @image.cloud_engine %></td>
+			<th>Created:</th>
+			<td><%= l @image.created_at %></td>
+		</tr>
+		<tr>
+			<th>Engine type:</th>
+			<td><%= @image.cloud_engine.engine_type %></td>
+			<th>Last update:</th>
+			<td><%= l @image.updated_at %></td>
+		</tr>
+		<tr>
+			<th>Image type:</th>
+			<td><%= @image.image_type %></td>
+			<th>&nbsp;</th>
+			<td>&nbsp;</td>
+		</tr>
+	</table>
+
+</div>
+
+<div class="field">
+	<%= link_to 'Edit', edit_image_path(@image) %> |
+	<%= link_to 'Verify availability', verify_availability_image_path(@image), :method => :post %> |
+	<%= link_to t('default.back'), :back %>
+</div>
 
 
-<%= link_to 'Edit', edit_image_path(@image) %> |
-<%= link_to t('default.back'), images_path %>

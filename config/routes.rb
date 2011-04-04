@@ -23,8 +23,18 @@ ProdPlanner::Application.routes.draw do
   scope "/admin" do
     resources :users do
     end
-    resources :images
-    resources :cloud_engines
+  
+    resources :cloud_engines do
+      member do
+        post :test_connection
+      end
+    end
+
+    resources :images do
+      member do
+        post :verify_availability
+      end
+    end
   end
   
 

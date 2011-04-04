@@ -2,13 +2,13 @@
 	<%= render :partial => 'shared/form_errors', :locals => {:resource => @image} %>
 	
 	<div class="field">
-		<%= f.label :name %><br />
-		<%= f.text_field :name, :class => "text title" %>
+		<%= f.label :title %><br />
+		<%= f.text_field :title, :class => "text title long" %>
 	</div>
 	
 	<div class="field">
 		<%= f.label :cloud_engine_id %><br />
-		<%= f.select :cloud_engine_id, options_from_collection_for_select(CloudEngine.all, :id, :engine_type, @image.cloud_engine_id) %>
+		<%= f.select :cloud_engine_id, options_from_collection_for_select(CloudEngine.all, :id, :title, @image.cloud_engine_id) %>
 	</div>
 
 	<div class="field">

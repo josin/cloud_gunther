@@ -4,32 +4,4 @@
 	<%= link_to 'New Image', new_image_path %>
 </p>
 
-<table>
-	<thead>
-	  <tr>
-	    <th><%= sort_link @search, :id %></th>
-	    <th><%= sort_link @search, :type %></th>
-	    <th><%= sort_link @search, :name %></th>
-	    <th><%= sort_link @search, :updated_at, "Last update" %></th>
-	    <th>Actions</th>
-	  </tr>
-	</thead>
-
-	<tbody>
-	<% @images.each do |image| %>
-	  <tr>
-			<td><%= image.id %></td>
-			<td><%= image.type %></td>
-			<td><%= image.name %></td>
-			<td><%= l image.updated_at %></td>
-			<td>
-		    <%= link_to 'Show', image %>
-		    <%= link_to 'Edit', edit_image_path(image) %>
-		    <%= link_to 'Destroy', image, :confirm => 'Are you sure?', :method => :delete %>
-			</td>
-	  </tr>
-	<% end %>
-	</tbody>
-</table>
-
-<%= pagination(@images) %>
+<%= render :partial => 'images/list', :locals => { :images => @images } %>
