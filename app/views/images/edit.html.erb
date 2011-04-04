@@ -1,4 +1,9 @@
-<h1>Edit <%= t('image.title') %></h1>
+<%= content_for :header do %>
+	<%= link_to @image.cloud_engine.title, @image.cloud_engine %>
+	&raquo;
+	Edit <%= t('image.title') %>
+<% end %>
+
 
 <%= render 'form' %>
 

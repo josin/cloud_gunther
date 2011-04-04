@@ -14,23 +14,23 @@
 			<th>User:</th>
 			<td><%= @task.user.name %></td>
 			<th>Started at:</th>
-			<td><%= l @task.started_at %></td>
+			<td><%= l @task.started_at if @task.started_at %></td>
 		</tr>
 		<tr>
 			<th>State:</th>
 			<td><%= @task.state %></td>
 			<th>Finished at:</th>
-			<td><%= l @task.finished_at %></td>
+			<td><%= l @task.finished_at if @task.finished_at %></td>
 		</tr>
 	</table>
 
 	<hr />
 	<div>
-		<p><span class="label">Inputs:</span><%= @task.inputs %></p>
+		<p><span class="label">Inputs:</span><pre><%= @task.inputs %></pre></p>
 	</div>
 	<hr />
 	<div>
-		<p><span class="label">Params:</span><%= @task.params %></p>
+		<p><span class="label">Params:</span><pre><%= @task.params %></pre></p>
 	</div>
 </div>
 

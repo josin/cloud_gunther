@@ -1,6 +1,7 @@
 class ImagesController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
+  before_filter :find_cloud_engine
   
   # GET /images
   # GET /images.xml
@@ -29,6 +30,7 @@ class ImagesController < ApplicationController
   # GET /images/new.xml
   def new
     @image = Image.new
+    @image.cloud_engine = @cloud_engine
 
     respond_to do |format|
       format.html # new.html.erb
@@ -48,7 +50,7 @@ class ImagesController < ApplicationController
 
     respond_to do |format|
       if @image.save
-        format.html { redirect_to(@image, :notice => 'Image was successfully created.') }
+        format.html { redirect_to([@cloud_engine, @image], :notice => 'Image was successfully created.') }
         format.xml  { render :xml => @image, :status => :created, :location => @image }
       else
         format.html { render :action => "new" }
@@ -64,7 +66,7 @@ class ImagesController < ApplicationController
 
     respond_to do |format|
       if @image.update_attributes(params[:image])
-        format.html { redirect_to(@image, :notice => 'Image was successfully updated.') }
+        format.html { redirect_to([@cloud_engine, @image], :notice => 'Image was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -99,12 +101,17 @@ class ImagesController < ApplicationController
     end    
 
     respond_to do |format|
-      format.html { redirect_to(@image, :notice => @output) } unless @error
-      format.html { redirect_to(@image, :alert => @output) } if @error
+      format.html { redirect_to([@cloud_engine, @image], :notice => @output) } unless @error
+      format.html { redirect_to([@cloud_engine, @image], :alert => @output) } if @error
     end
   end
   
   private
+  def find_cloud_engine
+    @cloud_engine = CloudEngine.find params[:cloud_engine_id]
+    authorize! :manage, @cloud_engine
+  end
+  
   def setup
     @title << "Admin"
     @title << "Images"

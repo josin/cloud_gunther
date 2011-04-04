@@ -6,7 +6,7 @@
 class Image < ActiveRecord::Base
   belongs_to :cloud_engine
   
-  validates_presence_of :cloud_engine_id, :name, :image_type
+  validates_presence_of :cloud_engine_id, :title, :image_type
 
 
   def describe_image!

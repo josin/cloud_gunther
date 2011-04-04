@@ -33,7 +33,7 @@
 <h2>Assigned Images</h2>
 
 <div class="field">
-	<%= link_to "New image", new_image_path %>	
+	<%= link_to "New image", new_cloud_engine_image_path(@cloud_engine) %>	
 </div>
 
 <%= render :partial => 'images/list', :locals => {:images => @images} %>

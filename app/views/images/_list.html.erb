@@ -13,13 +13,13 @@
 	<% images.each do |image| %>
 	  <tr>
 			<td><%= image.id %></td>
-			<td><%= link_to image.title, image %></td>
+			<td><%= link_to image.title, cloud_engine_image_path(image.cloud_engine, image) %></td>
 			<td><%= image.image_type %></td>
 			<td><%= l image.updated_at %></td>
 			<td>
-		    <%= link_to 'Show', image %>
-		    <%= link_to 'Edit', edit_image_path(image) %>
-		    <%= link_to 'Destroy', image, :confirm => 'Are you sure?', :method => :delete %>
+		    <%= link_to 'Show', cloud_engine_image_path(image.cloud_engine, image) %>
+		    <%= link_to 'Edit', edit_cloud_engine_image_path(image.cloud_engine, image) %>
+		    <%= link_to 'Destroy', cloud_engine_image_path(image.cloud_engine, image), :confirm => 'Are you sure?', :method => :delete %>
 			</td>
 	  </tr>
 	<% end %>

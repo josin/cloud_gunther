@@ -28,11 +28,11 @@ ProdPlanner::Application.routes.draw do
       member do
         post :test_connection
       end
-    end
 
-    resources :images do
-      member do
-        post :verify_availability
+      resources :images do
+        member do
+          post :verify_availability
+        end
       end
     end
   end

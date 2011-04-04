@@ -1,4 +1,9 @@
-<%= content_for :header, "Detail of #{@image.title}" %>
+<%= content_for :header do %>
+	<%= link_to @image.cloud_engine.title, @image.cloud_engine %>
+	&raquo;
+	<%= @image.title %>
+<% end %>
+
 
 <div class="resource_detail">
 	<table>
@@ -25,9 +30,9 @@
 </div>
 
 <div class="field">
-	<%= link_to 'Edit', edit_image_path(@image) %> |
-	<%= link_to 'Verify availability', verify_availability_image_path(@image), :method => :post %> |
-	<%= link_to t('default.back'), :back %>
+	<%= link_to 'Edit', edit_cloud_engine_image_path(@cloud_engine, @image) %> |
+	<%= link_to 'Verify availability', verify_availability_cloud_engine_image_path(@cloud_engine, @image), :method => :post %> |
+	<%= link_to t('default.back'), cloud_engine_path(@cloud_engine) %>
 </div>
 
 
