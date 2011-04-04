@@ -9,6 +9,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
 
       # Devise authentication
       t.database_authenticatable :null => false
+      t.encryptable
       t.rememberable
       t.trackable
       t.lockable :lock_strategy => :failed_attempts, :unlock_strategy => :none

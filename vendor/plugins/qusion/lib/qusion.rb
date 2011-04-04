@@ -4,7 +4,7 @@ unless defined?(QUSION_ROOT)
 end
 
 require "eventmachine"
-require "mq"
+require "amqp"
 
 require QUSION_ROOT + "qusion/server_spy"
 require QUSION_ROOT + "qusion/em"
