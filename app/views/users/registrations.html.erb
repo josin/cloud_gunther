@@ -1,0 +1,39 @@
+<% content_for :header do %>
+	<%= link_to "Users", users_path %>
+	&raquo;
+	Pending registrations
+<% end %>
+
+<table>
+	<thead>
+	  <tr>
+			<th><%= sort_link @search, :id, "#" %></th>
+	    <th><%= sort_link @search, :last_name, "Name" %></th>
+	    <th><%= sort_link @search, :email %></th>
+			<th><%= sort_link @search, :created_at, "Registration date" %></th>
+	    <th>Actions</th>
+	  </tr>
+	</thead>
+
+	<tbody>
+	<% @users.each do |user| %>
+	  <tr>
+			<td><%= user.id %></td>
+	    <td><%= link_to user.name, user %></td>
+	    <td><%= auto_link user.email %></td>
+	    <td><%= l user.created_at %></td>
+	    <td>
+		    <%= link_to 'View', user_path(user) %>
+		    <%= link_to 'Edit', edit_user_path(user) %>
+		    <%= link_to 'Approve', approve_user_path(user), :method => :post %>
+		    <%= link_to 'Reject', reject_user_path(user), :method => :post, :confirm => "Do you really want to reject this registration?" %>
+			</td>
+	  </tr>
+	<% end %>
+	</tbody>
+</table>
+
+<%= pagination(@users) %>
+
+
+

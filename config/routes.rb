@@ -22,6 +22,13 @@ ProdPlanner::Application.routes.draw do
   
   scope "/admin" do
     resources :users do
+      collection do
+        get :registrations
+      end
+      member do
+        post :approve
+        post :reject
+      end
     end
   
     resources :cloud_engines do

@@ -1,34 +1,39 @@
 require "spec_helper"
 
 describe ImagesController do
+  before(:each) do
+    @base_path = "/admin/cloud_engines/1"
+    @base_route = { :cloud_engine_id => "1", :controller => "images" }
+  end
+  
+  
   describe "routing" do
-
     it "recognizes and generates #index" do
-      { :get => "/admin/images" }.should route_to(:controller => "images", :action => "index")
+      { :get => "#{@base_path}/images" }.should route_to(@base_route.merge(:action => "index"))
     end
 
     it "recognizes and generates #new" do
-      { :get => "/admin/images/new" }.should route_to(:controller => "images", :action => "new")
+      { :get => "#{@base_path}/images/new" }.should route_to(@base_route.merge(:action => "new"))
     end
 
     it "recognizes and generates #show" do
-      { :get => "/admin/images/1" }.should route_to(:controller => "images", :action => "show", :id => "1")
+      { :get => "#{@base_path}/images/1" }.should route_to(@base_route.merge(:action => "show", :id => "1"))
     end
 
     it "recognizes and generates #edit" do
-      { :get => "/admin/images/1/edit" }.should route_to(:controller => "images", :action => "edit", :id => "1")
+      { :get => "#{@base_path}/images/1/edit" }.should route_to(@base_route.merge(:action => "edit", :id => "1"))
     end
 
     it "recognizes and generates #create" do
-      { :post => "/admin/images" }.should route_to(:controller => "images", :action => "create")
+      { :post => "#{@base_path}/images" }.should route_to(@base_route.merge(:action => "create"))
     end
 
     it "recognizes and generates #update" do
-      { :put => "/admin/images/1" }.should route_to(:controller => "images", :action => "update", :id => "1")
+      { :put => "#{@base_path}/images/1" }.should route_to(@base_route.merge(:action => "update", :id => "1"))
     end
 
     it "recognizes and generates #destroy" do
-      { :delete => "/admin/images/1" }.should route_to(:controller => "images", :action => "destroy", :id => "1")
+      { :delete => "#{@base_path}/images/1" }.should route_to(@base_route.merge(:action => "destroy", :id => "1"))
     end
 
   end

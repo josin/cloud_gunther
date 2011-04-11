@@ -1,9 +1,11 @@
-<h1>Users management</h1>
+<%= content_for :header, "Users" %>
 
-<div class="field">
-	<ul>
-		<li><%= link_to 'New User', new_user_path %></li>
-	</ul>
-</div>
+<% content_for :actions do %>
+	<!-- <li><%= link_to 'Create a new user', new_user_path %></li> -->
+	<li><%= link_to "Pending Registrations (#{@pending_registrations_count})", registrations_users_path %></li>
+<% end %>
+
 
 <%= render :partial => "list", :locals => { :search => @search, :users => @users } %>
+
+

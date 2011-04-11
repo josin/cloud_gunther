@@ -1,19 +1,12 @@
 <table>
 	<thead>
 	  <tr>
-			<% if defined? search %>
 			<th><%= sort_link search, :id, "#"%></th>
 	    <th><%= sort_link search, :last_name, "Name" %></th>
 	    <th><%= sort_link search, :email %></th>
 			<th><%= sort_link search, :admin %></th>
 			<th><%= sort_link search, :state %></th>
-			<% else %>
-			<th>#</th>  
-			<th>Name</th>  
-			<th>Email</th>  
-			<th>Admin</th>  
-			<th>State</th>  
-			<% end %>
+			<th><%= sort_link search, :last_sign_in_at %></th>
 	    <th>Actions</th>
 	  </tr>
 	</thead>
@@ -26,7 +19,9 @@
 	    <td><%= auto_link user.email %></td>
 	    <td><%= user.admin? %></td>
 	    <td><%= user.state %></td>
+	    <td><%= l user.last_sign_in_at if user.last_sign_in_at %></td>
 	    <td>
+		    <%= link_to 'Detail', user_path(user) %>
 		    <%= link_to 'Edit', edit_user_path(user) %>
 		    <%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %>
 			</td>

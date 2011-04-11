@@ -40,7 +40,7 @@ Spork.prefork do
     config.use_transactional_fixtures = false
     
     # include Devise helper
-    config.include Devise::TestHelpers
+    config.include Devise::TestHelpers, :type => :controller
     # config.include Devise::TestHelpers, :type => :controller
   end
 end

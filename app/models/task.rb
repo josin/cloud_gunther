@@ -25,6 +25,8 @@ class Task < ActiveRecord::Base
   
   scope :running, where((:state - ["new", "finished"]))
   
+  serialize :params
+  
   def run!(*args)
     # options = {
     #   :resources => nil,

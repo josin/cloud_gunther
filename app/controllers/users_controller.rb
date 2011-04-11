@@ -6,9 +6,9 @@ class UsersController < ApplicationController
   # GET /users.xml
   def index
     @search = User.metasearch(params[:search])
-    @users = @search.all.paginate(:page => @page, :per_page => @per_page)
+    @users = @search.where(:state ^ 'new').paginate(:page => @page, :per_page => @per_page)
     
-    @pending_activations = User.where(:state => 'new')
+    @pending_registrations_count = User.where(:state => 'new').count
     
     respond_to do |format|
       format.html # index.html.erb
@@ -78,11 +78,45 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.xml
   def destroy
-    @user = User.find(params[:id])
     @user.destroy
 
     respond_to do |format|
       format.html { redirect_to(users_url) }
+      format.xml  { head :ok }
+    end
+  end
+  
+  # GET /users/registrations
+  # GET /users/registrations.xml
+  def registrations
+    @search = User.metasearch(params[:search])
+    @users = @search.where(:state => 'new').paginate(:page => @page, :per_page => @per_page)
+    
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @users }
+    end
+  end
+  
+  # POST /users/1/approve
+  # POST /users/1/approve.xml
+  def approve
+    @user.state = User::ENABLED
+    @user.save
+    
+    respond_to do |format|
+      format.html { redirect_to(registrations_users_path, :notice => "User registration was successfully approved.") }
+      format.xml  { head :ok }
+    end
+  end
+  
+  # POST /users/1/reject
+  # POST /users/1/reject.xml
+  def reject
+    @user.destroy
+    
+    respond_to do |format|
+      format.html { redirect_to(registrations_users_path, :notice => "User registration was successfully rejected and deleted.") }
       format.xml  { head :ok }
     end
   end

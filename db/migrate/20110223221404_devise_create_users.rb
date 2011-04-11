@@ -6,6 +6,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       
       t.boolean :admin, :default => false
       t.string :state
+      t.timestamps
 
       # Devise authentication
       t.database_authenticatable :null => false

@@ -6,13 +6,25 @@
     <%= f.select :algorithm_binary_id, grouped_options_for_select(active_binaries_for_select, @task.algorithm_binary) %>
   </div>
   <div class="field">
-    <%= f.label :state %><br />
+    <%= f.label :state %> <em>(Only for development)</em><br />
     <%= f.select :state, options_for_select(["new", "ready", "finished"], @task.state) %>
   </div>
   <div class="field">
     <%= f.label :inputs %><br />
     <%= f.text_area :inputs, :class => "" %>
   </div>
+
+	<fieldset id="params" class="">
+		<legend>Task's Params</legend>
+		<%= f.fields_for :params do |params_builder| %>
+			<div class="field">
+				<%= params_builder.label :instances_count %><br />
+				<%= params_builder.text_field :instances_count, :class => "text", 
+							:type => :number, :min => 1, :step => 1, :value => 2 %>
+			</div>
+		<% end %>
+	</fieldset>
+	
   <div class="actions">
     <%= f.submit %> or <%= link_to "Cancel", :back %>
   </div>

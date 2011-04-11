@@ -25,6 +25,11 @@
 		
 		<div id="content">
 			<h1><%= yield :header %></h1>
+			<div class="actions">
+				<ul>
+					<%= yield :actions %>
+				</ul>
+			</div>
 			<%= yield %>	
 		</div><!-- #content -->
 		<div class="clear"></div>
