@@ -1,17 +1,20 @@
 # == Schema Information
 # Table name: images
-# Fields: id, title, description, cloud_engine_id, image_type, 
-#         created_at, updated_at, #
+# Fields: id, title, description, cloud_engine_id, launch_params, 
+#         start_up_script, created_at, updated_at, #
 
 class Image < ActiveRecord::Base
   belongs_to :cloud_engine
   
-  validates_presence_of :cloud_engine_id, :title, :image_type
+  serialize :launch_params
+  
+  validates_presence_of :cloud_engine_id, :title
 
 
   def describe_image!
     @connection = self.cloud_engine.connect!
-    @connection.ec2_describe_images("ImageId" => self.image_type).first
+    @connection.ec2_describe_images("ImageId" => self.launch_params[:image_type]).first
   end
   
+  INSTANCE_TYPES = %w{m1.small c1.medium m1.large m1.xlarge c1.xlarge}
 end

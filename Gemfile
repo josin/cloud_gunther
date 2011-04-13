@@ -25,10 +25,9 @@ gem 'right_aws'
 gem 'delayed_job'
 gem 'popen4'
 
+gem 'awesome_print', :require => 'ap'
 
 group :development do
-  gem 'awesome_print', :require => 'ap'
-  
   # debugger
   unless defined?(JRUBY_VERSION)
     gem 'ruby-debug' unless RUBY_VERSION == "1.9.2"

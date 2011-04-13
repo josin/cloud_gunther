@@ -1,4 +1,4 @@
-<h2>My Profile</h2>
+<% content_for :header, "My Profile" %>
 
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
   <%= devise_error_messages! %>
@@ -15,7 +15,12 @@
 
   <div class="field">
 		<%= f.label :email %><br />
-	  <%= f.text_field :email, :class => "text" %>
+	  <%= f.text_field :email, :class => "text", :type => :email %>
+	</div>
+
+  <div class="field">
+		<%= f.label :unix_uid %><br />
+	  <%= f.text_field :unix_uid, :class => "text" %>
 	</div>
 
   <div class="field">
@@ -35,9 +40,6 @@
 		<%= link_to "Generate a new token", token_authentications_path(:user_id => resource.id), :method => :post, 
 						:confirm => "Do you really want to generate new authentication token?" unless resource.authentication_token.blank? %>
 		<%= link_to "Delete Token", token_authentication_path(resource), :method => :delete, :confirm => "Are you sure?"  %>
-	</div>
-
-	<div class="field">
 	</div>
 
   <div class="field">

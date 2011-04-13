@@ -12,14 +12,46 @@
 	</div>
 
 	<div class="field">
-		<%= f.label :image_type %><br />
-		<%= f.text_field :image_type, :class => "text" %>
-	</div>
-
-	<div class="field">
 		<%= f.label :description %><br />
-		<%= f.text_area :description, :class => "text" %>
+		<%= f.text_area :description, :class => "text description" %>
 	</div>
+	
+	<fieldset id="launch_params" class="line">
+		<legend>Launch params</legend>
+		
+		<div class="unit size1of2">
+		<%= f.fields_for :launch_params do |f_params| %>
+			<div class="field">
+				<%= f_params.label :image_id %><br />
+				<%= f_params.text_field :image_id, :value => @image.launch_params[:image_id], :class => "text" %>
+			</div>
+			<div class="field">
+				<%= f_params.label :kernel_id %><br />
+				<%= f_params.text_field :kernel_id, :value => @image.launch_params[:kernel_id], :class => "text" %>
+			</div>
+			<div class="field">
+				<%= f_params.label :ramdisk_id %><br />
+				<%= f_params.text_field :ramdisk_id, :value => @image.launch_params[:ramdisk_id], :class => "text" %>
+			</div>
+			<div class="field">
+				<%= f_params.label :instance_type %><br />
+				<%= f_params.select :instance_type, options_for_select(Image::INSTANCE_TYPES, @image.launch_params[:instance_type]), 
+												:include_blank => true, :class => "text" %>
+			</div>
+			<div class="field">
+				<%= f_params.label :availability_zone %><br />
+				<%= f_params.text_field :availability_zone, :value => @image.launch_params[:availability_zone], :class => "text" %>
+			</div>
+		<% end %>
+		</div>
+		
+		<div class="unit size2of2 lastUnit">
+			<div class="field">
+				<%= f.label :start_up_script %><br />
+				<%= f.text_area :start_up_script, :class => "text" %>
+			</div>
+		</div>
+	</fieldset>
 
   <div class="actions">
     <%= f.submit %> or <%= link_to "Cancel", :back %>

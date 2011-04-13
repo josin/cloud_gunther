@@ -1,5 +1,5 @@
 # == Schema Information
 # Table name: images
-# Fields: id, title, description, cloud_engine_id, image_type, 
-#         created_at, updated_at, #
+# Fields: id, title, description, cloud_engine_id, launch_params, 
+#         start_up_script, created_at, updated_at, #
 

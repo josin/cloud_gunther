@@ -3,7 +3,6 @@
 	  <tr>
 	    <th><%= sort_link @search, :id %></th>
 	    <th><%= sort_link @search, :title %></th>
-	    <th><%= sort_link @search, :image_type %></th>
 	    <th><%= sort_link @search, :updated_at, "Last update" %></th>
 	    <th>Actions</th>
 	  </tr>
@@ -14,7 +13,6 @@
 	  <tr>
 			<td><%= image.id %></td>
 			<td><%= link_to image.title, cloud_engine_image_path(image.cloud_engine, image) %></td>
-			<td><%= image.image_type %></td>
 			<td><%= l image.updated_at %></td>
 			<td>
 		    <%= link_to 'Show', cloud_engine_image_path(image.cloud_engine, image) %>

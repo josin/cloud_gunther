@@ -19,14 +19,23 @@
 			<th>Last update:</th>
 			<td><%= l @image.updated_at %></td>
 		</tr>
-		<tr>
-			<th>Image type:</th>
-			<td><%= @image.image_type %></td>
-			<th>&nbsp;</th>
-			<td>&nbsp;</td>
-		</tr>
 	</table>
+	
+	<div>
+	  <p><span class="label">Description:</span><%= @image.description %></p>
+	</div>
+	<hr />
 
+	<div>
+	  <p><span class="label">Launch Params:</span><pre><%= ap @image.launch_params %></pre></p>
+	</div>
+	<hr />
+
+	<div>
+	  <p><span class="label">Start-up Script:</span><pre><%= @image.start_up_script %></pre></p>
+	</div>
+	<hr />
+	
 </div>
 
 <div class="field">

@@ -5,13 +5,13 @@
     <%= f.label :algorithm_binary_id %><br />
     <%= f.select :algorithm_binary_id, grouped_options_for_select(active_binaries_for_select, @task.algorithm_binary) %>
   </div>
-  <div class="field">
+  <!-- <div class="field">
     <%= f.label :state %> <em>(Only for development)</em><br />
     <%= f.select :state, options_for_select(["new", "ready", "finished"], @task.state) %>
-  </div>
+  </div> -->
   <div class="field">
     <%= f.label :inputs %><br />
-    <%= f.text_area :inputs, :class => "" %>
+    <%= f.text_area :inputs, :class => "wide" %>
   </div>
 
 	<fieldset id="params" class="">

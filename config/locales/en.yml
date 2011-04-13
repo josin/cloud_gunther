@@ -4,6 +4,7 @@
 en:
   app_name: "ProPlanner App"
   default:
+    edit: Edit
     back: Back to list
   task:
     title: Task
@@ -12,8 +13,16 @@ en:
     title: User
   cloud_engine:
     title: Cloud Engine
+    new: New Cloud Engine
   image:
     title: Image
+    new: New Image
+  algorithm:
+    title: Algorithm
+    new: New Algorithm
+  algorithm_binary:
+    title: Algorithm Version
+    new: New Algorithm Version
     
   
   

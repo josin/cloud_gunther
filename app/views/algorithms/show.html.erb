@@ -1,4 +1,4 @@
-<%= content_for :header, "Algorithm - #{@algorithm.name}" %>
+<%= content_for :header, "#{t('algorithm.title')} - #{@algorithm.name}" %>
 
 <div class="resource_detail">
 	<table>
@@ -34,10 +34,10 @@
 </div>
 
 
-<h2>Algorithm Binaries</h2>
+<h2><%= t("algorithm_binary.title").pluralize %></h2>
 
 <div class="field">
-	<%= link_to "New binary", new_algorithm_algorithm_binary_path(@algorithm) %>	
+	<%= link_to t('algorithm_binary.new'), new_algorithm_algorithm_binary_path(@algorithm) %>	
 </div>
 
 <%= render :partial => "algorithm_binaries/list", :locals => { :algorithm_binaries => @algorithm_binaries } %>
