@@ -12,14 +12,9 @@ class Image < ActiveRecord::Base
   
   validates_presence_of :cloud_engine_id, :title
 
-
   def describe_image!
-    logger.info self
     connection = self.cloud_engine.connect!
-    logger.info connection
-    images = connection.ec2_describe_images("ImageId" => self.launch_params[:image_id])
-    logger.info images
-    images.first
+    connection.ec2_describe_images("ImageId" => self.launch_params[:image_id]).first
   end
   
   INSTANCE_TYPES = %w{m1.small c1.medium m1.large m1.xlarge c1.xlarge}

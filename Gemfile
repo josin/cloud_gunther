@@ -21,8 +21,10 @@ gem 'meta_where'
 gem 'meta_search'
 
 gem 'amqp'
+gem 'qusion'
 gem 'right_aws'
 gem 'delayed_job'
+
 gem 'popen4'
 
 gem 'awesome_print', :require => 'ap'
