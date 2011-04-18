@@ -38,7 +38,7 @@ end
 
 group :development, :test do
   gem 'rspec-rails', '>= 2.4.1'
-  gem 'spork', '~> 0.9.0.rc'
+  gem 'spork', '>= 0.9.0.rc5'
   gem 'simplecov', '>=0.3.8', :require => false
 end
 

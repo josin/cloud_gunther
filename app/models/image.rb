@@ -8,12 +8,18 @@ class Image < ActiveRecord::Base
   
   serialize :launch_params
   
+  # attr_accessible :title, :description, :cloud_engine_id, :launch_params, :start_up_script
+  
   validates_presence_of :cloud_engine_id, :title
 
 
   def describe_image!
-    @connection = self.cloud_engine.connect!
-    @connection.ec2_describe_images("ImageId" => self.launch_params[:image_type]).first
+    logger.info self
+    connection = self.cloud_engine.connect!
+    logger.info connection
+    images = connection.ec2_describe_images("ImageId" => self.launch_params[:image_id])
+    logger.info images
+    images.first
   end
   
   INSTANCE_TYPES = %w{m1.small c1.medium m1.large m1.xlarge c1.xlarge}

@@ -28,11 +28,6 @@ class Task < ActiveRecord::Base
   serialize :params
   
   def run!(*args)
-    # options = {
-    #   :resources => nil,
-    #   :today => true, 
-    # }
-    # options.merge!(args.extract_options!)
     options = args.extract_options!
     
     self.started_at = Time.now
