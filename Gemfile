@@ -1,14 +1,7 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.5'
-
-group :production do
-  gem 'sqlite3' # AWS Free Account has no SQL DB included
-end
-
-group :development, :test do
-  gem 'mysql2'  
-end
+gem 'rails'
+gem 'mysql2'  
 
 gem 'devise'
 gem 'cancan'
