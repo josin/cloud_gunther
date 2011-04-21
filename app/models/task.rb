@@ -32,7 +32,7 @@ class Task < ActiveRecord::Base
     
     task_xml = task2xml
     logger.debug { "Task's XML: #{task_xml}" }
-    MQ.new.queue("inputs").publish(task2xml)
+    MQ.new.queue("inputs").publish(task2xml(self))
     
     self.state = "ready"
     self.save
@@ -46,14 +46,16 @@ class Task < ActiveRecord::Base
   # ==== Examples
   # <?xml version="1.0" encoding="UTF-8"?>
   # <task id="">
+  #   <task_params instance_id="" instances_count="" />
   # 	<alg_binary url="" filename="" launch_cmd="" />
   # 	<inputs />
   # </task>
-  def task2xml
+  def task2xml(task)
     xml = ::Builder::XmlMarkup.new
     xml.instruct!
     
-    xml.task(:id => self.id) do |task|
+    xml.task(:id => task.id) do |task|
+      task.task_params(:instance_id => "", :instances_count => "")
       task.alg_binary(:url => "", :filename => "", :launch_cmd => "") do |alg_binary|
       end
       

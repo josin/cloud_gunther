@@ -5,14 +5,11 @@ ProdPlanner::Application.routes.draw do
   resource :dashboard, :controller => "dashboard", :only => [:index] do
     get :queues
   end
-  
 
   devise_for :users,
              :controllers => { :sessions => "sessions", :registrations => "registrations" },
              :path => "account"
   match "/account" => redirect("/account/sign_in")
-
-  resources :token_authentications, :only => [:create, :destroy]
 
   resources :tasks do
     post :run

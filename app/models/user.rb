@@ -46,6 +46,10 @@ class User < ActiveRecord::Base
   
   private
   def action_before_create
+    # Generate auth_token for new user account
+    self.reset_authentication_token!
+    
+    # Lock new account => wait for admin aproval
     self.state = 'new'
     self.locked_at = Time.now
   end
