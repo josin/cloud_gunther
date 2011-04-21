@@ -5,17 +5,45 @@
 
 <h2>Queues info</h2>
 
-<div style="display:block;">
-	<div class="highlight">
+<div class="line">
+	<div id="inputs_queue" class="highlight">
 		Waiting tasks
-		<strong><%= @waiting_tasks %></strong>
+		<strong></strong>
 	</div>
-	<div class="highlight">
-		Elapsed hours
-		<strong><%= 22 %></strong>
+	<div id="outputs_queue" class="highlight">
+		Outputs queue
+		<strong></strong>
 	</div>
+	<!--
 	<div class="highlight">
 		Hours remaining
 		<strong><%= 3 %></strong>
 	</div>
+	-->
 </div>
+
+<script type="text/javascript" charset="utf-8">
+(function($, window, document, undefined) {
+	function update_queues_indicators() {
+		$.ajax({
+			url: "/dashboard/queues.json",
+			type: "GET",
+			success: function(data, status, jqXHR) {
+				$(data).each(function(index, item) {
+					if (item.name == "inputs" || item.name == "outputs") {
+						$("#" + item.name + "_queue").find("strong").text(item.messages);
+					}
+				});
+			},
+			error: function(jqXHR, status, error) {
+				// alert("error:" + error);
+			}
+		});
+	}
+	
+	$(function() {
+		// setInterval(update_queues_indicators, 5000);
+		update_queues_indicators();
+	});
+})(jQuery, window, document);
+</script>

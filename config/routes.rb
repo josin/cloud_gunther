@@ -1,6 +1,11 @@
 ProdPlanner::Application.routes.draw do
   root :to => "dashboard#index"
   match "/", :to => "dashboard#index", :as => :dashboard
+  
+  resource :dashboard, :controller => "dashboard", :only => [:index] do
+    get :queues
+  end
+  
 
   devise_for :users,
              :controllers => { :sessions => "sessions", :registrations => "registrations" },

@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails'
+gem 'rails', '3.0.7'
 gem 'mysql2'  
 
 gem 'devise'
@@ -25,16 +25,14 @@ gem 'awesome_print', :require => 'ap'
 
 group :development do
   # debugger
-  unless defined?(JRUBY_VERSION)
-    gem 'ruby-debug' unless RUBY_VERSION == "1.9.2"
-    gem 'ruby-debug19' if RUBY_VERSION == "1.9.2"
-  end
+  gem 'ruby-debug19' if RUBY_VERSION == "1.9.2"
+  # gem 'ruby-debug' unless RUBY_VERSION == "1.9.2"
 end
 
 
 group :development, :test do
-  gem 'rspec-rails', '>= 2.4.1'
-  gem 'spork', '>= 0.9.0.rc5'
+  gem 'rspec-rails'
+  gem 'spork', '~> 0.9.0.rc'
   gem 'simplecov', '>=0.3.8', :require => false
 end
 
