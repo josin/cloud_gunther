@@ -4,10 +4,7 @@
 #         state, user_id, algorithm_binary_id, created_at, updated_at, 
 #         #
 
-require "popen4"
 require "builder/xmlmarkup"
-
-require 'action_view/helpers/url_helper'
 
 MACRO_REGEXP = /\{{2}(\w+)\}{2}/
 

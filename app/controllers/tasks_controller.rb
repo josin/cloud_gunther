@@ -2,8 +2,6 @@ class TasksController < ApplicationController
   before_filter :authenticate_user!
   before_filter :find_task, :except => [:index, :new, :create]
   
-  # before_filter :check_outputs_queue, :only => [:index, :show]
-  
   # GET /tasks
   # GET /tasks.xml
   def index
