@@ -1,7 +1,8 @@
 class TasksController < ApplicationController
   before_filter :authenticate_user!
   before_filter :find_task, :except => [:index, :new, :create]
-
+  
+  # before_filter :check_outputs_queue, :only => [:index, :show]
   
   # GET /tasks
   # GET /tasks.xml
@@ -91,7 +92,9 @@ class TasksController < ApplicationController
   end
   
   def run
-    @task.run!
+    @task.run! :algorithm_url => url_for(attachment_path(:id => @task.algorithm_binary.attachment.id, 
+                                                         :auth_token => current_user.authentication_token,
+                                                         :only_path=> false))
     
     respond_to do |format|
       format.html { redirect_to(@task, :notice => 'Task is running.') }

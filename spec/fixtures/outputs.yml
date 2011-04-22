@@ -1,5 +1,5 @@
 # == Schema Information
 # Table name: outputs
 # Fields: id, task_id, stdout, stderr, created_at, 
-#         updated_at, #
+#         updated_at, params, #
 

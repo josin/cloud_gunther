@@ -7,6 +7,8 @@
 require "popen4"
 require "builder/xmlmarkup"
 
+require 'action_view/helpers/url_helper'
+
 MACRO_REGEXP = /\{{2}(\w+)\}{2}/
 
 class Task < ActiveRecord::Base
@@ -28,11 +30,30 @@ class Task < ActiveRecord::Base
   serialize :params
   
   def run!(*args)
-    options = args.extract_options!
+    options = {
+      :algorithm_filename => self.algorithm_binary.attachment.data_file_name,
+      :launch_cmd => self.algorithm_binary.prepare_launch_cmd,
+      :instances_count => self.params[:instances_count],
+      :task_id => self.id,
+    }
+    options.merge!(args.extract_options!)
     
-    task_xml = task2xml
-    logger.debug { "Task's XML: #{task_xml}" }
-    MQ.new.queue("inputs").publish(task2xml(self))
+    # FIXME: move macros into module or better place
+    options[:launch_cmd].gsub!(MACRO_REGEXP) do |m|
+      all, macro = $&, $1
+      case macro
+        when "BINARY"
+          self.algorithm_binary.attachment.data_file_name
+        when "INPUTS"
+          self.inputs
+      end
+    end
+    
+    self.params[:instances_count].to_i.times do |index|
+      task_xml = task2xml(options.merge(:instance_id => (index + 1)))
+      logger.debug { "Task's XML: #{task_xml}" }
+      MQ.new.queue("inputs").publish(task_xml)
+    end
     
     self.state = "ready"
     self.save
@@ -40,6 +61,8 @@ class Task < ActiveRecord::Base
     # TODO: run instances
     # TODO: send task xml description to MQ broker
   end
+  
+  private
   
   # Returns xml of task definition with all information necessary for running it on cloud.
   #
@@ -50,19 +73,26 @@ class Task < ActiveRecord::Base
   # 	<alg_binary url="" filename="" launch_cmd="" />
   # 	<inputs />
   # </task>
-  def task2xml(task)
+  def task2xml(*args)
+    options = {
+      :instance_id => 1,
+    }
+    options.merge!(args.extract_options!)
+    
     xml = ::Builder::XmlMarkup.new
     xml.instruct!
     
-    xml.task(:id => task.id) do |task|
-      task.task_params(:instance_id => "", :instances_count => "")
-      task.alg_binary(:url => "", :filename => "", :launch_cmd => "") do |alg_binary|
-      end
+    xml.task(:id => options[:task_id]) do |task|
+      task.task_params(:instance_id => options[:instance_id], :instances_count => options[:instances_count])
+      
+      task.alg_binary(:url => options[:algorithm_url],
+                      :filename => options[:algorithm_filename],
+                      :launch_cmd => options[:launch_cmd])
       
       task.inputs() do |inputs|
       end
     end
-    
+
     xml.target!
   end
   
@@ -112,7 +142,7 @@ class Task < ActiveRecord::Base
   #   self.save
   # end
   
-  private
+
   def action_before_save
     self.state = "new" if self.state.blank?
   end

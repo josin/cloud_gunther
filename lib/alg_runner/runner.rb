@@ -1,15 +1,15 @@
 #!/usr/bin/env ruby
 
-# require "carrot"
 require "bunny"
 require "rexml/document"
 require "logger"
 
+# TODO: begin raise blocks => doesn't matter what happen, script must send back message
 module AlgRunner
   class Runner
     include REXML
   
-    attr_reader :task_id, :task_opts
+    attr_reader :task_opts
     attr_accessor :logger, :input_queue, :output_queue
   
     def initialize(args)
@@ -24,14 +24,17 @@ module AlgRunner
     def start!
       # while msg = @input_queue.pop
       while msg = @input_queue.pop[:payload]
+        break if msg == :queue_empty
+        
         @task_opts = parse_input(msg)
       
-        download_binary(@task_opts[:filename], @task_opts[:alg_binary_url])
+        download_binary(@task_opts[:filename], @task_opts[:alg_binary_url]) unless @task_opts[:alg_binary_url].nil?
         task_output = launch_algorithm(@task_opts[:launch_cmd])
 
-        send_output(task_output)
+        task_output_xml = create_output_xml(task_output)
+        send_output(task_output_xml)
         
-        break # FIXME: only for debug
+        # break # FIXME: only for d&d
       end
     end
   
@@ -48,18 +51,36 @@ module AlgRunner
       task_xml.elements.each("task/alg_binary") do |element|
         opts[:alg_binary_url] =  element.attributes["url"]
         opts[:filename] =  element.attributes["filename"]
-      end
-
-      task_xml.elements.each("task/launch_cmd") do |element|
-        opts[:launch_cmd] = element.attributes["cmd"]
+        opts[:launch_cmd] = element.attributes["launch_cmd"]
       end
     
       opts
     end
+    
+    # <?xml version="1.0" encoding="UTF-8"?>
+    # <output task_id="">
+    #   <task_params instance_id="" />
+    #   <task_output>...</task_output>
+    # </output_task>
+    def create_output_xml(task_output)
+      output_xml = Document.new
+      output_xml.add(XMLDecl.new("1.0", "UTF-8"))
+      
+      root = output_xml.add_element("output", {"task_id" => @task_opts[:task_id]})
+
+      root.add_element("task_params", {"instance_id" => @task_opts[:instance_id]})
+
+      output_elem = Element.new("task_output")
+      task_output_str = ""
+      task_output.each { |i| task_output_str << i }
+      output_elem.add_text(task_output_str)
+      root.add(output_elem)
+      
+      output_xml.to_s
+    end
   
-    def send_output(task_output)
-      puts task_output
-      # raise "Not implemented yet."
+    def send_output(task_output_xml)
+      @output_queue.publish(task_output_xml)
     end
   
     def download_binary(filename, binary_url)
@@ -68,12 +89,16 @@ module AlgRunner
     end
   
     def launch_algorithm(launch_cmd)
-      f = IO.popen("#{launch_cmd}")
-      task_output = f.readlines
-      logger.debug { task_output }
-      f.close
-
-      task_output
+      begin
+        logger.debug { launch_cmd }
+        f = IO.popen("#{launch_cmd}")
+        task_output = f.readlines
+        logger.debug { task_output }
+        f.close
+        return task_output
+      rescue Exception => e
+        return e.message
+      end
     end
   end
 end

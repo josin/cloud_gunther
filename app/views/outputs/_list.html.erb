@@ -2,6 +2,7 @@
 	<thead>
 	  <tr>
 	    <th><%= sort_link @search, :id, "#" %></th>
+	    <th><%= sort_link @search, :instance_id %></th>
 	    <th><%= sort_link @search, :stdout %></th>
 	    <th><%= sort_link @search, :stderr %></th>
 			<th><%= sort_link @search, :created_at %></th>
@@ -13,6 +14,7 @@
 	<% outputs.each do |output| %>
 	  <tr>
 	    <td><%= output.id %></td>
+	    <td><%= output.instance_id %></td>
 	    <td><%= truncate(output.stdout) %></td>
 	    <td><%= truncate(output.stderr) %></td>
 			<td><%= l output.updated_at %></td>

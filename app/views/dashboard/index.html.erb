@@ -1,13 +1,17 @@
-<h1>Dashboard</h1>
+<% content_for :head do %>
+	<%= javascript_include_tag 'dashboard' %>
+<% end %>
+
+<% content_for :header, "Dashboard" %>
 
 <h2>Running tasks info</h2>
 <%= render :partial => 'tasks/list', :locals => { :tasks => @tasks } %>
 
-<h2>Queues info</h2>
+<h2>Queues Info</h2>
 
 <div class="line">
 	<div id="inputs_queue" class="highlight">
-		Waiting tasks
+		Inputs queue
 		<strong></strong>
 	</div>
 	<div id="outputs_queue" class="highlight">
@@ -22,28 +26,3 @@
 	-->
 </div>
 
-<script type="text/javascript" charset="utf-8">
-(function($, window, document, undefined) {
-	function update_queues_indicators() {
-		$.ajax({
-			url: "/dashboard/queues.json",
-			type: "GET",
-			success: function(data, status, jqXHR) {
-				$(data).each(function(index, item) {
-					if (item.name == "inputs" || item.name == "outputs") {
-						$("#" + item.name + "_queue").find("strong").text(item.messages);
-					}
-				});
-			},
-			error: function(jqXHR, status, error) {
-				// alert("error:" + error);
-			}
-		});
-	}
-	
-	$(function() {
-		// setInterval(update_queues_indicators, 5000);
-		update_queues_indicators();
-	});
-})(jQuery, window, document);
-</script>
