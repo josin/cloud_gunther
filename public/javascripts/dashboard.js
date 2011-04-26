@@ -11,7 +11,8 @@
 				});
 			},
 			error: function(jqXHR, status, error) {
-				// alert("error:" + error);
+				// console.log("Error status:" + status);
+				// console.log("Error:" + error);
 			}
 		});
 	}

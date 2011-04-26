@@ -11,6 +11,6 @@ class Output < ActiveRecord::Base
   serialize :params
   
   def instance_id
-    params[:instance_id]
+    params["instance_id"]
   end
 end

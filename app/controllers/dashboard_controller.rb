@@ -1,4 +1,5 @@
 require 'net/http'
+require 'net/https'
 require 'uri'
 
 class DashboardController < ApplicationController
@@ -21,7 +22,7 @@ class DashboardController < ApplicationController
   def queues
     amqp_config = Qusion::AmqpConfig.new.config_opts
     
-    url = URI.parse("http#{'s' if amqp_config[:ssl]}://#{amqp_config[:host]}:#{amqp_config[:port]}/api/queues")
+    url = URI.parse("http#{'s' if amqp_config[:ssl]}://#{amqp_config[:host]}:55672/api/queues")
     req = Net::HTTP::Get.new(url.path) 
     req.basic_auth "#{amqp_config[:user]}", "#{amqp_config[:pass]}"
     res = Net::HTTP.new(url.host, url.port).start { |http| http.request(req) }

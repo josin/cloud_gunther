@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require "bunny"
+require "popen4"
 require "rexml/document"
 require "logger"
 
@@ -34,7 +35,7 @@ module AlgRunner
         task_output_xml = create_output_xml(task_output)
         send_output(task_output_xml)
         
-        # break # FIXME: only for d&d
+        # FIXME: only for d&d
       end
     end
   
@@ -48,6 +49,10 @@ module AlgRunner
         opts[:task_id] = element.attributes["id"]
       end
 
+      task_xml.elements.each("task/task_params") do |element|
+        opts[:instance_id] = element.attributes["instance_id"]
+      end
+
       task_xml.elements.each("task/alg_binary") do |element|
         opts[:alg_binary_url] =  element.attributes["url"]
         opts[:filename] =  element.attributes["filename"]
@@ -58,23 +63,27 @@ module AlgRunner
     end
     
     # <?xml version="1.0" encoding="UTF-8"?>
-    # <output task_id="">
-    #   <task_params instance_id="" />
-    #   <task_output>...</task_output>
-    # </output_task>
+    # <output>
+    #   <task-id></task-id>
+    #   <stdout></stdout>
+    #   <stderr></stderr>
+    #   <params>
+    #     <instance-id></instance-id>
+    #   </params>
+    # </output>
     def create_output_xml(task_output)
       output_xml = Document.new
       output_xml.add(XMLDecl.new("1.0", "UTF-8"))
       
-      root = output_xml.add_element("output", {"task_id" => @task_opts[:task_id]})
-
-      root.add_element("task_params", {"instance_id" => @task_opts[:instance_id]})
-
-      output_elem = Element.new("task_output")
-      task_output_str = ""
-      task_output.each { |i| task_output_str << i }
-      output_elem.add_text(task_output_str)
-      root.add(output_elem)
+      root = output_xml.add_element("output")
+      root.add_element("task-id").add_text(@task_opts[:task_id])
+      
+      params = Element.new("params")
+      params.add_element("instance-id").add_text(@task_opts[:instance_id])
+      root.add_element(params)
+      
+      root.add_element("stdout").add_text(task_output[:stdout])
+      root.add_element("stderr").add_text(task_output[:stderr])
       
       output_xml.to_s
     end
@@ -91,11 +100,16 @@ module AlgRunner
     def launch_algorithm(launch_cmd)
       begin
         logger.debug { launch_cmd }
-        f = IO.popen("#{launch_cmd}")
-        task_output = f.readlines
-        logger.debug { task_output }
-        f.close
-        return task_output
+        stdout, stderr = "", ""
+        status = POpen4::popen4(launch_cmd) do |out, err, stdin, pid|
+
+          out.each_line { |line| stdout << line }
+          err.each_line { |line| stderr << line }
+        end
+        
+        stdout << "Program finished with status: #{status.exitstatus} at #{Time.now}"
+        
+        return { :stdout => stdout, :stderr => stderr }
       rescue Exception => e
         return e.message
       end
