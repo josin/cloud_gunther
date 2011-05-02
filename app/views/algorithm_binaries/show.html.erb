@@ -21,8 +21,7 @@
 		<tr>
 			<th>Binary:</th>
 			<td>
-				<%= link_to_if @algorithm_binary.attachment, @algorithm_binary.attachment.data_file_name, 
-							attachment_path(@algorithm_binary.attachment) %>
+				<%= link_to @algorithm_binary.attachment.data_file_name, attachment_path(@algorithm_binary.attachment) if @algorithm_binary.attachment %>
 				<%= "(empty)" if @algorithm_binary.attachment.blank? %>
 			</td>
 		</tr>

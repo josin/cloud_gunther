@@ -3,9 +3,10 @@ require 'spec_helper'
 describe AttachmentsController do
   fixtures :users
   
+  let(:user) { users(:test_user1) }
+  
   before(:each) do
-    @user = users(:test_user1)
-    sign_in @user
+    sign_in user
   end
   
   def mock_attachment(stubs={})

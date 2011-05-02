@@ -10,14 +10,11 @@ module AlgRunner
   class Runner
     include REXML
   
-    attr_reader :task_opts
     attr_accessor :logger, :input_queue, :output_queue
   
-    def initialize(args)
-      bunny = Bunny.new(args[:config])
-      bunny.start
-      @input_queue = bunny.queue(args[:input_queue])
-      @output_queue = bunny.queue(args[:output_queue])
+    def initialize(input_queue, output_queue)
+      @input_queue = input_queue
+      @output_queue = output_queue
       
       @logger ||= Logger.new(STDOUT)
     end
@@ -27,12 +24,12 @@ module AlgRunner
       while msg = @input_queue.pop[:payload]
         break if msg == :queue_empty
         
-        @task_opts = parse_input(msg)
+        task_opts = parse_input(msg)
       
-        download_binary(@task_opts[:filename], @task_opts[:alg_binary_url]) unless @task_opts[:alg_binary_url].nil?
-        task_output = launch_algorithm(@task_opts[:launch_cmd])
+        download_binary(task_opts[:filename], task_opts[:alg_binary_url]) unless task_opts[:alg_binary_url].nil?
+        task_output = launch_algorithm(task_opts[:launch_cmd])
 
-        task_output_xml = create_output_xml(task_output)
+        task_output_xml = create_output_xml(task_output, task_opts)
         send_output(task_output_xml)
         
         # FIXME: only for d&d
@@ -71,19 +68,19 @@ module AlgRunner
     #     <instance-id></instance-id>
     #   </params>
     # </output>
-    def create_output_xml(task_output)
+    def create_output_xml(task_output, options)
       output_xml = Document.new
       output_xml.add(XMLDecl.new("1.0", "UTF-8"))
       
       root = output_xml.add_element("output")
-      root.add_element("task-id").add_text(@task_opts[:task_id])
+      root.add_element("task-id").add_text(options[:task_id].to_s)
       
       params = Element.new("params")
-      params.add_element("instance-id").add_text(@task_opts[:instance_id])
+      params.add_element("instance-id").add_text(options[:instance_id].to_s)
       root.add_element(params)
       
-      root.add_element("stdout").add_text(task_output[:stdout])
-      root.add_element("stderr").add_text(task_output[:stderr])
+      root.add_element("stdout").add_text(task_output[:stdout].to_s)
+      root.add_element("stderr").add_text(task_output[:stderr].to_s)
       
       output_xml.to_s
     end
@@ -120,9 +117,14 @@ end
 unless defined?(Rails) # in this case it's running as a standalone script
   INPUT_QUEUE = "inputs"
   OUTPUT_QUEUE = "outputs"
-  CONFIG = {:host => "localhost", :user => "guest", :pass => "guest", :vhost => "/"}
+  CONFIG = {:host => "rabbitmq", :user => "guest", :pass => "guest", :vhost => "/"}
   
-  runner = AlgRunner::Runner.new(:config => CONFIG, :input_queue => INPUT_QUEUE, :output_queue => OUTPUT_QUEUE)
+  bunny = Bunny.new(CONFIG)
+  bunny.start
+  input_queue = bunny.queue(INPUT_QUEUE)
+  output_queue = bunny.queue(OUTPUT_QUEUE)
+  
+  runner = AlgRunner::Runner.new(input_queue, output_queue)
   runner.start!
 end
 

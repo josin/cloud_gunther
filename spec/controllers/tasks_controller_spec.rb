@@ -7,9 +7,10 @@ require 'spec_helper'
 describe TasksController do
   fixtures :users, :tasks
   
+  let(:user) { users(:test_user1) }
+  
   before(:each) do
-    @user = users(:test_user1)
-    sign_in @user
+    sign_in user
   end
   
   def mock_task(stubs={})

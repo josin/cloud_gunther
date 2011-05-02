@@ -19,6 +19,10 @@ gem 'qusion'
 gem 'right_aws'
 gem 'delayed_job'
 
+gem 'net-ssh'
+gem 'net-scp'
+gem 'daemons'
+
 gem 'popen4'
 
 gem 'awesome_print', :require => 'ap'
