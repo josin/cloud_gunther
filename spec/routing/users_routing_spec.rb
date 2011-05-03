@@ -30,6 +30,10 @@ describe UsersController do
     it "recognizes and generates #destroy" do
       { :delete => "/admin/users/1" }.should route_to(:controller => "users", :action => "destroy", :id => "1")
     end
+    
+    it "recognizes and generates #index" do
+      { :get => "/admin/users/registrations" }.should route_to(:controller => "users", :action => "registrations")
+    end
 
   end
 end

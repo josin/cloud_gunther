@@ -3,3 +3,9 @@
 # Fields: id, title, description, cloud_engine_id, launch_params, 
 #         start_up_script, created_at, updated_at, #
 
+image_1:
+  title: Ruby image
+  description: Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+  cloud_engine: cloud_engine_1
+  launch_params: java -version
+  

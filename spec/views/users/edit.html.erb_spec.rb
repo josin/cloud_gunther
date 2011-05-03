@@ -6,9 +6,6 @@ describe "users/edit.html.erb" do
       :first_name => "MyString",
       :last_name => "MyString",
       :email => "MyString",
-      :username => "MyString",
-      :password => "MyString",
-      :salt => "MyString"
     ))
   end
 
@@ -20,9 +17,6 @@ describe "users/edit.html.erb" do
       assert_select "input#user_first_name", :name => "user[first_name]"
       assert_select "input#user_last_name", :name => "user[last_name]"
       assert_select "input#user_email", :name => "user[email]"
-      assert_select "input#user_username", :name => "user[username]"
-      assert_select "input#user_password", :name => "user[password]"
-      assert_select "input#user_salt", :name => "user[salt]"
     end
   end
 end

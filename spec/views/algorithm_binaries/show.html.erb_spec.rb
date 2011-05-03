@@ -2,13 +2,16 @@ require 'spec_helper'
 
 describe "algorithm_binaries/show.html.erb" do
   before(:each) do
+    @algorithm = assign(:algorithm, stub_model(Algorithm, :name => "Test alg"))
     @algorithm_binary = assign(:algorithm_binary, stub_model(AlgorithmBinary,
       :algorithm_id => 1,
-      :name => "Name",
+      :algorithm => @algorithm,
       :description => "MyText",
       :version => "Version",
       :state => "State",
-      :launch_params => "Launch Params"
+      :launch_params => "Launch Params",
+      :created_at => Time.now,
+      :updated_at => Time.now
     ))
   end
 
@@ -16,8 +19,6 @@ describe "algorithm_binaries/show.html.erb" do
     render
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     rendered.should match(/1/)
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(/Name/)
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     rendered.should match(/MyText/)
     # Run the generator again with the --webrat flag if you want to use webrat matchers

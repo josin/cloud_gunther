@@ -6,9 +6,6 @@ describe "users/show.html.erb" do
       :first_name => "First Name",
       :last_name => "Last Name",
       :email => "Email",
-      :username => "Username",
-      :password => "Password",
-      :salt => "Salt"
     ))
   end
 
@@ -21,10 +18,5 @@ describe "users/show.html.erb" do
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     rendered.should match(/Email/)
     # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(/Username/)
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(/Password/)
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(/Salt/)
   end
 end

@@ -82,7 +82,7 @@ class ImagesController < ApplicationController
     @image.destroy
 
     respond_to do |format|
-      format.html { redirect_to(images_url) }
+      format.html { redirect_to(cloud_engine_images_url(@image.cloud_engine.id)) }
       format.xml  { head :ok }
     end
   end

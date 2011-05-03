@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe Output do
+describe ApplicationHelper do
   pending
 end
