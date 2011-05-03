@@ -6,8 +6,6 @@
 
 require "builder/xmlmarkup"
 
-MACRO_REGEXP = /\{{2}(\w+)\}{2}/
-
 class Task < ActiveRecord::Base
   before_save :action_before_save
   
@@ -26,7 +24,7 @@ class Task < ActiveRecord::Base
   
   serialize :params
   
-  def run!(*args)
+  def run(*args)
     options = {
       :algorithm_filename => self.algorithm_binary.attachment.data_file_name,
       :launch_cmd => self.algorithm_binary.prepare_launch_cmd,
@@ -35,29 +33,19 @@ class Task < ActiveRecord::Base
     }
     options.merge!(args.extract_options!)
     
-    # FIXME: move macros into module or better place
-    options[:launch_cmd].gsub!(MACRO_REGEXP) do |m|
-      all, macro = $&, $1
-      case macro
-        when "BINARY"
-          self.algorithm_binary.attachment.data_file_name
-        when "INPUTS"
-          self.inputs
-      end
-    end
-    
+    options[:launch_cmd] = MacroProcesor.process_macros(options[:launch_cmd], self)
+
     self.params[:instances_count].to_i.times do |index|
       task_xml = task2xml(options.merge(:instance_id => (index + 1)))
       logger.debug { "Task's XML: #{task_xml}" }
       MQ.new.queue("inputs").publish(task_xml)
     end
     
-    self.state = "ready"
-    self.save
-    # TODO: validation
     # TODO: run instances
-    # TODO: send task xml description to MQ broker
+    
+    self.update_attribute(:state, "running")
   end
+  handle_asynchronously :run
   
   private
   
@@ -93,53 +81,6 @@ class Task < ActiveRecord::Base
     xml.target!
   end
   
-  
-  # def run!(*args)
-  #   options = args.extract_options!
-  #   
-  #   self.started_at = Time.now
-  #   
-  #   task_home_dir = "#{::Rails.root}/tmp/tasks/#{self.id}/"
-  # 
-  #   # download file into tmp folder
-  #   FileUtils.mkpath(task_home_dir)
-  #   FileUtils.cp(self.algorithm_binary.attachment.data.path, task_home_dir)
-  # 
-  #   # prepare run command
-  #   launch_cmd = self.algorithm_binary.prepare_launch_cmd
-  #   
-  #   launch_cmd.gsub!(MACRO_REGEXP) do |m|
-  #     all, macro = $&, $1
-  #     case macro
-  #       when "BINARY"
-  #         self.algorithm_binary.attachment.data_file_name
-  #       when "INPUTS"
-  #         self.inputs
-  #     end
-  #   end
-  #   
-  #   # run appropriate task
-  #   stdout, stderr = "", ""
-  #   cmd = "cd #{task_home_dir} && #{launch_cmd}"
-  #   status = POpen4::popen4(cmd) do |out, err|
-  #     out.each_line { |line| stdout << line }
-  #     err.each_line { |line| stderr << line }
-  #   end
-  #   # save outputs
-  #   output = self.outputs.new
-  #   output.stdout = stdout
-  #   output.stderr = stderr
-  #   output.save
-  #     
-  #   # delete files from tmp
-  #   FileUtils.rm_rf(task_home_dir)
-  # 
-  #   self.state = "finished"
-  #   self.finished_at = Time.now
-  #   self.save
-  # end
-  
-
   def action_before_save
     self.state = "new" if self.state.blank?
   end

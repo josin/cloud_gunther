@@ -90,9 +90,12 @@ class TasksController < ApplicationController
   end
   
   def run
-    @task.run! :algorithm_url => url_for(attachment_path(:id => @task.algorithm_binary.attachment.id, 
+    # TODO: validation. Is task ready to run?
+    
+    @task.run :algorithm_url => url_for(attachment_path(:id => @task.algorithm_binary.attachment.id, 
                                                          :auth_token => current_user.authentication_token,
                                                          :only_path=> false))
+    @task.update_attribute(:state, "ready")
     
     respond_to do |format|
       format.html { redirect_to(@task, :notice => 'Task is running.') }
