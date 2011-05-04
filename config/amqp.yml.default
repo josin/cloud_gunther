@@ -1,7 +1,7 @@
 # AMQP settings
 default: &default
   host: localhost
-  port: 55672
+  port: 5672
   user: guest
   pass: guest
   vhost: /
