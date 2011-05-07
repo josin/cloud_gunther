@@ -38,6 +38,9 @@ class Task < ActiveRecord::Base
     self.params[:instances_count].to_i.times do |index|
       task_xml = task2xml(options.merge(:instance_id => (index + 1)))
       logger.debug { "Task's XML: #{task_xml}" }
+      
+      # amqp_config = Qusion::AmqpConfig.new.config_opts
+      # Qusion.channel.queue("inputs").publish(task_xml)
       MQ.new.queue("inputs").publish(task_xml)
     end
     

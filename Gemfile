@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.0.7'
-gem 'mysql2'  
+gem 'mysql2', '0.2.7'
 
 gem 'devise'
 gem 'cancan'
@@ -30,7 +30,7 @@ gem 'awesome_print', :require => 'ap'
 group :development do
   # debugger
   gem 'ruby-debug19' if RUBY_VERSION == "1.9.2"
-  # gem 'ruby-debug' unless RUBY_VERSION == "1.9.2"
+  gem 'ruby-debug' unless RUBY_VERSION == "1.9.2"
 end
 
 
