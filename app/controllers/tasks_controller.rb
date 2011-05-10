@@ -88,14 +88,16 @@ class TasksController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+
+  # POST /tasks/1/run
   def run
     # TODO: validation. Is task ready to run?
     
-    @task.run :algorithm_url => url_for(attachment_path(:id => @task.algorithm_binary.attachment.id, 
-                                                         :auth_token => current_user.authentication_token,
-                                                         :only_path=> false))
-    @task.update_attribute(:state, "ready")
+    # => run is asynchronous method via delayed_job
+    @task.run(:algorithm_url => url_for(attachment_path(:id => @task.algorithm_binary.attachment.id, 
+                                                        :auth_token => current_user.authentication_token,
+                                                        :only_path=> false)))
+    @task.update_attribute(:state, Task::STATES[:ready])
     
     respond_to do |format|
       format.html { redirect_to(@task, :notice => 'Task is running.') }

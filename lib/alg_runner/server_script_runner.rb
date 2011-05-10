@@ -14,6 +14,7 @@ Net::SSH.start(HOST, USER) do |ssh|
 
   # Run script on remote side
   # puts ssh.exec! "source /etc/profile.d/rvm.sh; rvm --version"
+  # TODO: add su command to run alg with correct user id
   puts ssh.exec! "source /etc/profile.d/rvm.sh; nohup ruby #{SCRIPT_NAME} > out.log 2>&1 &"
 end
 
