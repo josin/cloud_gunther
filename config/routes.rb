@@ -1,4 +1,4 @@
-ProdPlanner::Application.routes.draw do
+CloudGunther::Application.routes.draw do
   root :to => "dashboard#index"
   match "/", :to => "dashboard#index", :as => :dashboard
   
