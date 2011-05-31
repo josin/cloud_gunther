@@ -15,8 +15,6 @@ class User < ActiveRecord::Base
   DISABLED = "disabled"
   STATES = [ENABLED, DISABLED]
   
-  # Include default devise modules. Others available are:
-  # :timeoutable, :recoverable, :confirmable,
   devise :encryptable, :encryptor => :sha512
   devise :database_authenticatable, :token_authenticatable,
          :rememberable, :trackable, :validatable, :registerable, :lockable
@@ -26,8 +24,8 @@ class User < ActiveRecord::Base
                   :admin, :state
   
   validates_presence_of :first_name, :last_name, :email
+  validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   
-
   has_many :tasks
   has_many :algorithms
   has_many :algorithm_binaries

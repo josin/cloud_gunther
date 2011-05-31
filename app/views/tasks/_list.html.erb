@@ -13,7 +13,7 @@
 	</thead>
 
 	<tbody>
-	<% tasks.each do |task| %>
+	<% tasks.each do |task, index| %>
 		<tr>
 			<td><%= task.id %></td>
 			<td><%= task.algorithm_binary.nil? ? "not found" : "#{task.algorithm_binary.name}" %></td>

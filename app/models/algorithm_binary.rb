@@ -34,7 +34,7 @@ class AlgorithmBinary < ActiveRecord::Base
   
   validates_presence_of :version
   validates_presence_of :algorithm_id, :on => :create
-  validates_with AlgorithmBinaryValidator, :fields => [:state]
+  # validates_with AlgorithmBinaryValidator, :fields => [:state]
   
   scope :active, where(:state => "enabled")
   

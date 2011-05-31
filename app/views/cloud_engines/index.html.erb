@@ -7,7 +7,6 @@
 <table>
 	<thead>
 	  <tr>
-			<th><%= sort_link @search, :id %></th>
 			<th><%= sort_link @search, :title %></th>
 	    <th><%= sort_link @search, :engine_type %></th>
 	    <th><%= sort_link @search, :endpoint_url %></th>
@@ -19,7 +18,6 @@
 	<tbody>
 	<% @cloud_engines.each do |cloud_engine| %>
 	  <tr>
-			<td><%= cloud_engine.id %></td>
 			<td><%= link_to cloud_engine.title, cloud_engine %></td>
 			<td><%= cloud_engine.engine_type %></td>
 			<td><%= cloud_engine.endpoint_url %></td>
