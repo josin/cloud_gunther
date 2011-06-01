@@ -18,6 +18,21 @@ en:
   image:
     title: Image
     new: New Image
+    start_up_script_help_title: How start up script works?
+    start_up_script_help_html: "
+<p>You should write standard bash script which will be processed into stared instance via <abbr>ssh</abbr> command.</p>
+<p>
+Sample script:
+<pre>
+useradd foo
+cp /etc/hosts /home/foo
+</pre>
+This sample script will be processed into <abbr>ssh</abbr> command in following format:</p>
+<pre>
+ssh root@HOST 'useradd foo; cp /etc/hosts /home/foo;'
+</pre>
+</p>
+"
   algorithm:
     title: Algorithm
     new: New Algorithm

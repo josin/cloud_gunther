@@ -19,8 +19,8 @@
 	<fieldset id="launch_params" class="line">
 		<legend>Launch params</legend>
 		
-		<div class="unit size1of2">
 		<%= f.fields_for :launch_params do |f_params| %>
+		<div class="unit size1of2">
 			<div class="field">
 				<%= f_params.label :image_id %><br />
 				<%= f_params.text_field :image_id, :value => @image.launch_params[:image_id], :class => "text" %>
@@ -33,6 +33,9 @@
 				<%= f_params.label :ramdisk_id %><br />
 				<%= f_params.text_field :ramdisk_id, :value => @image.launch_params[:ramdisk_id], :class => "text" %>
 			</div>
+		</div>
+		
+		<div class="unit size2of2 lastUnit">
 			<div class="field">
 				<%= f_params.label :instance_type %><br />
 				<%= f_params.select :instance_type, options_for_select(Image::INSTANCE_TYPES, @image.launch_params[:instance_type]), 
@@ -42,13 +45,24 @@
 				<%= f_params.label :availability_zone %><br />
 				<%= f_params.text_field :availability_zone, :value => @image.launch_params[:availability_zone], :class => "text" %>
 			</div>
-		<% end %>
 		</div>
+		<% end %>
+	</fieldset>
+
+	<fieldset class="line">
+		<legend>Start up script</legend>
 		
-		<div class="unit size2of2 lastUnit">
+		<div class="unit size1of2">
 			<div class="field">
 				<%= f.label :start_up_script %><br />
 				<%= f.text_area :start_up_script, :class => "text" %>
+			</div>
+		</div>
+		
+		<div class="unit size2of2 lastUnit">
+			<div class="field info-help">
+				<strong><%= t("image.start_up_script_help_title") %></strong>
+				<%= raw t("image.start_up_script_help_html") %>
 			</div>
 		</div>
 	</fieldset>
