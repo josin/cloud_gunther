@@ -4,6 +4,8 @@ require "bunny"
 require "popen4"
 require "rexml/document"
 require "logger"
+require "net/http"
+require "uri"
 
 # TODO: begin raise blocks => doesn't matter what happen, script must send back message
 module AlgRunner
@@ -32,6 +34,7 @@ module AlgRunner
         task_output_xml = create_output_xml(task_output, task_opts)
         send_output(task_output_xml)
         
+        # TODO: ack
         # FIXME: only for d&d
       end
     end
@@ -115,14 +118,21 @@ module AlgRunner
 end
 
 unless defined?(Rails) # in this case it's running as a standalone script
-  INPUT_QUEUE = "inputs"
-  OUTPUT_QUEUE = "outputs"
-  CONFIG = {:host => "rabbitmq", :user => "guest", :pass => "guest", :vhost => "/"}
+  # load configs about MQ broker from instance meta-data loopback
+  url = URI.parse("http://169.254.169.254/latest/meta-data/")
+  req = Net::HTTP::Get.new(url.path) 
+  res = Net::HTTP.new(url.host, url.port).start { |http| http.request(req) }
   
-  bunny = Bunny.new(CONFIG)
-  bunny.start
-  input_queue = bunny.queue(INPUT_QUEUE)
-  output_queue = bunny.queue(OUTPUT_QUEUE)
+  instance_meta_data = YAML::load(res.body)
+  
+  input_queue = instance_meta_data["input_queue"]
+  output_queue = instance_meta_data["output_queue"]
+  config = instance_meta_data["amqp_config"]
+  
+  bunny = Bunny.new(config)
+  bunny.start # TODO: check if :connected otherwise ... what?
+  input_queue = bunny.queue(input_queue)
+  output_queue = bunny.queue(output_queue)
   
   runner = AlgRunner::Runner.new(input_queue, output_queue)
   runner.start!

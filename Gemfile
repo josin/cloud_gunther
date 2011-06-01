@@ -15,7 +15,6 @@ gem 'meta_search'
 
 gem 'amqp'
 gem 'bunny'
-gem 'qusion'
 gem 'right_aws'
 gem 'delayed_job'
 
