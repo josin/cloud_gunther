@@ -23,6 +23,9 @@ class Task < ActiveRecord::Base
   belongs_to :user
   belongs_to :algorithm_binary
   has_one :algorithm, :through => :algorithm_binary
+  
+  has_one :inputs_file, :as => :attachable, :dependent => :destroy, :conditions => "attachment_type = 'inputs_file'"
+  has_one :params_file, :as => :attachable, :dependent => :destroy, :conditions => "attachment_type = 'params_file'"
 
   has_many :outputs
   validates_presence_of :algorithm_binary_id #, :inputs :params
@@ -31,7 +34,7 @@ class Task < ActiveRecord::Base
 
   scope :running, where((:state - [STATES[:new], STATES[:finished]]))
 
-  serialize :params
+  serialize :task_params
   
   attr_accessor :instance_id # attr helper for macro processing
   
