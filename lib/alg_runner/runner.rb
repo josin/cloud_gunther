@@ -6,6 +6,7 @@ require "rexml/document"
 require "logger"
 require "net/http"
 require "uri"
+require "yaml"
 
 # TODO: begin raise blocks => doesn't matter what happen, script must send back message
 module AlgRunner
@@ -28,7 +29,10 @@ module AlgRunner
         
         task_opts = parse_input(msg)
       
-        download_binary(task_opts[:filename], task_opts[:alg_binary_url]) unless task_opts[:alg_binary_url].nil?
+        if !task_opts[:alg_binary_url].nil? && !task_opts[:alg_binary_url].empty?
+          download_binary(task_opts[:filename], task_opts[:alg_binary_url]) 
+        end
+        
         task_output = launch_algorithm(task_opts[:launch_cmd])
 
         task_output_xml = create_output_xml(task_output, task_opts)
@@ -37,6 +41,9 @@ module AlgRunner
         # TODO: ack
         # FIXME: only for d&d
       end
+      
+      # queue is empty, instance is idle
+      # TODO: send_idle with instance_id
     end
   
     private
@@ -125,9 +132,9 @@ unless defined?(Rails) # in this case it's running as a standalone script
   
   instance_meta_data = YAML::load(res.body)
   
-  input_queue = instance_meta_data["input_queue"]
-  output_queue = instance_meta_data["output_queue"]
-  config = instance_meta_data["amqp_config"]
+  input_queue = instance_meta_data[:input_queue]
+  output_queue = instance_meta_data[:output_queue]
+  config = instance_meta_data[:amqp_config]
   
   bunny = Bunny.new(config)
   bunny.start # TODO: check if :connected otherwise ... what?

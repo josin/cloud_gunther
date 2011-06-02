@@ -32,41 +32,39 @@ class Task < ActiveRecord::Base
   scope :running, where((:state - [STATES[:new], STATES[:finished]]))
 
   serialize :params
-
+  
+  attr_accessor :instance_id # attr helper for macro processing
+  
   def run(*args)
     options = {
-        :algorithm_filename => self.algorithm_binary.attachment.data_file_name,
         :launch_cmd => self.algorithm_binary.prepare_launch_cmd,
         :instances_count => self.params[:instances_count],
         :task_id => self.id,
     }
     options.merge!(args.extract_options!)
-
+    
+    amqp_config = AmqpConfig.config
+    bunny = Bunny.new(amqp_config)
+    status = bunny.start
+    raise "Could not connect to MQ broker." unless status == :connected
+    queue = bunny.queue("inputs")
+    
     options[:launch_cmd] = MacroProcesor.process_macros(options[:launch_cmd], self)
-
+    
     self.params[:instances_count].to_i.times do |index|
       task_xml = task2xml(options.merge(:instance_id => (index + 1)))
       logger.debug { "Task's XML: #{task_xml}" }
-
-      amqp_config = Qusion::AmqpConfig.new.config_opts
-      bunny = Bunny.new(amqp_config)
-      status = bunny.start
-      raise "Could not connect to MQ broker." unless status == :connected
-      queue = bunny.queue("inputs")
       queue.publish task_xml
     end
 
-
     # TODO: run instances
-
     self.update_attribute(:state, STATES[:running])
   rescue Exception => e
     logger.error { "Running task #{self.id} failed due to: #{e.message}" }
     self.update_attribute(:state, STATES[:failed])
     self.outputs.create(:stderr => e.message)
   end
-
-  handle_asynchronously :run
+  # handle_asynchronously :run
 
   private
 
@@ -91,9 +89,11 @@ class Task < ActiveRecord::Base
     xml.task(:id => options[:task_id]) do |task|
       task.task_params(:instance_id => options[:instance_id], :instances_count => options[:instances_count])
 
-      task.alg_binary(:url => options[:algorithm_url],
-                      :filename => options[:algorithm_filename],
-                      :launch_cmd => options[:launch_cmd])
+      task.alg_binary({
+        :filename => options[:algorithm_filename].presence,
+        :launch_cmd => options[:launch_cmd].presence,
+        :url => options[:algorithm_url].presence
+      })
 
       task.inputs() do |inputs|
       end
