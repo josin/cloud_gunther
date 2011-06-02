@@ -1,7 +1,8 @@
 # == Schema Information
 # Table name: attachments
 # Fields: id, attachable_id, attachable_type, data_file_name, data_content_type, 
-#         data_file_size, created_at, updated_at, user_id, #
+#         data_file_size, created_at, updated_at, user_id, attachment_type, 
+#         #
 
 # TODO: max attachment size
 # TODO: attachment presence validation

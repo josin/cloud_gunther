@@ -4,58 +4,73 @@
 
 <%= form_for(@task) do |f| %>
 	<%= render :partial => 'shared/form_errors', :locals => {:resource => @task} %>
-
-  <div class="field">
-    <%= f.label :algorithm_binary_id %><br />
-    <%= f.select :algorithm_binary_id, grouped_options_for_select(active_binaries_for_select, @task.algorithm_binary) %>
-  </div>
+	
+	
+	<fieldset>
+		<legend>Algorithm &amp; Cloud Engine</legend>
+		<div class="line">
+		  <div class="field unit size1of2">
+		    <%= f.label :algorithm_binary_id %><br />
+		    <%= f.select :algorithm_binary_id, grouped_options_for_select(active_binaries_for_select, @task.algorithm_binary) %>
+		  </div>
+		  <div class="field unit size2of2 lastUnit">
+		    <%= f.label :cloud_engine_id %><br />
+		    <%= f.select :cloud_engine_id, options_from_collection_for_select(CloudEngine.all, :id, :title, @task.cloud_engine_id) %>
+		  </div>
+		</div>
+	</fieldset>
+	
   <!-- 
 	<div class="field">
     <%= f.label :state %> <em>(Only for development)</em><br />
     <%= f.select :state, options_for_select(["new", "ready", "finished"], @task.state) %>
   </div> 
 	-->
-  <div class="field">
-		<div class="field">
-			<%= label_tag 'params[text_field]', "Params from text" %>
-			<%= radio_button_tag 'params', 'text_field', true, :class => 'input_switcher' %>
+	
+	<fieldset>
+		<legend>Inputs &amp; Params</legend>
+	  <div class="field">
+			<div class="field">
+				<%= label_tag 'params[text_field]', "Params from direct input" %>
+				<%= radio_button_tag 'params', 'text_field', true, :class => 'input_switcher' %>
 			
-			<%= label_tag 'params[file_field]', "Params from file" %>
-			<%= radio_button_tag 'params', 'file_field', false, :class => 'input_switcher' %>
-		</div>
+				<%= label_tag 'params[file_field]', "Params from file" %>
+				<%= radio_button_tag 'params', 'file_field', false, :class => 'input_switcher' %>
+			</div>
 		
-		<div class="togglable text_field">
-	    <%= f.label :params %><br />
-	    <%= f.text_area :params, :class => "wide" %>
-		</div>
-	  <div class="togglable file_field nodisplay">
-	    <%= f.label :params_file %><br />
-	    <%= f.file_field :params_file, :class => "wide" %>
+			<div class="togglable text_field">
+		    <%= f.label :params %><br />
+		    <%= f.text_area :params, :class => "wide" %>
+			</div>
+		  <div class="togglable file_field nodisplay">
+		    <%= f.label :params_file %><br />
+		    <%= f.file_field :params_file, :class => "wide" %>
+		  </div>
 	  </div>
-  </div>
 
-  <div class="field">
-		<div class="field">
-			<%= label_tag 'inputs[text_field]', "Inputs from text" %>
-			<%= radio_button_tag 'inputs', 'text_field', true, :class => 'input_switcher' %>
+	  <div class="field">
+			<div class="field">
+				<%= label_tag 'inputs[text_field]', "Inputs from direct input" %>
+				<%= radio_button_tag 'inputs', 'text_field', true, :class => 'input_switcher' %>
 			
-			<%= label_tag 'inputs[file_field]', "Inputs from file" %>
-			<%= radio_button_tag 'inputs', 'file_field', false, :class => 'input_switcher' %>
-		</div>
+				<%= label_tag 'inputs[file_field]', "Inputs from file" %>
+				<%= radio_button_tag 'inputs', 'file_field', false, :class => 'input_switcher' %>
+			</div>
 
-		<div class="togglable text_field">
-	    <%= f.label :inputs %><br />
-	    <%= f.text_area :inputs, :class => "wide" %>
-		</div>
-		<div class="togglable file_field nodisplay">
-	    <%= f.label :inputs_file %><br />
-	    <%= f.file_field :inputs_file, :class => "wide" %>
-		</div>
-  </div>
+			<div class="togglable text_field">
+		    <%= f.label :inputs %><br />
+		    <%= f.text_area :inputs, :class => "wide" %>
+			</div>
+			<div class="togglable file_field nodisplay">
+		    <%= f.label :inputs_file %><br />
+		    <%= f.file_field :inputs_file, :class => "wide" %>
+			</div>
+	  </div>
+	</fieldset>
 
 	<fieldset id="params" class="">
 		<legend>Task's Params</legend>
-		<%= f.fields_for :params do |params_builder| %>
+		<%= f.fields_for :task_params do |params_builder| %>
 			<div class="field">
 				<%= params_builder.check_box :preconfiguration_required, :class => "" %>
 				<%= params_builder.label :preconfiguration_required %><br />
