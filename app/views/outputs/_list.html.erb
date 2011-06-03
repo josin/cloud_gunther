@@ -14,7 +14,7 @@
 	<% outputs.each do |output| %>
 	  <tr>
 	    <td><%= output.id %></td>
-	    <td><%= output.instance_id %></td>
+	    <td><%= output.params[:instance_id] if output.params %></td>
 	    <td><%= truncate(output.stdout) %></td>
 	    <td><%= truncate(output.stderr) %></td>
 			<td><%= l output.updated_at %></td>

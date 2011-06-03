@@ -32,6 +32,10 @@
 	<div>
 		<p><span class="label">Params:</span><pre><%= ap @task.params %></pre></p>
 	</div>
+	<hr />
+	<div>
+		<p><span class="label">Task's params:</span><pre><%= ap @task.task_params %></pre></p>
+	</div>
 </div>
 
 <%#= button_to "Run!", task_run_path(@task), :disabled => (@task.state != "new") %>

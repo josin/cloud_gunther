@@ -52,17 +52,19 @@
 	<fieldset class="line">
 		<legend>Start up script</legend>
 		
-		<div class="unit size1of2">
+		<div class="unit size3of4">
 			<div class="field">
 				<%= f.label :start_up_script %><br />
-				<%= f.text_area :start_up_script, :class => "text" %>
+				<%= f.text_area :start_up_script, :class => "text wide" %>
 			</div>
 		</div>
 		
-		<div class="unit size2of2 lastUnit">
+		<div class="unit size1of4 lastUnit">
 			<div class="field info-help">
-				<strong><%= t("image.start_up_script_help_title") %></strong>
-				<%= raw t("image.start_up_script_help_html") %>
+				<%= render :partial => "shared/help/start_up_script_help" %>
+			</div>
+			<div class="field info-help">
+				<%= render :partial => "shared/help/macro_syntax_help" %>
 			</div>
 		</div>
 	</fieldset>

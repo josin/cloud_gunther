@@ -9,8 +9,4 @@ class Output < ActiveRecord::Base
   validates_presence_of :task_id
   
   serialize :params
-  
-  def instance_id
-    params["instance_id"]
-  end
 end

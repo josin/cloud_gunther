@@ -11,11 +11,21 @@ class Image < ActiveRecord::Base
   # attr_accessible :title, :description, :cloud_engine_id, :launch_params, :start_up_script
   
   validates_presence_of :cloud_engine_id, :title
-
+  
+  INSTANCE_TYPES = %w{m1.small c1.medium m1.large m1.xlarge c1.xlarge}
+  
   def describe_image!
     connection = self.cloud_engine.connect!
     connection.ec2_describe_images("ImageId" => self.launch_params[:image_id]).first
   end
   
-  INSTANCE_TYPES = %w{m1.small c1.medium m1.large m1.xlarge c1.xlarge}
+  def start_up_script_for_ssh
+    lines = []
+    
+    self.start_up_script.lines do |line|
+      lines << line unless line.blank?
+    end
+    
+    ssh_cmd = lines.to_sentence(:words_connector => ";", :two_words_connector => ";", :last_word_connector => ";")
+  end
 end

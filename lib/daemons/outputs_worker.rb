@@ -13,7 +13,7 @@ Signal.trap("TERM") do
 end
 
 if ($running)
-  amqp_config = Qusion::AmqpConfig.new.config_opts
+  amqp_config = AmqpConfig.config
 
   AMQP.start(amqp_config) do
     amq = MQ.new

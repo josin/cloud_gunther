@@ -3,5 +3,17 @@
 (function($, window, document, undefined) {
 	$(document).ready(function(){			
 		$('textarea').elastic();
+		
+		$('.help_dialog').dialog({
+			width: 500,
+			autoOpen: false,	
+			position: ['right', 'center'],
+		});
 	});	
+	
+	
 })(jQuery, window, document);
+
+function open_help_dialog(context) {
+	$(context).dialog("open");
+}

@@ -2,7 +2,7 @@
 # Table name: tasks
 # Fields: id, started_at, finished_at, params, inputs, 
 #         state, user_id, algorithm_binary_id, created_at, updated_at, 
-#         cloud_engine_id, task_params, #
+#         cloud_engine_id, task_params, image_id, #
 
 require "builder/xmlmarkup"
 
@@ -23,6 +23,8 @@ class Task < ActiveRecord::Base
   belongs_to :user
   belongs_to :algorithm_binary
   has_one :algorithm, :through => :algorithm_binary
+  belongs_to :cloud_engine
+  belongs_to :image
   
   has_one :inputs_file, :as => :attachable, :dependent => :destroy, :conditions => "attachment_type = 'inputs_file'"
   has_one :params_file, :as => :attachable, :dependent => :destroy, :conditions => "attachment_type = 'params_file'"
@@ -41,7 +43,7 @@ class Task < ActiveRecord::Base
   def run(*args)
     options = {
         :launch_cmd => self.algorithm_binary.prepare_launch_cmd,
-        :instances_count => self.params[:instances_count],
+        :instances_count => self.task_params[:instances_count],
         :task_id => self.id,
     }
     options.merge!(args.extract_options!)
@@ -54,18 +56,21 @@ class Task < ActiveRecord::Base
     
     options[:launch_cmd] = MacroProcesor.process_macros(options[:launch_cmd], self)
     
-    self.params[:instances_count].to_i.times do |index|
+    self.task_params[:instances_count].to_i.times do |index|
       task_xml = task2xml(options.merge(:instance_id => (index + 1)))
       logger.debug { "Task's XML: #{task_xml}" }
-      queue.publish task_xml
+      # queue.publish task_xml
     end
 
-    # TODO: run instances
-    self.update_attribute(:state, STATES[:running])
-  rescue Exception => e
-    logger.error { "Running task #{self.id} failed due to: #{e.message}" }
-    self.update_attribute(:state, STATES[:failed])
-    self.outputs.create(:stderr => e.message)
+    # run instances
+    # instances_controller = InstancesController.new(self)
+    # instances_controller.run_instances
+    # 
+    # self.update_attribute(:state, STATES[:running])
+  # rescue Exception => e
+  #   logger.error { "Running task #{self.id} failed due to: #{e.message}" }
+  #   self.update_attribute(:state, STATES[:failed])
+  #   self.outputs.create(:stderr => e.message)
   end
   # handle_asynchronously :run
 

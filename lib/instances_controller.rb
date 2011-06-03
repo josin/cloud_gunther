@@ -1,3 +1,6 @@
+require "net/ssh"
+require "net/scp"
+
 # Class responsible for starting appropriate number of instances and setup them
 # to proper state which is required for running algorithms.
 #
@@ -7,9 +10,10 @@
 # 3. inject runner script and let them work
 # TODO: after starting instances, save theirs IDs into task for monitoring, stopping etc.
 class InstancesController
-  attr_reader :task, :options
   
   ENVIRONMENTS = [:cloud, :local]
+  SCRIPT_NAME = "runner.rb"
+  SCRIPT_PATH = File.join(Rails.root, "lib", "alg_runner")
   
   def initialize(task, *args)
     @task = task
@@ -20,20 +24,107 @@ class InstancesController
     }
     @options = options.merge(args.extract_options!)
   end
-
-  def prepare_instances
-
+  
+  def run_instances
+    launch_instances
+    wait_until_instances_ready
+    prepare_instances
+    run_task
   end
 
   private
 
-  def run_instances
+  # README: https://github.com/rightscale/right_aws/blob/master/lib/ec2/right_ec2_instances.rb
+  # ec2_launch_instances
+  # instance-user-data => information for connection to amqp broker
+  # userdata: curl http://169.254.169.254/latest/meta-data/ => string with given metadata
+  # Required user-data:key => "value", 
+  # => amqp = {host, port, user, pass, vhost, timeout}
+  # => inputs queue, outputs queue
+  def launch_instances
+    @connection = @task.cloud_engine.connect!
+
+    image_opts = @task.image.launch_params
+    image_id = image_opts.delete(:image_id)
+    
+    instances_count = @task.task_params[:instances_count]
+    
+    @instances = @connection.launch_instances(image_id, {
+      :min_count => instances_count || 1,
+      :addressing_type => "private",
+      :user_data => create_user_data,
+    })
+  end
+  
+  # waits until instances ready and instances are ready to connect
+  # wait in google style - 1, 2, 4, 8, ... , 512 otherwise Task#state=failed
+  def wait_until_instances_ready
+    until instances_ready? do
+      logger.info "Waiting until instances is ready."
+      sleep 20
+    end
+
+    logger.info "Instances #{@instances.collect{ |i| i[:aws_instance_id] }} are running. Waiting 30 sec until OS gets ready to connect."
+    sleep 30
+    logger.info "Instances are ready to connect."
+  end
+  
+  # if state is "running" returns true otherwise false
+  def instances_ready?
+    @instances = @connection.describe_instances(@instances.collect{ |i| i[:aws_instance_id] })
+    
+    running_flag = true
+    @instances.each { |instance|  running_flag = (instance[:aws_state] == "running") }
+    
+    return running_flag
+  end
+  
+  # run init scripts, inject ruby runner
+  def prepare_instances
+    @instances.each do |instance|
+      ssh_host = instance[:dns_name]
+      
+      logger.info "Connecting and preparing instance #{instance[:aws_instance_id]} with dns_name: #{ssh_host}"
+      
+      ssh_session = Net::SSH.start(ssh_host, "root")
+      
+      # run init scripts
+      start_up_script = @task.image.start_up_script_for_ssh
+      logger.debug { start_up_script }
+      ssh_session.exec! start_up_script
+      
+      # inject ruby runner
+      ssh_session.scp.upload! "#{SCRIPT_PATH}/#{SCRIPT_NAME}", "#{SCRIPT_NAME}" do |ch, name, sent, total|
+        puts "#{name}: #{sent}/#{total}"
+      end
+      
+      ssh_session.close
+    end
   end
 
+  # Run script on remote side
+  def run_task
+    @instances.each do |instance|
+      ssh_host = instance[:dns_name]
+      ssh_session = Net::SSH.start(ssh_host, "root")
+      
+      logger.info "Connecting and running task on instance #{instance[:aws_instance_id]} with dns_name: #{ssh_host}"
+      ssh_session.exec! "source /etc/profile.d/rvm.sh; nohup ruby #{SCRIPT_NAME} > out.log 2>&1 &"
 
-  def start_instances
-
+      ssh_session.close
+    end
   end
-
+  
+  def create_user_data
+    user_data = {
+      :amqp_config => AmqpConfig.config,
+      :input_queue => "inputs",
+      :output_queue => "outputs",
+    }
+  end
+  
+  def logger
+    Rails.logger
+  end
 
 end
