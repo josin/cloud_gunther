@@ -1,9 +1,9 @@
 <head>
   <title><%= title %></title>
-  <%= stylesheet_link_tag %w{typography forms oocss} %>
+  <%= stylesheet_link_tag %w{typography forms oocss jquery-ui-1.8.13.custom} %>
   <%= stylesheet_link_tag "styles.less", :rel => "stylesheet/less" %>
   <%= javascript_include_tag %w{less-1.0.41.min} %>
-  <%= javascript_include_tag %w{jquery-1.5.min jquery.elastic} %>
+  <%= javascript_include_tag %w{jquery-1.5.1.min jquery-ui-1.8.13.custom.min jquery.elastic} %>
   <%= javascript_include_tag %w{rails application} %>
   <%= csrf_meta_tag %>
 	<%= yield :head %>
