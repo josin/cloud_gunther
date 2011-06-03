@@ -8,58 +8,99 @@
 .device_links { margin: 1em 0; }
 .inline { display:inline; }
 
+/********************
+********* Colors
+*********************/
+@background_color: #4B7399;
+@content_background_color: #FFF;
+@header_background_color: #03507B;
 
 /********************
 ********* Layout
 *********************/
 body {
-  background-color: #4B7399;
+	.nopa;
+	.noma;
+  background-color: @background_color;
 }
 
-div#main, div#sign_up_container {
-  width: 85%;
+
+#main, #sign_up_container {
+	width: 85%;
   margin: 0 auto;
-  background-color: #FFF;
-  padding: 20px 40px;
+  background-color: @content_background_color;
+
   border: solid 1px black;
-  margin-top: 20px;
 }
 
-div#sign_up_container { 
+#main { }
+#sign_up_container { 
+  margin-top: 20px;
 	width: 40%; 
 }
 
-div#user_login_box {
+#header {
+	background-color: @header_background_color;
+	color: @content_background_color;
+	padding: 4px 100px;
+	border-bottom: 5px solid darken(@header_background_color, 10%);
+	
+	#app_name { font-size:30px; font-weight:bold; }
+	#app_description { font-style: italic; }
+}
+
+#content {
+	padding: 20px 40px;
+}
+
+#user_login_box {
+	padding: 5px 20px;
 	float:right;
 }
 
-div#footer { 
+#footer { 
 	text-align: right;
 	margin-top: 3em;
 }
 
-div#notifications {
+#notifications {
 	margin-top:1em;
 }
 
-div#menu {
-	margin:1em 0;
-
+#menu {
+	.noma;
+	height:30px;
 	ul.navigation {
 		width:100%;
-		float:left;
-		padding:0;
-		margin:0;
+		.noma;
+		.nopa;
 
 		li {
+			background-color: lighten(@header_background_color, 7%);
 			float:left;
-			display:inline;
-			margin-right:1.5em;
-			padding:0.25em;
+			height:30px;
+			border:1px solid darken(@header_background_color, 5%);
+			list-style-type:none;
+			
+			a { 
+				display:block; 
+				padding:10px 14px 5px; /* top left-right bottom */
+				height:20px;
+				.noma;
+				color: @content_background_color; 
+				font-weight:bold; 
+				text-decoration: none; 
+			}
+			a:hover { 
+				text-decoration: underline; 
+			}
 		}
-		li.current a { color: red; }
-		li:hover { background-color: #eee; }
-		li.admin { float:right; margin-right: 0; margin-left:1.5em; }
+		li:hover { background-color: lighten(@header_background_color, 10%); }
+		li.current { 
+			background-color: lighten(@header_background_color, 15%);
+		}
+		
+		li.admin { float:right; margin-right: 0; }
 	}
 }
 

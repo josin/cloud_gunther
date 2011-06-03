@@ -12,18 +12,23 @@
 		<% end %>
 		<div class="clear"></div>
 		
+		<div id="header">
+			<div id="app_name"><%= t("app_name") %></div>
+			<div id="app_description"><%= t("app_desc") %></div>
+		</div>
+		
 		<div id="menu">
 			<%= render_navigation %>
 		</div><!-- #menu -->
 		<div class="clear"></div>
 		
-		<div id="notifications">
-			<% flash.each do |name, msg| %>
-	      <%= content_tag :div, msg, :class => "#{name}" if msg.is_a?(String) %>
-	    <% end %>
-		</div><!-- #notifications -->
-		
 		<div id="content">
+			<div id="notifications">
+				<% flash.each do |name, msg| %>
+		      <%= content_tag :div, msg, :class => "#{name}" if msg.is_a?(String) %>
+		    <% end %>
+			</div><!-- #notifications -->
+
 			<h1><%= yield :header %></h1>
 			<div class="actions">
 				<ul>
