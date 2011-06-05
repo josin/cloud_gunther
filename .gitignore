@@ -1,6 +1,7 @@
 /config/database.yml
 /config/amqp.yml
 /config/application.yml
+config/daemons.yml
 /db/schema.rb
 /Gemfile.lock
 /log/
