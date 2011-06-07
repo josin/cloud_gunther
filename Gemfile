@@ -39,6 +39,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'spork', '~> 0.9.0.rc'
   gem 'simplecov', '>=0.3.8', :require => false
+  gem 'jasmine'
 end
 
 # Use * as the web server
