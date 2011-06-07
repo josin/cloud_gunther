@@ -3,7 +3,6 @@
 /config/application.yml
 config/daemons.yml
 /db/schema.rb
-/Gemfile.lock
 /log/
 /public/system/attachments/
 /tmp/
