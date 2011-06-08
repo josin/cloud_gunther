@@ -59,18 +59,20 @@ class Task < ActiveRecord::Base
     self.task_params[:instances_count].to_i.times do |index|
       task_xml = task2xml(options.merge(:instance_id => (index + 1)))
       logger.debug { "Task's XML: #{task_xml}" }
-      # queue.publish task_xml
+      queue.publish task_xml
     end
 
     # run instances
-    # instances_controller = InstancesController.new(self)
-    # instances_controller.run_instances
-    # 
-    # self.update_attribute(:state, STATES[:running])
-  # rescue Exception => e
-  #   logger.error { "Running task #{self.id} failed due to: #{e.message}" }
-  #   self.update_attribute(:state, STATES[:failed])
-  #   self.outputs.create(:stderr => e.message)
+    if AppConfig.config[:start_instances]
+      instances_controller = InstancesController.new(self)
+      instances_controller.run_instances
+    end
+    
+    self.update_attribute(:state, STATES[:running])
+  rescue Exception => e
+    logger.error { "Running task #{self.id} failed due to: #{e.message}" }
+    self.update_attribute(:state, STATES[:failed])
+    self.outputs.create(:stderr => e.message)
   end
   # handle_asynchronously :run
 

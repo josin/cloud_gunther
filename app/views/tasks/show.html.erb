@@ -25,16 +25,16 @@
 	</table>
 
 	<hr />
-	<div>
-		<p><span class="label">Inputs:</span><pre><%= @task.inputs %></pre></p>
+	<div  class="ap_container">
+		<p><span class="label">Inputs:</span><pre><%= @task.inputs %><pre></p>
 	</div>
 	<hr />
-	<div>
-		<p><span class="label">Params:</span><pre><%= ap @task.params %></pre></p>
+	<div class="ap_container">
+		<p><span class="label">Params:</span><pre class="ap"><%= raw ap @task.params %></pre></p>
 	</div>
 	<hr />
-	<div>
-		<p><span class="label">Task's params:</span><pre><%= ap @task.task_params %></pre></p>
+	<div class="ap_container">
+		<p><span class="label">Task's params:</span><pre class="ap"><%= raw ap @task.task_params %></pre></p>
 	</div>
 </div>
 

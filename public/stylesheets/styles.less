@@ -167,9 +167,12 @@ form {
 	
 	hr { background: #ccc; border: none; height: 1px; width: 100%; }
 	div { display: block; }
-	div p { margin: 1em 0px; }
+	div.ap_container {
+		span.label { display: block; font-weight: bold; }
+		p { margin: 1em 0px; }
+		pre { .nopa; .noma; display:inline; }
+	}
 }
-div span.label { display: block; font-weight: bold; }
 
 pre.output { padding:0.5em; border:1px solid #ddd; background-color: #ffd; }
 pre.stderr { background: #fbe3e4; color: #8a1f11; border-color: #fbc2c4; }

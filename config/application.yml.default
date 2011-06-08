@@ -2,6 +2,7 @@
 
 default: &default
   host: 127.0.0.1
+  start_instances: false
 
 development:
   <<: *default
