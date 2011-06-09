@@ -70,9 +70,10 @@ class Task < ActiveRecord::Base
     
     self.update_attribute(:state, STATES[:running])
   rescue Exception => e
-    logger.error { "Running task #{self.id} failed due to: #{e.message}" }
     self.update_attribute(:state, STATES[:failed])
-    self.outputs.create(:stderr => e.message)
+    raise e
+    # logger.error { "Running task #{self.id} failed due to: #{e.message}" }
+    # self.outputs.create(:stderr => e.message)
   end
   # handle_asynchronously :run
 

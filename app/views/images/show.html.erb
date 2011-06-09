@@ -27,12 +27,14 @@
 	<hr />
 
 	<div class="ap_container">
-	  <p><span class="label">Launch Params:</span><pre><%= raw ap @image.launch_params %></pre></p>
+	  <p><span class="label">Launch Params:</span></p>
+		<div class="ap"><%= raw ap @image.launch_params %></div>
 	</div>
 	<hr />
 
 	<div class="ap_container">
-	  <p><span class="label">Start-up Script:</span><pre><%= @image.start_up_script %></pre></p>
+	  <p><span class="label">Start-up Script:</span></p>
+		<pre><%= @image.start_up_script %></pre>
 	</div>
 	<hr />
 	

@@ -53,6 +53,8 @@ class User < ActiveRecord::Base
   end
   
   def action_before_save
+    self.reset_authentication_token! if self.authentication_token.blank?
+    
     if self.state_changed?
       case self.state
         when ENABLED
