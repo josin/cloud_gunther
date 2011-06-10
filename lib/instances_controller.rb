@@ -48,7 +48,7 @@ class InstancesController
   # => amqp = {host, port, user, pass, vhost, timeout}
   # => inputs queue, outputs queue
   def launch_instances
-    connection = @task.cloud_engine.connect!
+    @connection = @task.cloud_engine.connect!
 
     image_opts = @task.image.launch_params
     image_id = image_opts.delete(:image_id)
@@ -56,7 +56,7 @@ class InstancesController
     
     instances_count = @task.task_params[:instances_count]
     
-    instances = connection.launch_instances(image_id, {
+    @instances = @connection.launch_instances(image_id, {
       :min_count => instances_count || 1,
       :addressing_type => "private", # MUST HAVE
       :key_name => key_pair || "cvut-euca", # MUST HAVE
@@ -77,14 +77,14 @@ class InstancesController
       raise "Instances connection timeout." if wait_time > TIMEOUT_LIMIT
     end
 
-    logger.info "Instances #{instances.collect{ |i| i[:aws_instance_id] }} are running. Waiting 30 sec until OS gets ready to connect."
+    logger.info "Instances #{@instances.collect{ |i| i[:aws_instance_id] }} are running. Waiting 30 sec until OS gets ready to connect."
     sleep 30
     logger.info "Instances are ready to connect."
   end
   
   # if state is "running" returns true otherwise false
   def instances_ready?
-    running_instances = connection.describe_instances(instances.collect{ |i| i[:aws_instance_id] })
+    running_instances = @connection.describe_instances(@instances.collect{ |i| i[:aws_instance_id] })
     
     running_flag = true
     running_instances.each { |instance| running_flag = false if instance[:aws_state] != "running" }
@@ -94,7 +94,7 @@ class InstancesController
   
   # run init scripts, inject ruby runner
   def prepare_instances
-    instances.each do |instance|
+    @instances.each do |instance|
       ssh_host = instance[:dns_name]
       
       logger.info "Connecting and preparing instance #{instance[:aws_instance_id]} with dns_name: #{ssh_host}"
@@ -117,7 +117,7 @@ class InstancesController
 
   # Run script on remote side
   def run_task
-    instances.each do |instance|
+    @instances.each do |instance|
       ssh_host = instance[:dns_name]
       ssh_session = Net::SSH.start(ssh_host, "root")
       
