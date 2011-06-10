@@ -41,9 +41,9 @@ module AlgRunner
         # TODO: ack
         # FIXME: only for d&d
       end
-      
-      # queue is empty, instance is idle
-      # TODO: send_idle with instance_id
+     
+      # queue is empty, instance is idle => request termination
+      request_termination
     end
   
     private
@@ -114,34 +114,51 @@ module AlgRunner
           err.each_line { |line| stderr << line }
         end
         
-        stdout << "Program finished with status: #{status.exitstatus} at #{Time.now}"
+        # stdout << "Program finished with status: #{status.exitstatus} at #{Time.now}"
+        stdout << "Program finished at #{Time.now}"
         
         return { :stdout => stdout, :stderr => stderr }
       rescue Exception => e
         return e.message
       end
     end
+    
+    # TODO: send_idle with instance_id
+    # instance_id => http://169.254.169.254/latest/meta-data/instance-id
+    def request_termination
+      true
+      # raise "Not implemented yet."
+    end
+  end # of class
+  
+  # load configs about MQ broker from instance meta-data loopback
+  def self.get_user_data
+    url = URI.parse("http://169.254.169.254/latest/user-data/")
+    req = Net::HTTP::Get.new(url.path) 
+    res = Net::HTTP.new(url.host, url.port).start { |http| http.request(req) }
+  
+    YAML::load(res.body)
   end
-end
+  
+  def self.init_amqp(instance_meta_data)
+    input_queue = instance_meta_data[:input_queue]
+    output_queue = instance_meta_data[:output_queue]
+    config = instance_meta_data[:amqp_config]
+  
+    bunny = Bunny.new(config)
+    bunny.start # TODO: check if :connected otherwise ... what?
+    input_queue = bunny.queue(input_queue)
+    output_queue = bunny.queue(output_queue)
+    
+    [input_queue, output_queue]
+  end
+end # of module
 
 unless defined?(Rails) # in this case it's running as a standalone script
-  # load configs about MQ broker from instance meta-data loopback
-  url = URI.parse("http://169.254.169.254/latest/meta-data/")
-  req = Net::HTTP::Get.new(url.path) 
-  res = Net::HTTP.new(url.host, url.port).start { |http| http.request(req) }
+  instance_meta_data = AlgRunner.get_user_data
+  queues = AlgRunner.init_amqp(instance_meta_data)
   
-  instance_meta_data = YAML::load(res.body)
-  
-  input_queue = instance_meta_data[:input_queue]
-  output_queue = instance_meta_data[:output_queue]
-  config = instance_meta_data[:amqp_config]
-  
-  bunny = Bunny.new(config)
-  bunny.start # TODO: check if :connected otherwise ... what?
-  input_queue = bunny.queue(input_queue)
-  output_queue = bunny.queue(output_queue)
-  
-  runner = AlgRunner::Runner.new(input_queue, output_queue)
+  runner = AlgRunner::Runner.new(queues[0], queues[1]) # input_queue, output_queue
   runner.start!
 end
 

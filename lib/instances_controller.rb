@@ -15,14 +15,20 @@ class InstancesController
   SCRIPT_NAME = "runner.rb"
   SCRIPT_PATH = File.join(Rails.root, "lib", "alg_runner")
   
+  TIMEOUT_LIMIT = 512 # sec
+  
+  attr_reader :task
+  attr_accessor :instances, :connection
+  
   def initialize(task, *args)
     @task = task
+    @instances = []
     
-    options = {
-      :environment => :cloud,
-      :task_options => {},
-    }
-    @options = options.merge(args.extract_options!)
+    # options = {
+    #   :environment => :cloud,
+    #   :task_options => {},
+    # }
+    # @options = options.merge(args.extract_options!)
   end
   
   def run_instances
@@ -42,46 +48,53 @@ class InstancesController
   # => amqp = {host, port, user, pass, vhost, timeout}
   # => inputs queue, outputs queue
   def launch_instances
-    @connection = @task.cloud_engine.connect!
+    connection = @task.cloud_engine.connect!
 
     image_opts = @task.image.launch_params
     image_id = image_opts.delete(:image_id)
+    key_pair = image_opts.delete(:key_pair) # TODO: move to image or cloud engine config
     
     instances_count = @task.task_params[:instances_count]
     
-    @instances = @connection.launch_instances(image_id, {
+    instances = connection.launch_instances(image_id, {
       :min_count => instances_count || 1,
-      :addressing_type => "private",
-      :user_data => create_user_data,
+      :addressing_type => "private", # MUST HAVE
+      :key_name => key_pair || "cvut-euca", # MUST HAVE
+      :user_data => create_user_data, # MUST HAVE
     })
   end
   
   # waits until instances ready and instances are ready to connect
   # wait in google style - 1, 2, 4, 8, ... , 512 otherwise Task#state=failed
   def wait_until_instances_ready
+    wait_time = 1
+    
     until instances_ready? do
-      logger.info "Waiting until instances is ready."
-      sleep 20
+      logger.info "Waiting #{wait_time} sec until instances is ready."
+      sleep wait_time
+      wait_time *= 2
+      
+      raise "Instances connection timeout." if wait_time > TIMEOUT_LIMIT
     end
 
-    logger.info "Instances #{@instances.collect{ |i| i[:aws_instance_id] }} are running. Waiting 30 sec until OS gets ready to connect."
+    logger.info "Instances #{instances.collect{ |i| i[:aws_instance_id] }} are running. Waiting 30 sec until OS gets ready to connect."
     sleep 30
     logger.info "Instances are ready to connect."
   end
   
   # if state is "running" returns true otherwise false
   def instances_ready?
-    @instances = @connection.describe_instances(@instances.collect{ |i| i[:aws_instance_id] })
+    running_instances = connection.describe_instances(instances.collect{ |i| i[:aws_instance_id] })
     
     running_flag = true
-    @instances.each { |instance|  running_flag = (instance[:aws_state] == "running") }
+    running_instances.each { |instance| running_flag = false if instance[:aws_state] != "running" }
     
     return running_flag
   end
   
   # run init scripts, inject ruby runner
   def prepare_instances
-    @instances.each do |instance|
+    instances.each do |instance|
       ssh_host = instance[:dns_name]
       
       logger.info "Connecting and preparing instance #{instance[:aws_instance_id]} with dns_name: #{ssh_host}"
@@ -104,23 +117,23 @@ class InstancesController
 
   # Run script on remote side
   def run_task
-    @instances.each do |instance|
+    instances.each do |instance|
       ssh_host = instance[:dns_name]
       ssh_session = Net::SSH.start(ssh_host, "root")
       
       logger.info "Connecting and running task on instance #{instance[:aws_instance_id]} with dns_name: #{ssh_host}"
-      ssh_session.exec! "source /etc/profile.d/rvm.sh; nohup ruby #{SCRIPT_NAME} > out.log 2>&1 &"
+      ssh_session.exec! "[[ -s '/usr/local/rvm/scripts/rvm' ]] && . '/usr/local/rvm/scripts/rvm'; nohup ruby #{SCRIPT_NAME} > out.log 2>&1 &"
 
       ssh_session.close
     end
   end
   
   def create_user_data
-    user_data = {
+    {
       :amqp_config => AmqpConfig.config,
       :input_queue => "inputs",
       :output_queue => "outputs",
-    }
+    }.to_yaml
   end
   
   def logger
