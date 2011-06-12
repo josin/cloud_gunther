@@ -62,6 +62,7 @@ class InstancesController
       :key_name => key_pair || "cvut-euca", # MUST HAVE
       :user_data => create_user_data, # MUST HAVE
     })
+    logger.debug @instances
   end
   
   # waits until instances ready and instances are ready to connect
@@ -72,13 +73,14 @@ class InstancesController
     until instances_ready? do
       logger.info "Waiting #{wait_time} sec until instances is ready."
       sleep wait_time
-      wait_time *= 2
+      wait_time += 20
       
       raise "Instances connection timeout." if wait_time > TIMEOUT_LIMIT
     end
 
-    logger.info "Instances #{@instances.collect{ |i| i[:aws_instance_id] }} are running. Waiting 30 sec until OS gets ready to connect."
-    sleep 30
+    logger.info "Instances #{@instances.collect{ |i| i[:aws_instance_id] }} are running."
+    # logger.info "Waiting 30 sec until OS gets ready to connect."
+    # sleep 30
     logger.info "Instances are ready to connect."
   end
   
@@ -88,6 +90,8 @@ class InstancesController
     
     running_flag = true
     running_instances.each { |instance| running_flag = false if instance[:aws_state] != "running" }
+    
+    @instances = running_instances if running_flag
     
     return running_flag
   end
@@ -102,7 +106,7 @@ class InstancesController
       ssh_session = Net::SSH.start(ssh_host, "root")
       
       # run init scripts
-      start_up_script = @task.image.start_up_script_for_ssh
+      start_up_script = @task.image.start_up_script_for_ssh(@task)
       logger.debug { start_up_script }
       ssh_session.exec! start_up_script
       

@@ -54,10 +54,16 @@ class Task < ActiveRecord::Base
     raise "Could not connect to MQ broker." unless status == :connected
     queue = bunny.queue("inputs")
     
-    options[:launch_cmd] = MacroProcesor.process_macros(options[:launch_cmd], self)
-    
     self.task_params[:instances_count].to_i.times do |index|
-      task_xml = task2xml(options.merge(:instance_id => (index + 1)))
+      self.instance_id = (index + 1)
+      logger.debug { "Processing macros for instance id: #{self.instance_id}" }
+
+      launch_cmd = MacroProcesor.process_macros(options[:launch_cmd].clone, self)
+      
+      task_options = options.dup
+      task_options.merge!(:instance_id => self.instance_id, :launch_cmd => launch_cmd)
+      
+      task_xml = task2xml(task_options)
       logger.debug { "Task's XML: #{task_xml}" }
       queue.publish task_xml
     end
