@@ -21,7 +21,7 @@ class Attachment < ActiveRecord::Base
     :zip => { :label => "*.zip", :content_type => "application/zip" },
     :gzip => { :label => "*.gzip, *.tar.gz", :content_type => "application/x-gzip" },
     :java => { :label => "*.jar", :content_type => "application/java-archive" },
-    :ruby => { :label => "*.rb", :content_type => "application/ruby" },
+    :ruby => { :label => "*.rb", :content_type => "text/x-ruby-script" },
   }
   
   validates_attachment_presence :data
