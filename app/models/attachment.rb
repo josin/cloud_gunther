@@ -20,7 +20,8 @@ class Attachment < ActiveRecord::Base
   VALID_FILE_TYPES = {
     :zip => { :label => "*.zip", :content_type => "application/zip" },
     :gzip => { :label => "*.gzip, *.tar.gz", :content_type => "application/x-gzip" },
-    :java => { :label => "*.jar", :content_type => "application/java-archive" }
+    :java => { :label => "*.jar", :content_type => "application/java-archive" },
+    :ruby => { :label => "*.rb", :content_type => "application/ruby" },
   }
   
   validates_attachment_presence :data

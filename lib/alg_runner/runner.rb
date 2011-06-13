@@ -119,8 +119,12 @@ module AlgRunner
         logger.debug { "stdout: #{stdout}" }
         logger.debug { "stderr: #{stderr}" }
         
-        # stdout << "Program finished with status: #{status.exitstatus} at #{Time.now}"
-        stdout << "Program finished at #{Time.now}"
+        unless status.nil?
+          stdout << "Program finished with status: #{status.exitstatus} at #{Time.now}"
+        else # command failed
+          stdout << "Program finished at #{Time.now}"
+          stderr << "Command '#{launch_cmd}' failed to run."
+        end
         
         return { :stdout => stdout, :stderr => stderr }
       rescue Exception => e
