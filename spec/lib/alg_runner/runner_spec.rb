@@ -15,9 +15,10 @@ describe AlgRunner do
   end
   
   describe AlgRunner::Runner do
+    let(:bunny) { mock(Bunny) }
     let(:input_queue) { mock("queue").as_null_object }
     let(:output_queue) { mock("queue", {:publish => nil}).as_null_object }
-    let(:runner) { AlgRunner::Runner.new(input_queue, output_queue) }
+    let(:runner) { AlgRunner::Runner.new(bunny, input_queue, output_queue) }
 
     describe "start! method" do
       pending
@@ -67,6 +68,14 @@ describe AlgRunner do
         out.should_not be_empty
         out[:stdout].should_not be_empty
         out[:stderr].should_not be_empty
+      end
+      
+      it "describes ruby command" do
+        out = runner.send :launch_algorithm, "type ruby"
+        out.should_not be_empty
+        out[:stdout].should_not be_empty
+        out[:stdout].should match(/ruby is \//)
+        out[:stderr].should be_empty
       end
     end
   

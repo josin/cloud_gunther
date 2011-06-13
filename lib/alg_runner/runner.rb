@@ -8,14 +8,17 @@ require "net/http"
 require "uri"
 require "yaml"
 
+INSTANCE_SERVICE_QUEUE = "instance_service"
+
 # TODO: begin raise blocks => doesn't matter what happen, script must send back message
 module AlgRunner
   class Runner
     include REXML
   
-    attr_accessor :logger, :input_queue, :output_queue
+    attr_accessor :logger, :bunny, :input_queue, :output_queue
   
-    def initialize(input_queue, output_queue)
+    def initialize(bunny, input_queue, output_queue)
+      @bunny = bunny
       @input_queue = input_queue
       @output_queue = output_queue
       
@@ -109,25 +112,31 @@ module AlgRunner
         logger.debug { launch_cmd }
         stdout, stderr = "", ""
         status = POpen4::popen4(launch_cmd) do |out, err, stdin, pid|
-
           out.each_line { |line| stdout << line }
           err.each_line { |line| stderr << line }
         end
+        
+        logger.debug { "stdout: #{stdout}" }
+        logger.debug { "stderr: #{stderr}" }
         
         # stdout << "Program finished with status: #{status.exitstatus} at #{Time.now}"
         stdout << "Program finished at #{Time.now}"
         
         return { :stdout => stdout, :stderr => stderr }
       rescue Exception => e
-        return e.message
+        return { :stdout => "", :stderr => e.message }
       end
     end
     
     # TODO: send_idle with instance_id
     # instance_id => http://169.254.169.254/latest/meta-data/instance-id
     def request_termination
-      true
-      # raise "Not implemented yet."
+      url = URI.parse("http://169.254.169.254/latest/meta-data/instance-id")
+      req = Net::HTTP::Get.new(url.path) 
+      res = Net::HTTP.new(url.host, url.port).start { |http| http.request(req) }
+      instance_id = req.body
+      
+      @bunny.queue(INSTANCE_SERVICE_QUEUE).publish(instance_id)
     end
   end # of class
   
@@ -150,15 +159,15 @@ module AlgRunner
     input_queue = bunny.queue(input_queue)
     output_queue = bunny.queue(output_queue)
     
-    [input_queue, output_queue]
+    [bunny, input_queue, output_queue]
   end
 end # of module
 
 unless defined?(Rails) # in this case it's running as a standalone script
   instance_meta_data = AlgRunner.get_user_data
-  queues = AlgRunner.init_amqp(instance_meta_data)
+  amqp_conn = AlgRunner.init_amqp(instance_meta_data)
   
-  runner = AlgRunner::Runner.new(queues[0], queues[1]) # input_queue, output_queue
+  runner = AlgRunner::Runner.new(amqp_conn[0], amqp_conn[1], amqp_conn[2]) # bunny, input_queue, output_queue
   runner.start!
 end
 
