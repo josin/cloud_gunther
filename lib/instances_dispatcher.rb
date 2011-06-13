@@ -9,7 +9,7 @@ require "net/scp"
 # 2. setup instances using Image#start_up_script
 # 3. inject runner script and let them work
 # TODO: after starting instances, save theirs IDs into task for monitoring, stopping etc.
-class InstancesController
+class InstancesDispatcher
   
   ENVIRONMENTS = [:cloud, :local]
   SCRIPT_NAME = "runner.rb"
@@ -126,7 +126,7 @@ class InstancesController
       ssh_session = Net::SSH.start(ssh_host, "root")
       
       logger.info "Connecting and running task on instance #{instance[:aws_instance_id]} with dns_name: #{ssh_host}"
-      ssh_session.exec! "[[ -s '/usr/local/rvm/scripts/rvm' ]] && . '/usr/local/rvm/scripts/rvm'; nohup ruby #{SCRIPT_NAME} > out.log 2>&1 &"
+      ssh_session.exec! "/bin/bash -l -c 'nohup ruby #{SCRIPT_NAME} > out.log 2>&1 &'"
 
       ssh_session.close
     end

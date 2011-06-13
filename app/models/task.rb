@@ -70,7 +70,7 @@ class Task < ActiveRecord::Base
 
     # run instances
     if AppConfig.config[:start_instances]
-      instances_controller = InstancesController.new(self)
+      instances_controller = InstancesDispatcher.new(self)
       instances_controller.run_instances
     end
     

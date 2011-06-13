@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe InstancesController do
+describe InstancesDispatcher do
   
   let(:image) { mock_model(Image, :launch_params => {:image_id => "emi-123", :key_pair => "kp"}).as_null_object }
   let(:cloud_engine) { mock_model(CloudEngine).as_null_object }
   let(:task) { mock_model(Task, :image => image, :cloud_engine => cloud_engine, :task_params => {:instances_count => 3}).as_null_object }                  
-  let(:ic) { InstancesController.new(task) }
+  let(:ic) { InstancesDispatcher.new(task) }
   let(:connection) { mock("connection", :describe_instances => [{:aws_state => "pending", :aws_instance_id => "i123"}]).as_null_object }
 
   before(:each) do
