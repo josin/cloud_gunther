@@ -16,6 +16,7 @@ class InstancesDispatcher
   SCRIPT_PATH = File.join(Rails.root, "lib", "alg_runner")
   
   TIMEOUT_LIMIT = 512 # sec
+  WAIT_STEP = 20 # sec
   
   attr_reader :task
   attr_accessor :instances, :connection
@@ -61,26 +62,27 @@ class InstancesDispatcher
       :addressing_type => "private", # MUST HAVE
       :key_name => key_pair || "cvut-euca", # MUST HAVE
       :user_data => create_user_data, # MUST HAVE
+      :group_ids => "task-#{@task.id}",
     })
     logger.debug @instances
+    
+    # TODO: save instances ids into task
   end
   
   # waits until instances ready and instances are ready to connect
   # wait in google style - 1, 2, 4, 8, ... , 512 otherwise Task#state=failed
   def wait_until_instances_ready
-    wait_time = 1
+    wait_time = 0
     
     until instances_ready? do
-      logger.info "Waiting #{wait_time} sec until instances is ready."
-      sleep wait_time
-      wait_time += 20
+      logger.info "Waiting #{WAIT_STEP} sec until instances is ready."
+      sleep WAIT_STEP
+      wait_time += WAIT_STEP
       
       raise "Instances connection timeout." if wait_time > TIMEOUT_LIMIT
     end
 
     logger.info "Instances #{@instances.collect{ |i| i[:aws_instance_id] }} are running."
-    # logger.info "Waiting 30 sec until OS gets ready to connect."
-    # sleep 30
     logger.info "Instances are ready to connect."
   end
   

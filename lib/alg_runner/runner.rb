@@ -30,21 +30,18 @@ module AlgRunner
       while msg = @input_queue.pop[:payload]
         break if msg == :queue_empty
         
-        task_opts = parse_input(msg)
+        @task_opts = parse_input(msg)
       
-        if !task_opts[:alg_binary_url].nil? && !task_opts[:alg_binary_url].empty?
-          download_binary(task_opts[:filename], task_opts[:alg_binary_url]) 
+        if !@task_opts[:alg_binary_url].nil? && !@task_opts[:alg_binary_url].empty?
+          download_binary(@task_opts[:filename], @task_opts[:alg_binary_url]) 
         end
         
-        task_output = launch_algorithm(task_opts[:launch_cmd])
+        task_output = launch_algorithm(@task_opts[:launch_cmd])
 
-        task_output_xml = create_output_xml(task_output, task_opts)
+        task_output_xml = create_output_xml(task_output, @task_opts)
         send_output(task_output_xml)
-        
-        # TODO: ack
-        # FIXME: only for d&d
       end
-     
+      
       # queue is empty, instance is idle => request termination
       request_termination
     end
@@ -140,7 +137,8 @@ module AlgRunner
       res = Net::HTTP.new(url.host, url.port).start { |http| http.request(req) }
       instance_id = req.body
       
-      @bunny.queue(INSTANCE_SERVICE_QUEUE).publish(instance_id)
+      @bunny.queue(INSTANCE_SERVICE_QUEUE).publish(instance_id.to_s)
+      # @bunny.queue(INSTANCE_SERVICE_QUEUE).publish({ :instance_id => instance_id }.to_s)
     end
   end # of class
   

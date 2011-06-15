@@ -9,7 +9,7 @@ Rails.application.require_environment!
 $running = true
 Signal.trap("TERM") do 
   $running = false
-  AMQP.stop
+  AMQP.stop { EM.stop }
 end
 
 if ($running)
