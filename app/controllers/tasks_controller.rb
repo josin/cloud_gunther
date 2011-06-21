@@ -24,7 +24,10 @@ class TasksController < ApplicationController
     @outputs = @search.all.paginate(:page => @page, :per_page => @per_page)
     
     @title << "##{@task.id}"
-
+    
+    connection = @task.cloud_engine.connect!
+    @instances = connection.describe_instances(@task.task_params[:instances])
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @task }
@@ -105,7 +108,10 @@ class TasksController < ApplicationController
     end    
     
     @task.run(run_opts)
-    @task.update_attribute(:state, Task::STATES[:ready])
+    
+    @task.state = Task::STATES[:ready]
+    @task.started_at = Time.now
+    @task.save
     
     respond_to do |format|
       format.html { redirect_to(@task, :notice => 'Task is running.') }

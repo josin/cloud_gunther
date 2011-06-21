@@ -62,9 +62,11 @@ class InstancesDispatcher
       :addressing_type => "private", # MUST HAVE
       :key_name => key_pair || "cvut-euca", # MUST HAVE
       :user_data => create_user_data, # MUST HAVE
-      :group_ids => "task-#{@task.id}",
     })
     logger.debug @instances
+    
+    @task.task_params[:instances] = @instances.collect { |i| i[:aws_instance_id] }
+    @task.save
     
     # TODO: save instances ids into task
   end

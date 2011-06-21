@@ -33,6 +33,7 @@
   </div> 
 	-->
 	
+	<!--
 	<fieldset>
 		<legend>Inputs &amp; Params</legend>
 	  <div class="field">
@@ -46,11 +47,11 @@
 		
 			<div class="togglable text_field">
 		    <%= f.label :params %><br />
-		    <%= f.text_area :params, :class => "wide" %>
+		    <%#= f.text_area :params, :class => "wide" %>
 			</div>
 		  <div class="togglable file_field nodisplay">
 		    <%= f.label :params_file %><br />
-		    <%= f.file_field :params_file, :class => "wide" %>
+		    <%#= f.file_field :params_file, :class => "wide" %>
 		  </div>
 	  </div>
 
@@ -65,21 +66,22 @@
 
 			<div class="togglable text_field">
 		    <%= f.label :inputs %><br />
-		    <%= f.text_area :inputs, :class => "wide" %>
+		    <%#= f.text_area :inputs, :class => "wide" %>
 			</div>
 			<div class="togglable file_field nodisplay">
 		    <%= f.label :inputs_file %><br />
-		    <%= f.file_field :inputs_file, :class => "wide" %>
+		    <%#= f.file_field :inputs_file, :class => "wide" %>
 			</div>
 	  </div>
 	</fieldset>
+	-->
 
 	<fieldset id="params" class="">
 		<legend>Task's Params</legend>
 		<%= f.fields_for :task_params do |params_builder| %>
 			<div class="field">
 				<%= params_builder.check_box :preconfiguration_required, :class => "" %>
-				<%= params_builder.label :preconfiguration_required %><br />
+				<%= params_builder.label :preconfiguration_required, "Run preconfiguration before starting the task (Seage algorithm only!!!)" %><br />
 			</div>
 			<div class="field">
 				<%= params_builder.label :instances_count %><br />

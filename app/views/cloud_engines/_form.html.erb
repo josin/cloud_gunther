@@ -8,7 +8,7 @@
 
 	<div class="field">
 		<%= f.label :engine_type %><br />
-		<%= f.select :engine_type, options_for_select(CloudEngine::ENGINE_TYPES, @cloud_engine.engine_type) %>
+		<%= f.select :engine_type, options_for_select(CloudEngine::ENGINE_TYPES.values, @cloud_engine.engine_type) %>
 	</div>
 	
 	<div class="field">

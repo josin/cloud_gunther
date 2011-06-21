@@ -27,7 +27,10 @@ class Task < ActiveRecord::Base
   belongs_to :image
   
   has_one :inputs_file, :as => :attachable, :dependent => :destroy, :conditions => "attachment_type = 'inputs_file'"
+  accepts_nested_attributes_for :inputs_file, :allow_destroy => true, :reject_if => proc { |obj| obj.blank? }
+
   has_one :params_file, :as => :attachable, :dependent => :destroy, :conditions => "attachment_type = 'params_file'"
+  accepts_nested_attributes_for :params_file, :allow_destroy => true, :reject_if => proc { |obj| obj.blank? }
 
   has_many :outputs
   validates_presence_of :algorithm_binary_id #, :inputs :params
@@ -81,7 +84,7 @@ class Task < ActiveRecord::Base
     # logger.error { "Running task #{self.id} failed due to: #{e.message}" }
     # self.outputs.create(:stderr => e.message)
   end
-  # handle_asynchronously :run
+  handle_asynchronously :run
 
   private
 

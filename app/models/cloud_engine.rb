@@ -4,9 +4,9 @@
 #         endpoint_url, created_at, updated_at, params, #
 
 class CloudEngine < ActiveRecord::Base
-  
-  ENGINE_TYPES = %w{AWS Eucaliptus}
-  
+
+  ENGINE_TYPES = { :eucalyptus => "Eucalyptus", :aws => "AmazonWS" }
+
   has_many :images
   
   serialize :params
@@ -15,7 +15,7 @@ class CloudEngine < ActiveRecord::Base
     @connection = nil
   
     options = {}
-    options = { :endpoint_url => self.endpoint_url, :eucaliptus => true } if self.engine_type == "Eucaliptus"
+    options = { :endpoint_url => self.endpoint_url, :eucaliptus => true } if self.engine_type == ENGINE_TYPES[:eucalyptus]
 
     @connection = RightAws::Ec2.new self.access_key, self.secret_access_key, options
   end

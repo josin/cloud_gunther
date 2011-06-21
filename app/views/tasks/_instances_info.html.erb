@@ -1,0 +1,22 @@
+<h2>Instances info</h2>
+
+<% unless @instances.empty? %>
+<div>
+	<table>
+		<tr>
+			<th>Instance id</th>
+			<th>IP address</th>
+			<th>Status</th>
+		</tr>
+		<% @instances.each do |instance| %>
+		<tr>
+			<td><%= instance[:aws_instance_id] %></td>
+			<td><%= instance[:dns_name] %></td>
+			<td><%= instance[:aws_state] %></td>
+		</tr>
+		<% end %>
+	</table>
+</div>
+<% else %>
+	<p>No running instances for this task.</p>
+<% end %>
