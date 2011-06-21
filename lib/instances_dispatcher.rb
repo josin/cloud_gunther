@@ -54,14 +54,17 @@ class InstancesDispatcher
     image_opts = @task.image.launch_params
     image_id = image_opts.delete(:image_id)
     key_pair = image_opts.delete(:key_pair) # TODO: move to image or cloud engine config
+    instance_type = image_opts.delete(:instance_type) || Image::INSTANCE_TYPES.first
     
     instances_count = @task.task_params[:instances_count]
+    
     
     @instances = @connection.launch_instances(image_id, {
       :min_count => instances_count || 1,
       :addressing_type => "private", # MUST HAVE
       :key_name => key_pair || "cvut-euca", # MUST HAVE
       :user_data => create_user_data, # MUST HAVE
+      :instance_type => instance_type,
     })
     logger.debug @instances
     
