@@ -60,6 +60,14 @@ GEM
       abstract (>= 1.0.0)
     eventmachine (0.12.10)
     ffi (1.0.9)
+    growl (1.0.3)
+    guard (0.4.2)
+      thor (~> 0.14.6)
+    guard-rspec (0.4.0)
+      guard (>= 0.4.0)
+    guard-spork (0.2.0)
+      guard (>= 0.2.2)
+      spork (>= 0.8.4)
     highline (1.6.2)
     i18n (0.5.0)
     jasmine (1.0.2.1)
@@ -122,6 +130,7 @@ GEM
       rdoc (~> 3.4)
       thor (~> 0.14.4)
     rake (0.9.2)
+    rb-fsevent (0.4.0)
     rdoc (3.6.1)
     right_aws (2.0.0)
       right_http_connection (>= 1.2.1)
@@ -161,10 +170,6 @@ GEM
       simplecov-html (~> 0.4.4)
     simplecov-html (0.4.5)
     spork (0.9.0.rc8)
-    thin (1.2.11)
-      daemons (>= 1.0.9)
-      eventmachine (>= 0.12.6)
-      rack (>= 1.0.0)
     thor (0.14.6)
     treetop (1.4.9)
       polyglot (>= 0.3.1)
@@ -185,6 +190,10 @@ DEPENDENCIES
   daemons
   delayed_job
   devise
+  growl
+  guard
+  guard-rspec
+  guard-spork
   jasmine
   meta_search
   meta_where
@@ -194,11 +203,11 @@ DEPENDENCIES
   paperclip
   popen4
   rails (= 3.0.9)
+  rb-fsevent
   right_aws (= 2.0.0)
   rspec-rails
   ruby-debug19
   simple-navigation
   simplecov (>= 0.3.8)
   spork (~> 0.9.0.rc)
-  thin
   will_paginate (>= 3.0.pre2)

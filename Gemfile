@@ -39,10 +39,23 @@ group :development, :test do
   gem 'spork', '~> 0.9.0.rc'
   gem 'simplecov', '>=0.3.8', :require => false
   gem 'jasmine'
+  
+  # Autotest tool
+  gem 'guard'
+  gem 'guard-rspec'
+  gem 'guard-spork'
+  # gem 'guard-livereload'
+  
+  
+  # For more platform settings see https://github.com/guard/guard
+  if RUBY_PLATFORM =~ /darwin/i
+    gem 'rb-fsevent', :require => false 
+    gem 'growl'
+  elsif RUBY_PLATFORM =~ /linux/i
+    gem 'rb-inotify'
+    gem 'libnotify'
+  end 
 end
-
-# Use * as the web server
-gem 'thin'
 
 # Deploy with Capistrano
 gem 'capistrano'
