@@ -14,7 +14,7 @@
 	  <tr>
 	    <td><%= link_to algorithm_binary.version, [algorithm_binary.algorithm, algorithm_binary] %></td>
 	    <td><%= algorithm_binary.state %></td>
-	    <td><%= algorithm_binary.launch_params %></td>
+	    <td><%= truncate algorithm_binary.launch_params %></td>
 			<td><%= l algorithm_binary.updated_at %></td>
 	    <td>
 				<%= link_to 'Detail', algorithm_algorithm_binary_path(algorithm_binary.algorithm, algorithm_binary) %>
