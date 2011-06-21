@@ -3,18 +3,22 @@
 <% unless @instances.empty? %>
 <div>
 	<table>
-		<tr>
-			<th>Instance id</th>
-			<th>IP address</th>
-			<th>Status</th>
-		</tr>
+		<thead>
+			<tr>
+				<th>Instance id</th>
+				<th>IP address</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+		<tbody>
 		<% @instances.each do |instance| %>
-		<tr>
-			<td><%= instance[:aws_instance_id] %></td>
-			<td><%= instance[:dns_name] %></td>
-			<td><%= instance[:aws_state] %></td>
-		</tr>
+			<tr>
+				<td><%= instance[:aws_instance_id] %></td>
+				<td><%= instance[:dns_name] %></td>
+				<td><%= instance[:aws_state] %></td>
+			</tr>
 		<% end %>
+		</tbody>
 	</table>
 </div>
 <% else %>

@@ -15,7 +15,7 @@ class InstancesDispatcher
   SCRIPT_NAME = "runner.rb"
   SCRIPT_PATH = File.join(Rails.root, "lib", "alg_runner")
   
-  TIMEOUT_LIMIT = 512 # sec
+  TIMEOUT_LIMIT = 1024 # sec
   WAIT_STEP = 20 # sec
   
   attr_reader :task
