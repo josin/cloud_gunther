@@ -46,15 +46,6 @@ group :development, :test do
   gem 'guard-spork'
   # gem 'guard-livereload'
   
-  
-  # For more platform settings see https://github.com/guard/guard
-  if RUBY_PLATFORM =~ /darwin/i
-    gem 'rb-fsevent', :require => false 
-    gem 'growl'
-  elsif RUBY_PLATFORM =~ /linux/i
-    gem 'rb-inotify'
-    gem 'libnotify'
-  end 
 end
 
 # Deploy with Capistrano

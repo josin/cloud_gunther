@@ -8,13 +8,13 @@
 #   watch(%r{config/locales/.+\.yml})
 # end
 
-guard 'spork', :rspec_env => { 'RAILS_ENV' => 'test' }, :bundler => false do
-  watch('config/application.rb')
-  watch('config/environment.rb')
-  watch(%r{^config/environments/.+\.rb$})
-  watch(%r{^config/initializers/.+\.rb$})
-  watch('spec/spec_helper.rb')
-end
+# guard 'spork', :rspec_env => { 'RAILS_ENV' => 'test' }, :bundler => false do
+#   watch('config/application.rb')
+#   watch('config/environment.rb')
+#   watch(%r{^config/environments/.+\.rb$})
+#   watch(%r{^config/initializers/.+\.rb$})
+#   watch('spec/spec_helper.rb')
+# end
 
 
 guard 'rspec', :version => 2, :cli => "--color --drb" do
