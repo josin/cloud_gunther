@@ -15,7 +15,7 @@ class InstancesDispatcher
   SCRIPT_NAME = "runner.rb"
   SCRIPT_PATH = File.join(Rails.root, "lib", "alg_runner")
   
-  TIMEOUT_LIMIT = 1024 # sec
+  TIMEOUT_LIMIT = 2048 # sec
   WAIT_STEP = 20 # sec
   
   attr_reader :task
@@ -84,7 +84,7 @@ class InstancesDispatcher
       sleep WAIT_STEP
       wait_time += WAIT_STEP
       
-      raise "Instances connection timeout." if wait_time > TIMEOUT_LIMIT
+      # raise "Instances connection timeout." if wait_time > TIMEOUT_LIMIT
     end
 
     logger.info "Instances #{@instances.collect{ |i| i[:aws_instance_id] }} are running."
