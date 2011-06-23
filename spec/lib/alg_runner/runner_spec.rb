@@ -19,7 +19,7 @@ describe AlgRunner do
     let(:input_queue) { mock("queue").as_null_object }
     let(:output_queue) { mock("queue", {:publish => nil}).as_null_object }
     let(:runner) { AlgRunner::Runner.new(bunny, input_queue, output_queue) }
-
+    
     describe "start! method" do
       pending
     end
@@ -27,7 +27,6 @@ describe AlgRunner do
     describe "parse_input method" do
       pending    
     end
-  
   
     describe "send_output method" do
       it "should publish result set from algorithm to output queue" do
@@ -76,6 +75,10 @@ describe AlgRunner do
         out[:stdout].should_not be_empty
         out[:stdout].should match(/ruby is \//)
         out[:stderr].should be_empty
+      end
+      
+      it "should correctly unescape characters from message" do
+        pending
       end
     end
   

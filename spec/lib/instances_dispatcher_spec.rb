@@ -7,6 +7,7 @@ describe InstancesDispatcher do
   let(:task) { mock_model(Task, :image => image, :cloud_engine => cloud_engine, :task_params => {:instances_count => 3}).as_null_object }                  
   let(:ic) { InstancesDispatcher.new(task) }
   let(:connection) { mock("connection", :describe_instances => [{:aws_state => "pending", :aws_instance_id => "i123"}]).as_null_object }
+  let(:instances) { [{:aws_instance_id => "i-123456789", :aws_state => "pending"}] }
 
   before(:each) do
     # ic.stub(:connection => connection)
@@ -41,9 +42,12 @@ describe InstancesDispatcher do
       cloud_engine.should_receive(:connect!).and_return(connection)
       
       connection.should_receive(:launch_instances).with("emi-123", 
-        hash_including(:addressing_type => "private", :key_name => "kp", :user_data => instance_of(String)))
-      
+        hash_including(:addressing_type => "private", :key_name => "kp", :user_data => instance_of(String))).
+        and_return(instances)
+
       ic.send(:launch_instances)
+      task.task_params.should have_key(:instances)
+      task.task_params[:instances].should include(instances.first[:aws_instance_id])
     end
   end
   
@@ -58,8 +62,8 @@ describe InstancesDispatcher do
     end
     
     it "raises error when until given period of time instances are not ready" do
-      ic.should_receive(:instances_ready?).at_most(26).and_return(false)
-      ic.should_receive(:sleep).at_least(1)
+      ic.should_receive(:instances_ready?).at_most(100).and_return(false)
+      ic.should_receive(:sleep).at_least(1).at_most(100)
       
       lambda { ic.send(:wait_until_instances_ready) }.should raise_error
     end
