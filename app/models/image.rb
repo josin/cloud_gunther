@@ -24,7 +24,7 @@ class Image < ActiveRecord::Base
     
     self.start_up_script.each_line do |line|
       # RegExpresion match everything except new line characters
-      lines << line.match(/.*/)[0] unless line.blank?
+      lines << line.match(/.*[^\r\n]/)[0] unless line.blank?
     end
     
     ssh_cmd = lines.to_sentence(:words_connector => ";", :two_words_connector => ";", :last_word_connector => ";")

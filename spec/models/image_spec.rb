@@ -38,6 +38,13 @@ SCR
       image.start_up_script = "useradd -o -u {{UNIX_UID}} {{CLOUD_USER}}"
       image.start_up_script_for_ssh(task).should eq("useradd -o -u 1000 euca")
     end
+    
+    it "returns correct start-up-script from webapp textarea" do
+      task.stub_chain(:user, :unix_uid).and_return("1000")
+      
+      image.start_up_script = "useradd -o -u {{UNIX_UID}} {{CLOUD_USER}}\r\necho `date` >> /tmp/cloud_gunther.txt"
+      image.start_up_script_for_ssh(task).should eq("useradd -o -u 1000 euca;echo `date` >> /tmp/cloud_gunther.txt")
+    end
   end
   
 end
