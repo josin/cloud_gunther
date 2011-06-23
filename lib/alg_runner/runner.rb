@@ -7,6 +7,7 @@ require "logger"
 require "net/http"
 require "uri"
 require "yaml"
+require "cgi"
 
 INSTANCE_SERVICE_QUEUE = "instance_service"
 
@@ -106,6 +107,7 @@ module AlgRunner
   
     def launch_algorithm(launch_cmd)
       begin
+        launch_cmd = CGI::unescapeHTML(launch_cmd)
         logger.debug { launch_cmd }
         stdout, stderr = "", ""
         status = POpen4::popen4(launch_cmd) do |out, err, stdin, pid|
