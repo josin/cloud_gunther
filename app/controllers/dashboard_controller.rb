@@ -10,7 +10,8 @@ class DashboardController < ApplicationController
     @search = Task.where(nil) if current_user.admin?
     @search = current_user.tasks unless current_user.admin?
 
-    @search = @search.limit(10).metasearch(params[:search])
+    params[:search] = { :meta_sort => "id.desc" } unless params[:search].presence
+    @search = @search.order(:id.desc).metasearch(params[:search])
     @tasks = @search.paginate(:page => @page, :per_page => @per_page)
     
     respond_to do |format|

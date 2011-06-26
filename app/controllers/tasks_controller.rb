@@ -5,6 +5,9 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.xml
   def index
+    # Default sorting is id.desc (most recent tasks first)
+    params[:search] = { :meta_sort => "id.desc" } unless params[:search].presence
+    
     @search = Task.where(nil) if current_user.admin?
     @search = current_user.tasks unless current_user.admin?
 
