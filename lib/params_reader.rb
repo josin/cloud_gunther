@@ -4,7 +4,7 @@ module ParamsReader
   
   def read_from_params(field, key)
     if self.send(field)
-      self.send(:field)[key]
+      self.send(field)[key]
     else
       ""
     end
