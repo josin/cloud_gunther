@@ -1,13 +1,13 @@
 <table>
 	<thead>
 		<tr>
-			<th><%= sort_link @search, :id, "#" %></th>
-			<th><%= sort_link @search, :algorithm_binary_id, "Algorithm binary" %></th>
-			<th><%= sort_link @search, :created_at %></th>
-			<th><%= sort_link @search, :user_last_name, "User" %></th>
-			<th><%= sort_link @search, :state %></th>
-			<th><%= sort_link @search, :started_at %></th>
-			<th><%= sort_link @search, :finished_at %></th>
+			<th><%= sortable_link @search, :id, "#" %></th>
+			<th><%= sortable_link @search, :algorithm_binary_id, "Algorithm binary" %></th>
+			<th><%= sortable_link @search, :created_at %></th>
+			<th><%= sortable_link @search, :user_last_name, "User" %></th>
+			<th><%= sortable_link @search, :state %></th>
+			<th><%= sortable_link @search, :started_at %></th>
+			<th><%= sortable_link @search, :finished_at %></th>
 			<th>Action</th>
 		</tr>
 	</thead>
@@ -32,4 +32,6 @@
 	</tbody>
 </table>
 
-<%= pagination(tasks) %>
+<% unless defined?(no_pagination) %>
+	<%= pagination(tasks) %>
+<% end %>
