@@ -76,15 +76,26 @@
 	<fieldset id="params" class="">
 		<legend>Task's Params</legend>
 		<%= f.fields_for :task_params do |params_builder| %>
-			<div class="field">
-				<%= params_builder.check_box :preconfiguration_required, :class => "" %>
-				<%= params_builder.label :preconfiguration_required, "Run preconfiguration before starting the task (Seage algorithm only!!!)" %><br />
-			</div>
+		<div class="unit size1of2">
 			<div class="field">
 				<%= params_builder.label :instances_count %><br />
 				<%= params_builder.text_field :instances_count, :class => "text", 
 							:type => :number, :min => 1, :step => 1, :value => 1 %>
 			</div>
+			<div class="field">
+				<%= params_builder.label :instance_type %><br />
+				<%= params_builder.select :instance_type, options_for_select(Image::INSTANCE_TYPES, @task.task_params[:instance_type]), 
+												:include_blank => true, :class => "text" %>
+			</div>
+		</div>
+		
+		<div class="unit size2of2 lastUnit">
+			<div class="field">
+				<%= params_builder.check_box :preconfiguration_required, :class => "" %>
+				<%= params_builder.label :preconfiguration_required, "Run preconfiguration before starting the task" %><br />
+				<em class="error_notice">Seage algorithm only! Not implemented yet!</em>
+			</div>
+		</div>
 		<% end %>
 	</fieldset>
 	

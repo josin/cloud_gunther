@@ -6,6 +6,8 @@
 class CloudEngine < ActiveRecord::Base
 
   ENGINE_TYPES = { :eucalyptus => "Eucalyptus", :aws => "AmazonWS" }
+  
+  attr_reader :connection
 
   has_many :images
   

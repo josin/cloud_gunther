@@ -79,3 +79,5 @@ form.inline p { margin-bottom:0; }
 .notice a   { color: #514721; }
 .success a  { color: #264409; }
 .info a			{ color: #205791; }
+
+em.error_notice { color: #8a1f11; }

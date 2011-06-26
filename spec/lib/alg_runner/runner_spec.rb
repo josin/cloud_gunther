@@ -3,15 +3,11 @@ require 'spec_helper'
 describe AlgRunner do
   
   describe "get user data" do
-    it "fails" do
-      fail
-    end
+    pending
   end
 
   describe "init amqp" do
-    it "fails" do
-      fail
-    end
+    pending
   end
   
   describe AlgRunner::Runner do
@@ -98,9 +94,7 @@ describe AlgRunner do
     end
     
     describe "request termination" do
-      it "fails" do
-        fail
-      end
+      pending
     end
     
   end  

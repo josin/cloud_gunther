@@ -26,6 +26,17 @@
 		<%= f.text_field :endpoint_url, :class => "text" %>
 	</div>
 	
+	<fieldset id="launch_params" class="line">
+		<legend>Config params</legend>
+		
+		<%= f.fields_for :params do |params| %>
+		<div class="field">
+			<%= params.label :key_name, "Key pair name" %><br />
+			<%= params.text_field :key_name, :value => @cloud_engine.params[:key_name], :class => "text" %>
+		</div>
+		<% end %>
+	</fieldset>
+	
   <div class="actions">
     <%= f.submit %> or <%= link_to "Cancel", :back %>
   </div>
