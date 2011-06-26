@@ -27,7 +27,9 @@ Sample script:
 useradd foo
 cp /etc/hosts /home/foo
 </pre>
-This sample script will be processed into <abbr>ssh</abbr> command in following format:</p>
+</p>
+<p>
+This sample script will be processed into <abbr>ssh</abbr> command in following format:
 <pre>
 ssh root@HOST 'useradd foo; cp /etc/hosts /home/foo;'
 </pre>
