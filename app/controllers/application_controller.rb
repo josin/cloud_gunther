@@ -16,6 +16,6 @@ class ApplicationController < ActionController::Base
     @title = []
     
     @page = params[:page].presence || 1
-    @per_page = params[:per_page].presence || 10 
+    @per_page = params[:per_page].presence || AppConfig.config[:per_page].presence || 25 
   end
 end

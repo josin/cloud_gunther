@@ -5,13 +5,12 @@
 <%= form_for(@task) do |f| %>
 	<%= render :partial => 'shared/form_errors', :locals => {:resource => @task} %>
 	
-	
 	<fieldset>
 		<legend>Algorithm &amp; Cloud Engine</legend>
 		<div class="line">
 		  <div class="field unit size1of2">
 		    <%= f.label :algorithm_binary_id %><br />
-		    <%= f.select :algorithm_binary_id, grouped_options_for_select(active_binaries_for_select, @task.algorithm_binary) %>
+		    <%= f.select :algorithm_binary_id, grouped_options_for_select(active_binaries_for_select, @task.algorithm_binary.id) %>
 		  </div>
 		  <div class="field unit size2of2 lastUnit">
 				<div class="field">
@@ -26,14 +25,11 @@
 		</div>
 	</fieldset>
 	
-  <!-- 
 	<div class="field">
     <%= f.label :state %> <em>(Only for development)</em><br />
-    <%= f.select :state, options_for_select(["new", "ready", "finished"], @task.state) %>
+    <%= f.select :state, options_for_select(["", "new", "ready", "finished"], @task.state) %>
   </div> 
-	-->
 	
-	<!--
 	<fieldset>
 		<legend>Inputs &amp; Params</legend>
 	  <div class="field">
@@ -47,10 +43,11 @@
 		
 			<div class="togglable text_field">
 		    <%= f.label :params %><br />
-		    <%#= f.text_area :params, :class => "wide" %>
+		    <%= f.text_area :params, :class => "wide" %>
 			</div>
 		  <div class="togglable file_field nodisplay">
-		    <%= f.label :params_file %><br />
+				<p class="error">Not implemented yet.</p>
+		    <%#= f.label :params_file %><br />
 		    <%#= f.file_field :params_file, :class => "wide" %>
 		  </div>
 	  </div>
@@ -66,15 +63,15 @@
 
 			<div class="togglable text_field">
 		    <%= f.label :inputs %><br />
-		    <%#= f.text_area :inputs, :class => "wide" %>
+		    <%= f.text_area :inputs, :class => "wide" %>
 			</div>
 			<div class="togglable file_field nodisplay">
-		    <%= f.label :inputs_file %><br />
+				<p class="error">Not implemented yet.</p>
+		    <%#= f.label :inputs_file %><br />
 		    <%#= f.file_field :inputs_file, :class => "wide" %>
 			</div>
 	  </div>
 	</fieldset>
-	-->
 
 	<fieldset id="params" class="">
 		<legend>Task's Params</legend>

@@ -133,6 +133,7 @@ class InstancesDispatcher
       ssh_session = Net::SSH.start(ssh_host, "root")
       
       logger.info "Connecting and running task on instance #{instance[:aws_instance_id]} with dns_name: #{ssh_host}"
+      # /bin/bash -l -c 'nohup ruby runner.rb > out.log 2>&1 &'
       ssh_session.exec! "/bin/bash -l -c 'nohup ruby #{SCRIPT_NAME} > out.log 2>&1 &'"
 
       ssh_session.close
