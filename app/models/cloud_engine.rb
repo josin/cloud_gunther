@@ -22,13 +22,7 @@ class CloudEngine < ActiveRecord::Base
     @connection = RightAws::Ec2.new self.access_key, self.secret_access_key, options
   end
   
-  def key_name; read_from_params(:key_name); end
-    
-  def read_from_params(key)
-    if self.params
-      self.params[key]
-    else
-      ""
-    end
-  end
+  include ParamsReader
+  def key_name; read_from_params(:params, :key_name); end
+
 end

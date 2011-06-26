@@ -19,17 +19,10 @@ class Image < ActiveRecord::Base
     connection.ec2_describe_images("ImageId" => self.launch_params[:image_id]).first
   end
   
-  def image_id; read_from_launch_params(:image_id); end
-  def instance_type; read_from_launch_params(:instance_type); end
-  def availability_zone; read_from_launch_params(:availability_zone); end
-  
-  def read_from_launch_params(key)
-    if self.launch_params
-      self.launch_params[key]
-    else
-      ""
-    end
-  end
+  include ParamsReader
+  def image_id; read_from_params(:launch_params, :image_id); end
+  def instance_type; read_from_params(:launch_params, :instance_type); end
+  def availability_zone; read_from_params(:launch_params, :availability_zone); end
   
   def start_up_script_for_ssh(task)
     lines = []

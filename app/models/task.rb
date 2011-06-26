@@ -41,16 +41,9 @@ class Task < ActiveRecord::Base
 
   serialize :task_params
   
-  def instances_count; read_from_task_params(:instances_count); end
-  def instance_type; read_from_task_params(:instance_type); end
-  
-  def read_from_task_params(key)
-    if self.task_params
-      self.task_params[key]
-    else
-      ""
-    end
-  end
+  include ParamsReader
+  def instances_count; read_from_params(:task_params, :instances_count); end
+  def instance_type; read_from_params(:task_params, :instance_type); end
   
   attr_accessor :instance_id # attr helper for macro processing
   
