@@ -10,7 +10,7 @@
 		<div class="line">
 		  <div class="field unit size1of2">
 		    <%= f.label :algorithm_binary_id %><br />
-		    <%= f.select :algorithm_binary_id, grouped_options_for_select(active_binaries_for_select, @task.algorithm_binary.id) %>
+		    <%= f.select :algorithm_binary_id, grouped_options_for_select(active_binaries_for_select, @task.algorithm_binary_id) %>
 		  </div>
 		  <div class="field unit size2of2 lastUnit">
 				<div class="field">
@@ -80,11 +80,11 @@
 			<div class="field">
 				<%= params_builder.label :instances_count %><br />
 				<%= params_builder.text_field :instances_count, :class => "text", 
-							:type => :number, :min => 1, :step => 1, :value => 1 %>
+							:type => :number, :min => 1, :step => 1, :value => @task.instances_count %>
 			</div>
 			<div class="field">
 				<%= params_builder.label :instance_type %><br />
-				<%= params_builder.select :instance_type, options_for_select(Image::INSTANCE_TYPES, @task.task_params[:instance_type]), 
+				<%= params_builder.select :instance_type, options_for_select(Image::INSTANCE_TYPES, @task.instance_type), 
 												:include_blank => true, :class => "text" %>
 			</div>
 		</div>

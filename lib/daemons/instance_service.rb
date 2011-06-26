@@ -1,5 +1,3 @@
-require "bunny"
-
 module Daemons
   class InstanceService
     class << self
@@ -7,6 +5,8 @@ module Daemons
         amqp_config = AmqpConfig.config
         bunny = Bunny.new(amqp_config)
         bunny.start
+        
+        Rails.logger.info("Connected to MQ Broker.")
         
         queue = bunny.queue("instance_service")
         

@@ -20,31 +20,18 @@
 		<legend>Launch params</legend>
 		
 		<%= f.fields_for :launch_params do |f_params| %>
-		<div class="unit size1of2">
-			<div class="field">
-				<%= f_params.label :image_id %><br />
-				<%= f_params.text_field :image_id, :value => @image.launch_params[:image_id], :class => "text" %>
-			</div>
-			<div class="field">
-				<%= f_params.label :kernel_id %><br />
-				<%= f_params.text_field :kernel_id, :value => @image.launch_params[:kernel_id], :class => "text" %>
-			</div>
-			<div class="field">
-				<%= f_params.label :ramdisk_id %><br />
-				<%= f_params.text_field :ramdisk_id, :value => @image.launch_params[:ramdisk_id], :class => "text" %>
-			</div>
+		<div class="field">
+			<%= f_params.label :image_id %><br />
+			<%= f_params.text_field :image_id, :value => @image.image_id, :class => "text" %>
 		</div>
-		
-		<div class="unit size2of2 lastUnit">
-			<div class="field">
-				<%= f_params.label :instance_type %><br />
-				<%= f_params.select :instance_type, options_for_select(Image::INSTANCE_TYPES, @image.launch_params[:instance_type]), 
-												:include_blank => true, :class => "text" %>
-			</div>
-			<div class="field">
-				<%= f_params.label :availability_zone %><br />
-				<%= f_params.text_field :availability_zone, :value => @image.launch_params[:availability_zone], :class => "text" %>
-			</div>
+		<div class="field">
+			<%= f_params.label :instance_type %><br />
+			<%= f_params.select :instance_type, options_for_select(Image::INSTANCE_TYPES, @image.instance_type), 
+											:include_blank => true, :class => "text" %>
+		</div>
+		<div class="field">
+			<%= f_params.label :availability_zone %><br />
+			<%= f_params.text_field :availability_zone, :value => @image.availability_zone, :class => "text" %>
 		</div>
 		<% end %>
 	</fieldset>

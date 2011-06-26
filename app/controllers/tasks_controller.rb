@@ -1,6 +1,7 @@
 class TasksController < ApplicationController
   before_filter :authenticate_user!
   before_filter :find_task, :except => [:index, :new, :create]
+  before_filter :find_algorithms, :only => [:new, :edit]
   
   # GET /tasks
   # GET /tasks.xml
@@ -127,6 +128,11 @@ class TasksController < ApplicationController
     task_id = params[:id] || params[:task_id]
     @task = Task.find(task_id)
     authorize! :manage, @task
+  end
+  
+  def find_algorithms
+    @algorithms = current_user.algorithms
+    @algorithms = Algorithm.all if current_user.admin?
   end
   
   def setup

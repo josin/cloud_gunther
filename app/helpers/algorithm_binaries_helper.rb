@@ -2,7 +2,7 @@ module AlgorithmBinariesHelper
   
   def active_binaries_for_select
     grouped_options = []
-    current_user.algorithms.each do |algorithm|
+    @algorithms.each do |algorithm|
       label = algorithm.name
       
       options = algorithm.algorithm_binaries.active.collect { |i| [i.name, i.id ] }

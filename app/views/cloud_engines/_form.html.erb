@@ -32,7 +32,7 @@
 		<%= f.fields_for :params do |params| %>
 		<div class="field">
 			<%= params.label :key_name, "Key pair name" %><br />
-			<%= params.text_field :key_name, :value => @cloud_engine.params[:key_name], :class => "text" %>
+			<%= params.text_field :key_name, :value => @cloud_engine.key_name, :class => "text" %>
 		</div>
 		<% end %>
 	</fieldset>
