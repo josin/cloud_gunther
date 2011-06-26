@@ -4,7 +4,12 @@ describe "images/new.html.erb" do
   before(:each) do
     @cloud_engine = assign(:cloud_engine, stub_model(CloudEngine).as_null_object)
     @image = assign(:image, stub_model(Image, 
-           :cloud_engine => @cloud_engine
+           :cloud_engine => @cloud_engine,
+           :title => "Foobar image",
+           :description => "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
+           :cloud_engine_id => 1,
+           :launch_params => {:image_id => "emi-123456"},
+           :start_up_script => "whoami"
     ).as_new_record)
   end
   
