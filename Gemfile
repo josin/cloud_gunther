@@ -38,8 +38,10 @@ end
 group :development, :test do
   gem 'rspec-rails'
   gem 'spork', '~> 0.9.0.rc'
-  gem 'simplecov', '>=0.3.8', :require => false
+  gem 'factory_girl'
+  gem 'cover_me', '>= 1.0.0.rc6'
   gem 'jasmine'
+  gem 'cucumber'
   
   # Autotest tool
   gem 'guard'

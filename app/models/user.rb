@@ -7,7 +7,6 @@
 #         reset_password_token, unix_uid, #
 
 class User < ActiveRecord::Base
-  extend ActiveModel::Callbacks
   before_create :action_before_create
   before_save :action_before_save
   
@@ -44,9 +43,6 @@ class User < ActiveRecord::Base
   
   private
   def action_before_create
-    # Generate auth_token for new user account
-    self.reset_authentication_token!
-    
     # Lock new account => wait for admin aproval
     self.state = 'new'
     self.locked_at = Time.now
@@ -55,7 +51,7 @@ class User < ActiveRecord::Base
   def action_before_save
     self.reset_authentication_token! if self.authentication_token.blank?
     
-    if self.state_changed?
+    if self.state_changed? and !self.new_record?
       case self.state
         when ENABLED
           self.locked_at = nil

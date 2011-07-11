@@ -2,7 +2,12 @@
 
 %w{rubygems sinatra yaml}.each { |lib| require lib }
 
+# set :bind, "169.254.169.254"
 # set :port, 80
+
+get '/' do
+  "Instance user-data simulator."
+end
 
 # User data => http://169.254.169.254/latest/user-data/
 get '/latest/user-data' do

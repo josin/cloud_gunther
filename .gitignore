@@ -10,4 +10,4 @@ config/daemons.yml
 .DS_Store
 .rspec
 *.tmproj
-
+utils/user_data_service_simulator/tmp/restart.txt

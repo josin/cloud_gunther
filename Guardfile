@@ -22,7 +22,7 @@ guard 'rspec', :version => 2, :cli => "--color --drb" do
   watch(%r{^lib/(.+)\.rb})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb') { "spec" }
 
-  # Rails example
+  # Rails examples
   watch('spec/spec_helper.rb')                       { "spec" }
   watch('config/routes.rb')                          { "spec/routing" }
   watch('app/controllers/application_controller.rb') { "spec/controllers" }
