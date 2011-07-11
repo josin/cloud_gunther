@@ -225,7 +225,7 @@ DEPENDENCIES
   bunny
   cancan
   capistrano
-  cover_me (>= 1.0.0.rc6)
+  cover_me (~> 1.1.0)
   cucumber-rails
   daemons
   database_cleaner
