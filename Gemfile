@@ -41,12 +41,14 @@ group :development, :test do
   gem 'factory_girl'
   gem 'cover_me', '>= 1.0.0.rc6'
   gem 'jasmine'
-  gem 'cucumber'
+  gem 'cucumber-rails'
+  gem 'database_cleaner'
   
   # Autotest tool
   gem 'guard'
   gem 'guard-rspec'
   gem 'guard-spork'
+  gem 'guard-cucumber'
   # gem 'guard-livereload'
   
 end
