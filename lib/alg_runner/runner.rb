@@ -10,8 +10,8 @@ require "yaml"
 require "cgi"
 
 INSTANCE_SERVICE_QUEUE = "instance_service"
-USER_DATA_URL = "http://169.254.169.254/latest/user-data/"
-INSTANCE_ID_URL = "http://169.254.169.254/latest/meta-data/instance-id/"
+USER_DATA_URL = "http://169.254.169.254/latest/user-data"
+INSTANCE_ID_URL = "http://169.254.169.254/latest/meta-data/instance-id"
 
 # TODO: begin raise blocks => doesn't matter what happen, script must send back message
 module AlgRunner
