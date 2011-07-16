@@ -56,14 +56,7 @@ group :development, :test do
   if RUBY_PLATFORM =~ /darwin/i
     gem 'rb-fsevent'
     gem 'growl'
-  elsif RUBY_PLATFORM =~ /linux/i
-    gem 'rb-inotify'
-    gem 'libnotifiy'
-  elsif RUBY_PLATFORM =~ /mswin/i
-    gem 'rb-fchange'
-    gem 'rb-notifu'
   end
-  
 end
 
 # Deploy with Capistrano
