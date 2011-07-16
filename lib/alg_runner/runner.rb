@@ -10,6 +10,8 @@ require "yaml"
 require "cgi"
 
 INSTANCE_SERVICE_QUEUE = "instance_service"
+USER_DATA_URL = "http://169.254.169.254/latest/user-data/"
+INSTANCE_ID_URL = "http://169.254.169.254/latest/meta-data/instance-id/"
 
 # TODO: begin raise blocks => doesn't matter what happen, script must send back message
 module AlgRunner
@@ -31,6 +33,8 @@ module AlgRunner
       while msg = @input_queue.pop[:payload]
         break if msg == :queue_empty
         
+        logger.info { "Received message: #{msg}" }
+        
         @task_opts = parse_input(msg)
       
         if !@task_opts[:alg_binary_url].nil? && !@task_opts[:alg_binary_url].empty?
@@ -42,6 +46,8 @@ module AlgRunner
         task_output_xml = create_output_xml(task_output, @task_opts)
         send_output(task_output_xml)
       end
+      
+      logger.info { "Queue is empty." }
       
       # queue is empty, instance is idle => request termination
       request_termination
@@ -115,8 +121,9 @@ module AlgRunner
           err.each_line { |line| stderr << line }
         end
         
-        logger.debug { "stdout: #{stdout}" }
-        logger.debug { "stderr: #{stderr}" }
+        logger.info { "Algorithms launch outputs:" }
+        logger.info { "stdout: #{stdout}" }
+        logger.info { "stderr: #{stderr}" }
         
         unless status.nil?
           stdout << "Program finished with status: #{status.exitstatus} at #{Time.now}"
@@ -134,11 +141,9 @@ module AlgRunner
     # TODO: send_idle with instance_id
     # instance_id => http://169.254.169.254/latest/meta-data/instance-id
     def request_termination
-      url = URI.parse("http://169.254.169.254/latest/meta-data/instance-id")
-      req = Net::HTTP::Get.new(url.path) 
-      res = Net::HTTP.new(url.host, url.port).start { |http| http.request(req) }
-      instance_id = req.body
-      
+      instance_id = AlgRunner.fetch_url(INSTANCE_ID_URL)
+
+      logger.info { "Requesting terminating for #{instance_id}" }
       @bunny.queue(INSTANCE_SERVICE_QUEUE).publish(instance_id.to_s)
       # @bunny.queue(INSTANCE_SERVICE_QUEUE).publish({ :instance_id => instance_id }.to_s)
     end
@@ -146,11 +151,8 @@ module AlgRunner
   
   # load configs about MQ broker from instance meta-data loopback
   def self.get_user_data
-    url = URI.parse("http://169.254.169.254/latest/user-data/")
-    req = Net::HTTP::Get.new(url.path) 
-    res = Net::HTTP.new(url.host, url.port).start { |http| http.request(req) }
-  
-    YAML::load(res.body)
+    user_data = fetch_url(USER_DATA_URL)
+    YAML::load(user_data)
   end
   
   def self.init_amqp(instance_meta_data)
@@ -164,6 +166,10 @@ module AlgRunner
     output_queue = bunny.queue(output_queue)
     
     [bunny, input_queue, output_queue]
+  end
+  
+  def self.fetch_url(url)
+    IO.popen("curl -s #{url}") { |f| f.readlines }.join
   end
 end # of module
 

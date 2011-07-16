@@ -8,16 +8,15 @@
 #   watch(%r{config/locales/.+\.yml})
 # end
 
-# guard 'spork', :rspec_env => { 'RAILS_ENV' => 'test' }, :bundler => false do
-#   watch('config/application.rb')
-#   watch('config/environment.rb')
-#   watch(%r{^config/environments/.+\.rb$})
-#   watch(%r{^config/initializers/.+\.rb$})
-#   watch('spec/spec_helper.rb')
-# end
+guard 'spork', :test_unit => false do
+  watch('config/application.rb')
+  watch('config/environment.rb')
+  watch(%r{^config/environments/.*\.rb$})
+  watch(%r{^config/initializers/.*\.rb$})
+  watch('spec/spec_helper.rb')
+end
 
-
-guard 'rspec', :version => 2, :cli => "--color --drb" do
+guard 'rspec', :version => 2, :cli => "--drb --color" do
   watch(%r{^spec/.+_spec\.rb})
   watch(%r{^lib/(.+)\.rb})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb') { "spec" }
@@ -33,8 +32,7 @@ guard 'rspec', :version => 2, :cli => "--color --drb" do
   watch(%r{^app/views/(.+)/})                        { |m| "spec/requests/#{m[1]}_spec.rb" }
 end
 
-
-guard 'cucumber' do
+guard 'cucumber', :cli => "--drb --color --profile guard" do
   watch(%r{^features/.+\.feature$})
   watch(%r{^features/support/.+$})          { 'features' }
   watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'features' }

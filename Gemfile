@@ -39,9 +39,10 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'spork', '~> 0.9.0.rc'
   gem 'factory_girl'
-  gem 'cover_me', '~> 1.1.0'
+  # gem 'cover_me', '~> 1.1.0'
   gem 'jasmine'
   gem 'cucumber-rails'
+  gem "escape_utils" # FIXME: to avoid 'warning: regexp match /.../n against to UTF-8 string'
   gem 'database_cleaner'
   
   # Autotest tool
@@ -50,6 +51,18 @@ group :development, :test do
   gem 'guard-spork'
   gem 'guard-cucumber'
   # gem 'guard-livereload'
+
+  # FSEvent & Notifications for guard
+  if RUBY_PLATFORM =~ /darwin/i
+    gem 'rb-fsevent'
+    gem 'growl'
+  elsif RUBY_PLATFORM =~ /linux/i
+    gem 'rb-inotify'
+    gem 'libnotifiy'
+  elsif RUBY_PLATFORM =~ /mswin/i
+    gem 'rb-fchange'
+    gem 'rb-notifu'
+  end
   
 end
 

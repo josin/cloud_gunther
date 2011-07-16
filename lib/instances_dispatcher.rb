@@ -9,6 +9,7 @@ require "net/scp"
 # 2. setup instances using Image#start_up_script
 # 3. inject runner script and let them work
 # TODO: after starting instances, save theirs IDs into task for monitoring, stopping etc.
+# TODO: refactor class using fog gem
 class InstancesDispatcher
   
   ENVIRONMENTS = [:cloud, :local]

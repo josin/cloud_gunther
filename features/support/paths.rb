@@ -10,7 +10,7 @@ module NavigationHelpers
 
     when /^the home\s?page$/
       '/'
-    when /the new sign_up page/
+    when /^the sign up page$/
       new_user_registration_path
 
 
