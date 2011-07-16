@@ -5,7 +5,7 @@
 # 
 # Learn more: http://github.com/javan/whenever
 
-set :output, "/home/sin/cloud_gunther/current/log/cron_log.log"
+set :output, "#{Rails.root}/log/cron_log.log"
 
 every 2.minutes do
   runner "Daemons::OutputsWorker.run"
