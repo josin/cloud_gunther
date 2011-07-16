@@ -29,6 +29,8 @@ module AlgRunner
     end
   
     def start!
+      logger.info { "Starting AlgRunner." }
+      
       # while msg = @input_queue.pop
       while msg = @input_queue.pop[:payload]
         break if msg == :queue_empty

@@ -2,7 +2,7 @@ module Daemons
   class InstanceService
     class << self
       def run
-        amqp_config = AmqpConfig.config
+        amqp_config = AppConfig.amqp_config
         bunny = Bunny.new(amqp_config)
         bunny.start
         

@@ -55,7 +55,7 @@ class Task < ActiveRecord::Base
     }
     options.merge!(args.extract_options!)
     
-    amqp_config = AmqpConfig.config
+    amqp_config = AppConfig.amqp_config
     bunny = Bunny.new(amqp_config)
     status = bunny.start
     raise "Could not connect to MQ broker." unless status == :connected

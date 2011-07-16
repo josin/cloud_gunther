@@ -17,7 +17,7 @@ class DashboardController < ApplicationController
   
   # GET /dashboard/queues.json
   def queues
-    amqp_config = AmqpConfig.config
+    amqp_config = AppConfig.amqp_config
     
     url = URI.parse("http#{'s' if amqp_config[:ssl]}://#{amqp_config[:host]}:55672/api/queues")
     req = Net::HTTP::Get.new(url.path) 

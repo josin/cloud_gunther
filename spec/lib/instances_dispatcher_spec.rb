@@ -105,7 +105,7 @@ describe InstancesDispatcher do
   
   describe "create user data" do
     before(:each) do
-      AmqpConfig.should_receive(:config).and_return({})
+      AppConfig.should_receive(:amqp_config).and_return({})
     end
     
     it "should return string with serialized user data" do
