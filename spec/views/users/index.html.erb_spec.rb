@@ -8,11 +8,15 @@ describe "users/index.html.erb" do
         :first_name => "First Name",
         :last_name => "Last Name",
         :email => "Email",
+        :unix_uid => 1000,
+        :unix_username => "foo"
       ),
       stub_model(User,
         :first_name => "First Name",
         :last_name => "Last Name",
         :email => "Email",
+        :unix_uid => 1001,
+        :unix_username => "bar"
       )
     ])
     @users.stub!(:total_pages).and_return(1)

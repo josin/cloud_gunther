@@ -4,7 +4,7 @@
 #         email, encrypted_password, password_salt, created_at, updated_at, 
 #         remember_token, remember_created_at, sign_in_count, current_sign_in_at, last_sign_in_at, 
 #         current_sign_in_ip, last_sign_in_ip, failed_attempts, locked_at, authentication_token, 
-#         reset_password_token, unix_uid, #
+#         reset_password_token, unix_uid, unix_username, #
 
 class User < ActiveRecord::Base
   before_create :action_before_create
@@ -19,8 +19,8 @@ class User < ActiveRecord::Base
          :rememberable, :trackable, :validatable, :registerable, :lockable
         
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :remember_me,
-                  :admin, :state, :unix_uid
+  # attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :remember_me,
+  #                 :admin, :state, :unix_uid
   
   validates_presence_of :first_name, :last_name, :email
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i

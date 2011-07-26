@@ -5,13 +5,13 @@
 # 
 # Learn more: http://github.com/javan/whenever
 
-set :output, "/home/sin/cloud_gunther/current/log/cron.log"
-
 every 2.minutes do
+  set :output, "/home/sin/cloud_gunther/current/log/cron-outputs.log"
   runner "Daemons::OutputsWorker.run"
 end
 
 every 2.minutes do
+  set :output, "/home/sin/cloud_gunther/current/log/cron-instances.log"
   runner "Daemons::InstanceService.run"
 end
 

@@ -1,26 +1,8 @@
 <%= form_for(@user) do |f| %>
 	<%= render :partial => 'shared/form_errors', :locals => {:resource => @user} %>
+	
+	<%= render :partial => "users/common_user_form", :locals => { :f => f } %>
 
-  <div class="field">
-    <%= f.label :first_name %><br />
-    <%= f.text_field :first_name, :class => "text" %>
-  </div>
-  <div class="field">
-    <%= f.label :last_name %><br />
-    <%= f.text_field :last_name, :class => "text" %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email, :class => "text" %>
-  </div>
-	<div class="field">
-		<%= f.label :token_authentication_key %><br />
-		<%= f.text_field :authentication_token, :readonly => true, :class => "text" %>
-		<%#= link_to "Generate a token", token_authentications_path(:user_id => resource.id), :method => :post if resource.authentication_token.blank?%>
-		<%#= link_to "Generate a new token", token_authentications_path(:user_id => resource.id), :method => :post, 
-						:confirm => "Do you really want to generate new authentication token?" unless resource.authentication_token.blank? %>
-		<%#= link_to "Delete Token", token_authentication_path(resource), :method => :delete, :confirm => "Are you sure?"  %>
-	</div>
 	<div class="field">
 		<%= f.check_box :admin %>
 		<%= f.label :admin %>

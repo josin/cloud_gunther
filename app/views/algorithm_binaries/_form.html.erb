@@ -14,8 +14,16 @@
 	</div>
 	
 	<div class="field">
-		<%= f.label :launch_params %><br />
-		<%= f.text_field :launch_params, :class => "text long",  %>
+		<div class="unit size4of5">
+			<%= f.label :launch_params %><br />
+			<%= f.text_field :launch_params, :class => "text long",  %>
+		</div>
+		
+		<div class="unit size1of5 lastUnit">
+			<div class="field info-help">
+				<%= render :partial => "shared/help/macro_syntax_help" %>
+			</div>
+		</div>
 	</div>
 
 	<div class="field">

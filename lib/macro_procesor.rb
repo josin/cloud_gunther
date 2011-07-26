@@ -45,6 +45,10 @@ class MacroProcesor
     def unix_uid_macro(context)
       context.user.unix_uid
     end
+
+    def unix_username_macro(context)
+      context.user.unix_username
+    end
     
     def logger
       Rails.logger

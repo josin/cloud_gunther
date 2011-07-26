@@ -143,7 +143,7 @@ class InstancesDispatcher
   def create_user_data
     {
       :amqp_config => AppConfig.amqp_config,
-      :input_queue => "inputs",
+      :input_queue => @task.task_queue_name,
       :output_queue => "outputs",
     }.to_yaml
   end

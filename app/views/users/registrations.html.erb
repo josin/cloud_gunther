@@ -20,7 +20,7 @@
 	  <tr>
 			<td><%= user.id %></td>
 	    <td><%= link_to user.name, user %></td>
-	    <td><%= auto_link user.email %></td>
+	    <td><%= mail_to user.email %></td>
 	    <td><%= l user.created_at %></td>
 	    <td>
 		    <%= link_to 'View', user_path(user) %>

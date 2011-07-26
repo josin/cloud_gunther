@@ -38,4 +38,3 @@ get '/latest/user-data/' do; user_data; end
 get '/latest/meta-data/instance-id' do; instance_id; end
 get '/latest/meta-data/instance-id/' do; instance_id; end
 
-

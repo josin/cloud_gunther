@@ -16,7 +16,7 @@
 	  <tr>
 			<td><%= user.id %></td>
 	    <td><%= link_to user.name, user %></td>
-	    <td><%= raw auto_link user.email %></td>
+	    <td><%= mail_to user.email %></td>
 	    <td><%= user.admin? %></td>
 	    <td><%= user.state %></td>
 	    <td><%= l user.last_sign_in_at if user.last_sign_in_at %></td>

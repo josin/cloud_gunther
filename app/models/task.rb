@@ -59,7 +59,7 @@ class Task < ActiveRecord::Base
     bunny = Bunny.new(amqp_config)
     status = bunny.start
     raise "Could not connect to MQ broker." unless status == :connected
-    queue = bunny.queue("inputs")
+    queue = bunny.queue(self.task_queue_name)
     
     self.task_params[:instances_count].to_i.times do |index|
       self.instance_id = (index + 1)
@@ -88,7 +88,11 @@ class Task < ActiveRecord::Base
     self.outputs.create(:stderr => e.message)
   end
   handle_asynchronously :run
-
+  
+  def task_queue_name
+    "task-#{self.id}"
+  end
+  
   private
 
   # Returns xml of task definition with all information necessary for running it on cloud.
@@ -128,5 +132,4 @@ class Task < ActiveRecord::Base
   def action_before_save
     self.state = STATES[:new] if self.state.blank?
   end
-
 end
