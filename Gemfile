@@ -57,7 +57,13 @@ group :development, :test do
     gem 'rb-fsevent'
     gem 'growl'
   end
+  
+  # Instance service consumer
+  gem 'sinatra'
 end
+
+# App Servers
+gem 'passenger'
 
 # Deploy with Capistrano
 gem 'capistrano'
