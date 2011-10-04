@@ -6,7 +6,7 @@ class CloudEnginesController < ApplicationController
   # GET /cloud_engines.xml
   def index
     @search = CloudEngine.metasearch(params[:search])
-    @cloud_engines = @search.all.paginate(:page => @page, :per_page => @per_page)
+    @cloud_engines = @search.paginate(:page => @page)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -20,7 +20,7 @@ class CloudEnginesController < ApplicationController
     @cloud_engine = CloudEngine.find(params[:id])
     
     @search = @cloud_engine.images.metasearch(params[:search])
-    @images = @search.all.paginate(:page => @page, :per_page => @per_page)
+    @images = @search.paginate(:page => @page)
     
 
     respond_to do |format|

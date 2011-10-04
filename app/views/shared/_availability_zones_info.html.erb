@@ -1,0 +1,40 @@
+<ul class="zones_info">
+	<% zones_info.each do |zone| %>
+	<li class="zone">
+		<div>
+			<div class="zone_name">
+				<strong><%= zone[:zone_name] %></strong> (<%= zone[:zone_state] %>)
+			</div>
+			<div class="zone_detail">
+				<table>
+					<thead>
+						<tr>
+							<th rowspan="2">Instance type</th>
+							<th colspan="2">Available resources</th>
+							<th rowspan="2">CPU</th>
+							<th rowspan="2">RAM</th>
+							<th rowspan="2">Disk</th>
+						</tr>
+						<tr>
+							<th>Free</th>
+							<th>Max</th>
+						</tr>
+					</thead>
+					<tbody>
+						<% zone[:resources].each do |key, value| %>
+						<tr>
+							<td><%= key %></td>
+							<td><%= value[:free] %></td>
+							<td><%= value[:max] %></td>
+							<td><%= value[:cpu] %></td>
+							<td><%= value[:ram] %></td>
+							<td><%= value[:disk] %></td>
+						</tr>
+						<% end %>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</li>
+	<% end %>
+</ul>

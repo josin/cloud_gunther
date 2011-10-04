@@ -44,6 +44,7 @@ class Task < ActiveRecord::Base
   include ParamsReader
   def instances_count; read_from_params(:task_params, :instances_count); end
   def instance_type; read_from_params(:task_params, :instance_type); end
+  def zone_name; read_from_params(:task_params, :zone_name); end
   
   attr_accessor :instance_id # attr helper for macro processing
   

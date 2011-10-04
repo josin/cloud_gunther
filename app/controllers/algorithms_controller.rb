@@ -10,7 +10,7 @@ class AlgorithmsController < ApplicationController
     @search = current_user.algorithms unless current_user.admin?
 
     @search = @search.metasearch(params[:search])
-    @algorithms = @search.all.paginate(:page => @page, :per_page => @per_page)
+    @algorithms = @search.paginate(:page => @page)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -23,7 +23,7 @@ class AlgorithmsController < ApplicationController
   def show
     
     @search = @algorithm.algorithm_binaries.metasearch(params[:search])
-    @algorithm_binaries = @search.all.paginate(:page => @page, :per_page => @per_page)
+    @algorithm_binaries = @search.paginate(:page => @page)
 
     respond_to do |format|
       format.html # show.html.erb

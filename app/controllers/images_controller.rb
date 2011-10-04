@@ -7,7 +7,7 @@ class ImagesController < ApplicationController
   # GET /images.xml
   def index
     @search = Image.metasearch(params[:search])
-    @images = @search.all.paginate(:page => @page, :per_page => @per_page)
+    @images = @search.paginate(:page => @page)
 
     respond_to do |format|
       format.html # index.html.erb

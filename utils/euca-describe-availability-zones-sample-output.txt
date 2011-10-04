@@ -1,0 +1,14 @@
+AVAILABILITYZONE	stud2	147.32.84.118
+AVAILABILITYZONE	|- vm types	free / max   cpu   ram  disk
+AVAILABILITYZONE	|- m1.small	0000 / 0000   1    320     4
+AVAILABILITYZONE	|- c1.medium	0000 / 0000   1    853     8
+AVAILABILITYZONE	|- m1.large	0000 / 0000   1   1280    16
+AVAILABILITYZONE	|- m1.xlarge	0000 / 0000   2   2048    16
+AVAILABILITYZONE	|- c1.xlarge	0000 / 0000   2   2560    32
+AVAILABILITYZONE	ucebny	147.32.84.129
+AVAILABILITYZONE	|- vm types	free / max   cpu   ram  disk
+AVAILABILITYZONE	|- m1.small	0000 / 0000   1    320     4
+AVAILABILITYZONE	|- c1.medium	0000 / 0000   1    853     8
+AVAILABILITYZONE	|- m1.large	0000 / 0000   1   1280    16
+AVAILABILITYZONE	|- m1.xlarge	0000 / 0000   2   2048    16
+AVAILABILITYZONE	|- c1.xlarge	0000 / 0000   2   2560    32

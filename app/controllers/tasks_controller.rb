@@ -13,7 +13,7 @@ class TasksController < ApplicationController
     @search = current_user.tasks unless current_user.admin?
 
     @search = @search.metasearch(params[:search])
-    @tasks = @search.all.paginate(:page => @page, :per_page => @per_page)
+    @tasks = @search.paginate(:page => @page)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -25,7 +25,7 @@ class TasksController < ApplicationController
   # GET /tasks/1.xml
   def show
     @search = @task.outputs.metasearch(params[:search])
-    @outputs = @search.all.paginate(:page => @page, :per_page => @per_page)
+    @outputs = @search.paginate(:page => @page, :per_page => @per_page)
     
     @title << "##{@task.id}"
     

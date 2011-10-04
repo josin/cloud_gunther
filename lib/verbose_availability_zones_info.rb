@@ -19,7 +19,14 @@ module VerboseAvailabilityZonesInfo
   AVAILABILITY_ZONES_CMD = 'euca-describe-availability-zones verbose'
   
   def self.get_info
-    stdout = IO.popen(AVAILABILITY_ZONES_CMD) { |f| f.readlines.join }
+    
+    if RUBY_PLATFORM =~ /darwin/
+      # don't have active euca utils on local computer
+      stdout = File.open("#{Rails.root}/utils/euca-describe-availability-zones-sample-output.txt") { |f| f.read }
+    else
+      stdout = IO.popen(AVAILABILITY_ZONES_CMD) { |f| f.readlines.join }
+    end
+    
     VerboseAvailabilityZonesInfo::OutputParser.parse(stdout)
   end
   
