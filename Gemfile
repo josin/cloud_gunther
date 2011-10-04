@@ -16,7 +16,8 @@ gem 'meta_search'
 
 gem 'amqp'
 gem 'bunny'
-gem 'right_aws', '2.0.0'
+# gem 'right_aws', '2.0.0'
+gem 'right_aws'
 gem 'delayed_job'
 
 gem 'net-ssh'
@@ -53,10 +54,8 @@ group :development, :test do
   # gem 'guard-livereload'
 
   # FSEvent & Notifications for guard
-  if RUBY_PLATFORM =~ /darwin/i
-    gem 'rb-fsevent'
-    gem 'growl'
-  end
+  gem 'rb-fsevent', :require => false
+  gem 'growl', :require => false
   
   # Instance service consumer
   gem 'sinatra'

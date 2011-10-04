@@ -8,6 +8,17 @@
 #   watch(%r{config/locales/.+\.yml})
 # end
 
+if RUBY_PLATFORM =~ /darwin/
+  require 'rb-fsevent'
+  require 'growl'
+elsif RUBY_PLATFORM =~ /linux/
+  require 'rb-inotify'
+  require 'libnotify'
+else
+  raise "uknown platform: #{RUBY_PLATFORM}"
+end
+
+
 guard 'spork', :test_unit => false do
   watch('config/application.rb')
   watch('config/environment.rb')
@@ -16,7 +27,7 @@ guard 'spork', :test_unit => false do
   watch('spec/spec_helper.rb')
 end
 
-guard 'rspec', :version => 2, :cli => "--drb --color" do
+guard 'rspec', :version => 2, :all_on_start => false, :all_after_pass => false do
   watch(%r{^spec/.+_spec\.rb})
   watch(%r{^lib/(.+)\.rb})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb') { "spec" }
@@ -32,8 +43,8 @@ guard 'rspec', :version => 2, :cli => "--drb --color" do
   watch(%r{^app/views/(.+)/})                        { |m| "spec/requests/#{m[1]}_spec.rb" }
 end
 
-guard 'cucumber', :cli => "--drb --color --profile guard" do
-  watch(%r{^features/.+\.feature$})
-  watch(%r{^features/support/.+$})          { 'features' }
-  watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'features' }
-end
+# guard 'cucumber', :cli => "--drb --color --profile guard", :all_on_start => true, :all_after_pass => false do
+#   watch(%r{^features/.+\.feature$})
+#   watch(%r{^features/support/.+$})          { 'features' }
+#   # watch(%r{^features/step_definitions/(.+)_steps\.rb$}) { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'features' }
+# end
