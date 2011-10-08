@@ -1,0 +1,5 @@
+# == Schema Information
+# Table name: user_groups
+# Fields: id, name, permissions_store, priority, created_at, 
+#         updated_at, #
+

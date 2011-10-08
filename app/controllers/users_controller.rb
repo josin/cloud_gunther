@@ -128,7 +128,6 @@ class UsersController < ApplicationController
   
   private
   def setup
-    @title << "Admin"
-    @title << "Users"
+    @title << [ "Admin", "Users" ]
   end
 end

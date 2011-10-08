@@ -19,6 +19,8 @@ module Daemons
           obj = Output.create(output_hash["output"])
           logger.info "Created output with id: #{obj.id}"
         end
+        
+        bunny.stop
       end # of run
     end
   end # of class

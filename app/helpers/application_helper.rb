@@ -15,6 +15,8 @@ module ApplicationHelper
   
   # Return a title on a per-page basis
   def title
+    @title.flatten!
+    
     base_title = "#{t("app_name")} - #{t("app_desc")}"
     if @title.blank?
       base_title

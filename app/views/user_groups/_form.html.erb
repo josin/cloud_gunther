@@ -1,0 +1,33 @@
+<%= form_for(@user_group) do |f| %>
+	<%= render :partial => 'shared/form_errors', :locals => {:resource => @user_group} %>
+	
+	<fieldset id="group_definition" class="">
+		<legend>Group Definition</legend>
+		
+		<div class="field">
+			<%= f.label :name %><br />
+			<%= f.text_field :name, :class => "text title long" %>
+		</div>
+	
+		<div class="field">
+			<%= f.label :priority %><br />
+			<%= f.text_field :priority, :class => "text", :type => :number, :min => 0, :max => 9, :step => 1%>
+		</div>
+	
+		<div class="field">
+			<%= f.label :permissions_store, "Permissions DSL" %><br />
+			<%= f.text_area :permissions_store %>
+		</div>
+	</fieldset>
+	
+	<%= render :partial => "user_groups/user_group_assigment", :locals => { :f => f } %>
+	
+	<fieldset id="actions" class="">
+		<legend>Actions</legend>
+		
+		<div class="actions">
+	    <%= f.submit %> or <%= link_to "Cancel", :back %>
+	  </div>
+	</fieldset>
+	
+<% end %>

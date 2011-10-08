@@ -110,8 +110,7 @@ class CloudEnginesController < ApplicationController
   
   private
   def setup
-    @title << "Admin"
-    @title << "Cloud Engines"
+    @title << [ "Admin", "Cloud Engines" ]
   end
   
 end

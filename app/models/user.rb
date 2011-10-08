@@ -29,6 +29,9 @@ class User < ActiveRecord::Base
   has_many :algorithms
   has_many :algorithm_binaries
   
+  has_many :user_group_assocs
+  has_many :user_groups, :through => :user_group_assocs
+  
   def name
     "#{self.first_name} #{self.last_name}"
   end

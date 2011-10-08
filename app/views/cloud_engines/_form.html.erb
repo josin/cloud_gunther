@@ -1,31 +1,35 @@
 <%= form_for(@cloud_engine) do |f| %>
 	<%= render :partial => 'shared/form_errors', :locals => {:resource => @cloud_engine} %>
 
-	<div class="field">
-		<%= f.label :title %><br />
-		<%= f.text_field :title, :class => "text title long" %>
-	</div>
+	<fieldset id="cloud_engine_detail" class="">
+		<legend>Cloud Engine Detail</legend>
+		
+		<div class="field">
+			<%= f.label :title %><br />
+			<%= f.text_field :title, :class => "text title long" %>
+		</div>
 
-	<div class="field">
-		<%= f.label :engine_type %><br />
-		<%= f.select :engine_type, options_for_select(CloudEngine::ENGINE_TYPES.values, @cloud_engine.engine_type) %>
-	</div>
+		<div class="field">
+			<%= f.label :engine_type %><br />
+			<%= f.select :engine_type, options_for_select(CloudEngine::ENGINE_TYPES.values, @cloud_engine.engine_type) %>
+		</div>
 	
-	<div class="field">
-		<%= f.label :access_key %><br />
-		<%= f.text_field :access_key, :class => "text" %>
-	</div>
+		<div class="field">
+			<%= f.label :access_key %><br />
+			<%= f.text_field :access_key, :class => "text" %>
+		</div>
 
-	<div class="field">
-		<%= f.label :secret_access_key %><br />
-		<%= f.password_field :secret_access_key, :class => "text" %>
-	</div>
+		<div class="field">
+			<%= f.label :secret_access_key %><br />
+			<%= f.password_field :secret_access_key, :class => "text" %>
+		</div>
 	
-	<div class="field">
-		<%= f.label :endpoint_url %><br />
-		<%= f.text_field :endpoint_url, :class => "text" %>
-	</div>
-	
+		<div class="field">
+			<%= f.label :endpoint_url %><br />
+			<%= f.text_field :endpoint_url, :class => "text" %>
+		</div>
+	</fieldset>
+
 	<fieldset id="launch_params" class="line">
 		<legend>Config params</legend>
 		
@@ -37,7 +41,12 @@
 		<% end %>
 	</fieldset>
 	
-  <div class="actions">
-    <%= f.submit %> or <%= link_to "Cancel", :back %>
-  </div>
+	<fieldset id="actions" class="">
+		<legend>Actions</legend>
+		
+	  <div class="actions">
+	    <%= f.submit %> or <%= link_to "Cancel", :back %>
+	  </div>
+	</fieldset>
+	
 <% end %>

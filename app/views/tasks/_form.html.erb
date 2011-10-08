@@ -46,7 +46,7 @@
 		    <%= f.text_area :params, :class => "wide" %>
 			</div>
 		  <div class="togglable file_field nodisplay">
-				<p class="error">Not implemented yet.</p>
+				<p class="alert">Not implemented yet.</p>
 		    <%#= f.label :params_file %><br />
 		    <%#= f.file_field :params_file, :class => "wide" %>
 		  </div>
@@ -66,7 +66,7 @@
 		    <%= f.text_area :inputs, :class => "wide" %>
 			</div>
 			<div class="togglable file_field nodisplay">
-				<p class="error">Not implemented yet.</p>
+				<p class="alert">Not implemented yet.</p>
 		    <%#= f.label :inputs_file %><br />
 		    <%#= f.file_field :inputs_file, :class => "wide" %>
 			</div>
@@ -79,6 +79,11 @@
 		<% zones_info = VerboseAvailabilityZonesInfo.get_info %>
 		<div class="unit size1of2">
 			<div class="field">
+				<%= params_builder.label :zone_name %><br />
+				<%= params_builder.select :zone_name, options_for_select(zones_info.collect{ |i| i[:zone_name] }, @task.zone_name),
+				 							:include_blank => false, :class => "text" %>
+			</div>
+			<div class="field">
 				<%= params_builder.label :instance_type %><br />
 				<%= params_builder.select :instance_type, options_for_select(Image::INSTANCE_TYPES, @task.instance_type), 
 												:include_blank => true, :class => "text" %>
@@ -87,11 +92,6 @@
 				<%= params_builder.label :instances_count %><br />
 				<%= params_builder.text_field :instances_count, :class => "text", 
 							:type => :number, :min => 1, :step => 1, :value => @task.instances_count %>
-			</div>
-			<div class="field">
-				<%= params_builder.label :zone_name %><br />
-				<%= params_builder.select :zone_name, options_for_select(zones_info.collect{ |i| i[:zone_name] }, @task.zone_name),
-				 							:include_blank => false, :class => "text" %>
 			</div>
 		</div>
 		<div class="unit size2of2 lastUnit">
@@ -104,10 +104,10 @@
 		<legend>Task's Params</legend>
 		<%= f.fields_for :task_params do |params_builder| %>
 		<div class="unit size1of1 lastUnit">
+			<p class="alert">Seage algorithm only! Not implemented yet!</p>
 			<div class="field">
 				<%= params_builder.check_box :preconfiguration_required, :class => "" %>
 				<%= params_builder.label :preconfiguration_required, "Run preconfiguration before starting the task" %><br />
-				<em class="error_notice">Seage algorithm only! Not implemented yet!</em>
 			</div>
 		</div>
 		<% end %>

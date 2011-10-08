@@ -113,6 +113,6 @@ class ImagesController < ApplicationController
   end
   
   def setup
-    @title += ["Admin", "Cloud Engines", "Images"] 
+    @title << ["Admin", "Cloud Engines", "Images"] 
   end
 end

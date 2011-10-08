@@ -22,6 +22,8 @@ module Daemons
           connection = CloudEngine.where(:engine_type => CloudEngine::ENGINE_TYPES[:eucalyptus]).first.connect!
           connection.terminate_instances([msg])
         end
+        
+        bunny.stop
       end # of run
     end
   end # of class

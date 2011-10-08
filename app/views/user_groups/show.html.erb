@@ -1,0 +1,30 @@
+<% content_for :header do %>
+	<%= link_to "User Groups", user_groups_path %>
+	&raquo;
+	<%= "#{@user_group.name}" %>
+<% end %>
+
+
+<div class="resource_detail">
+	<table>
+		<tr>
+			<th>Name:</th>
+			<td><%= @user_group.name %></td>
+		</tr>
+		<tr>
+			<th>Priority:</th>
+			<td><%= @user_group.priority %></td>
+		</tr>
+	</table>
+		
+	<hr />
+	<div class="ap_container">
+		<p><span class="label">Permissions:</span></p>
+		<div class="ap"><%= raw ap @user_group.permissions_store %></div>
+	</div>
+</div>
+
+<div class="alert">Assigned Users: Not implemented yet.</div>
+
+<%= link_to 'Edit', edit_user_group_path(@user_group) %> |
+<%= link_to 'Back',:back %>

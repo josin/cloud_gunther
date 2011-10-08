@@ -1,4 +1,5 @@
 CloudGunther::Application.routes.draw do
+
   root :to => "dashboard#index"
   match "/", :to => "dashboard#index", :as => :dashboard
   
@@ -33,6 +34,8 @@ CloudGunther::Application.routes.draw do
       end
     end
   
+    resources :user_groups
+    
     resources :cloud_engines do
       member do
         post :test_connection

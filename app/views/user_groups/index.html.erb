@@ -1,0 +1,8 @@
+<%= content_for :header, "User groups" %>
+
+<% content_for :actions do %>
+	<li><%= link_to 'New User group', new_user_group_path %></li>
+<% end %>
+
+<%= render :partial => "user_groups/list", :locals => { :search => @search, :user_groups => @user_groups } %>
+

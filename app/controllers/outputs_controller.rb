@@ -85,7 +85,6 @@ class OutputsController < ApplicationController
   
   private
   def setup
-    @title << "Tasks"
-    @title << "Outputs"
+    @title << [ "Tasks", "Outputs" ]
   end
 end

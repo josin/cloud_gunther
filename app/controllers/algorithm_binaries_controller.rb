@@ -106,7 +106,6 @@ class AlgorithmBinariesController < ApplicationController
   end
   
   def setup
-    @title << "Algorithms"
-    @title << "Binaries"
+    @title << [ "Algorithms", "Binaries" ]
   end
 end
