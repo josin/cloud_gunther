@@ -1,3 +1,5 @@
+<% content_for :head, javascript_include_tag("user_groups") %>
+
 <%= form_for(@user_group) do |f| %>
 	<%= render :partial => 'shared/form_errors', :locals => {:resource => @user_group} %>
 	
@@ -20,7 +22,14 @@
 		</div>
 	</fieldset>
 	
-	<%= render :partial => "user_groups/user_group_assigment", :locals => { :f => f } %>
+	<fieldset id="users_group_assigment" class="">
+		<legend>Users Group Assigment</legend>
+
+		<%= f.label :users, "Assigned Users" %><br />
+		<%= f.text_field :user_tokens, :class => "text long", 
+						"data-pre" => @user_group.users.map { |v| { "id" => v.id, "name" => v.name } }.to_json,
+						"data-users-path" => tokeninput_users_path(:format => :json)	%>
+  </fieldset>
 	
 	<fieldset id="actions" class="">
 		<legend>Actions</legend>

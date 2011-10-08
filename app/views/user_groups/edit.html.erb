@@ -1,6 +1,7 @@
-<h1>Editing user_group</h1>
+<% content_for :header do %>
+	<%= link_to "User Groups", user_groups_path %>
+	&raquo;
+	Edit User Group
+<% end %>
 
 <%= render 'form' %>
-
-<%= link_to 'Show', @user_group %> |
-<%= link_to 'Back', user_groups_path %>

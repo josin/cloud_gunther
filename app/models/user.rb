@@ -31,6 +31,11 @@ class User < ActiveRecord::Base
   
   has_many :user_group_assocs
   has_many :user_groups, :through => :user_group_assocs
+  attr_reader :user_group_tokens
+  
+  def user_group_tokens=(ids)
+    self.user_group_ids = ids.split(",")
+  end
   
   def name
     "#{self.first_name} #{self.last_name}"

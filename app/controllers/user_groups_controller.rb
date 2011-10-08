@@ -13,6 +13,15 @@ class UserGroupsController < ApplicationController
       format.xml  { render :xml => @user_groups }
     end
   end
+  
+  # GET /tokeninput.json
+  def tokeninput
+    @user_groups = UserGroup.where(:name =~ "%#{params[:q]}%")
+
+    respond_to do |format|
+      format.json { render :json => @user_groups.map { |v| { :id => v.id, :name => v.name } } }
+    end
+  end
 
   # GET /user_groups/1
   # GET /user_groups/1.xml

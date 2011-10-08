@@ -1,17 +1,41 @@
+<% content_for :head, javascript_include_tag("user_groups") %>
+
 <%= form_for(@user) do |f| %>
 	<%= render :partial => 'shared/form_errors', :locals => {:resource => @user} %>
 	
-	<%= render :partial => "users/common_user_form", :locals => { :f => f } %>
+	<fieldset id="user_information" class="">
+		<legend>User Information</legend>
+		<%= render :partial => "users/common_user_form", :locals => { :f => f } %>
+	</fieldset>
+	
+	<fieldset id="account_permissions" class="">
+		<legend>Account Permissions</legend>
+		
+		<div class="field">
+			<%= f.check_box :admin %>
+			<%= f.label :admin %>
+		</div>
 
-	<div class="field">
-		<%= f.check_box :admin %>
-		<%= f.label :admin %>
-	</div>
-	<div class="field">
-		<%= f.label :state %>
-		<%= select :user, :state, options_for_select(User::STATES, @user.state), :include_blank => true %>
-	</div>
-  <div class="actions">
-    <%= f.submit %> or <%= link_to "Cancel", :back %>
-  </div>
+		<div class="field">
+			<%= f.label :state %>
+			<%= select :user, :state, options_for_select(User::STATES, @user.state), :include_blank => true %>
+		</div>
+	</fieldset>
+	
+	<fieldset id="user_group_assigment" class="">
+		<legend>User Group Assignment</legend>
+		
+		<%= f.label :user_group_tokens, "User Groups" %><br />
+		<%= f.text_field :user_group_tokens, :class => "text long",
+		 				"data-pre" => @user.user_groups.map { |v| { :id => v.id, :name => v.name } }.to_json,
+						"data-user-groups-path" => tokeninput_user_groups_path(:format => :json)	%>
+	</fieldset>
+
+	<fieldset id="actions" class="">
+		<legend>Actions</legend>
+		
+	  <div class="actions">
+	    <%= f.submit %> or <%= link_to "Cancel", :back %>
+	  </div>
+	</fieldset>
 <% end %>

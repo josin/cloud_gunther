@@ -15,6 +15,16 @@ class UsersController < ApplicationController
       format.xml  { render :xml => @users }
     end
   end
+  
+  # GET /tokeninput.json
+  def tokeninput
+    @users = User.where(:state => User::ENABLED).where((:first_name =~ "%#{params[:q]}%") | (:last_name =~ "%#{params[:q]}%"))
+
+    # logger.info { "Found #{@users.length} users." }
+    respond_to do |format|
+      format.json { render :json => @users.map { |v| { :id => v.id, :name => v.name } } }
+    end
+  end
 
   # GET /users/1
   # GET /users/1.xml

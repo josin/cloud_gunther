@@ -24,7 +24,13 @@
 	</div>
 </div>
 
-<div class="alert">Assigned Users: Not implemented yet.</div>
+<h2>Group members</h2>
+
+<ul>
+<% @user_group.users.each do |user| %>
+	<%= content_tag :li, link_to(user.name, user_path(user)) %>
+<% end %>
+</ul>
 
 <%= link_to 'Edit', edit_user_group_path(@user_group) %> |
 <%= link_to 'Back',:back %>

@@ -26,6 +26,7 @@ CloudGunther::Application.routes.draw do
   scope "/admin" do
     resources :users do
       collection do
+        get :tokeninput
         get :registrations
       end
       member do
@@ -34,7 +35,11 @@ CloudGunther::Application.routes.draw do
       end
     end
   
-    resources :user_groups
+    resources :user_groups do
+      collection do
+        get :tokeninput
+      end
+    end
     
     resources :cloud_engines do
       member do
