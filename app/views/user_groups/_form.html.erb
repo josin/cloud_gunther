@@ -13,13 +13,15 @@
 	
 		<div class="field">
 			<%= f.label :priority %><br />
-			<%= f.text_field :priority, :class => "text", :type => :number, :min => 0, :max => 9, :step => 1%>
+			<%= select_priority(f, @user_group.priority) %>
 		</div>
 	
+		<!--
 		<div class="field">
 			<%= f.label :permissions_store, "Permissions DSL" %><br />
 			<%= f.text_area :permissions_store %>
 		</div>
+		-->
 	</fieldset>
 	
 	<fieldset id="users_group_assigment" class="">

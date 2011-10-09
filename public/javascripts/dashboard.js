@@ -19,6 +19,6 @@
 	
 	$(function() {
 		update_queues_indicators();
-		setInterval(update_queues_indicators, 5000);
+    // setInterval(update_queues_indicators, 5000);
 	});
 })(jQuery, window, document);

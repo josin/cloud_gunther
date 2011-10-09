@@ -1,5 +1,4 @@
 require "spork"
-# require 'cover_me'
 
 # The Spork.prefork block is run only once when the spork server is started.
 # You typically want to place most of your (slow) initializer code in here, in
@@ -14,9 +13,6 @@ Spork.prefork do
   ENV["RAILS_ENV"] ||= 'test'
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
-
-  # require 'simplecov'
-  # SimpleCov.start 'rails'
 
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.

@@ -31,4 +31,9 @@ module ApplicationHelper
     output.safe_concat page_entries_info(resource)
     output
   end
+  
+  def select_priority(form, selected_value)
+    # form.text_field :priority, :class => "text", :type => :number, :min => 0, :max => 9, :step => 1
+    form.select :priority, options_for_select((1..9).to_a, selected_value), :include_blank => false
+  end
 end # of module

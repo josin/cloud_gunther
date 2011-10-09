@@ -4,7 +4,7 @@
 #         email, encrypted_password, password_salt, created_at, updated_at, 
 #         remember_token, remember_created_at, sign_in_count, current_sign_in_at, last_sign_in_at, 
 #         current_sign_in_ip, last_sign_in_ip, failed_attempts, locked_at, authentication_token, 
-#         reset_password_token, unix_uid, unix_username, #
+#         reset_password_token, unix_uid, unix_username, priority, #
 
 class User < ActiveRecord::Base
   before_create :action_before_create
@@ -24,6 +24,7 @@ class User < ActiveRecord::Base
   
   validates_presence_of :first_name, :last_name, :email
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
+  validates_numericality_of :priority
   
   has_many :tasks
   has_many :algorithms
@@ -47,6 +48,10 @@ class User < ActiveRecord::Base
   
   def role
     self.admin? ? "Administrator" : ""
+  end
+  
+  def real_priority
+    ([self.priority] + self.user_groups.map(&:priority)).max
   end
   
   private

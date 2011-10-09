@@ -14,8 +14,13 @@
 		</div>
 
 		<div class="field">
-			<%= f.label :state %>
+			<%= f.label :state %><br />
 			<%= select :user, :state, options_for_select(User::STATES, @user.state), :include_blank => true %>
+		</div>
+		
+		<div class="field">
+			<%= f.label :priority %><br />
+			<%= select_priority(f, @user.priority) %>
 		</div>
 	</fieldset>
 	

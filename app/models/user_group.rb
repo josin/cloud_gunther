@@ -8,8 +8,11 @@ class UserGroup < ActiveRecord::Base
   has_many :user_group_assocs
   has_many :users, :through => :user_group_assocs
   
-  attr_reader :user_tokens
+  validates_presence_of :name
+  validates_numericality_of :priority
   
+  
+  attr_reader :user_tokens
   def user_tokens=(ids)
     self.user_ids = ids.split(",")
   end
