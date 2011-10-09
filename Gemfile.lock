@@ -87,8 +87,6 @@ GEM
       abstract (>= 1.0.0)
     escape_utils (0.2.4)
     eventmachine (0.12.10)
-    factory_girl (2.1.2)
-      activesupport
     fastthread (1.0.7)
     ffi (1.0.9)
     gherkin (2.5.1)
@@ -247,7 +245,6 @@ DEPENDENCIES
   delayed_job
   devise
   escape_utils
-  factory_girl
   growl
   guard
   guard-cucumber

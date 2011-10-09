@@ -3,10 +3,7 @@
 <%= form_for(@user) do |f| %>
 	<%= render :partial => 'shared/form_errors', :locals => {:resource => @user} %>
 	
-	<fieldset id="user_information" class="">
-		<legend>User Information</legend>
-		<%= render :partial => "users/common_user_form", :locals => { :f => f } %>
-	</fieldset>
+	<%= render :partial => "users/common_user_form", :locals => { :f => f } %>
 	
 	<fieldset id="account_permissions" class="">
 		<legend>Account Permissions</legend>

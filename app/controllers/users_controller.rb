@@ -74,11 +74,6 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
 
-    unless params[:user][:password].presence && params[:user][:password_confirmation].presence
-      params[:user].delete(:password) 
-      params[:user].delete(:password_confirmation)
-    end
-
     respond_to do |format|
       if @user.update_attributes(params[:user])
         format.html { redirect_to(@user, :notice => 'User was successfully updated.') }

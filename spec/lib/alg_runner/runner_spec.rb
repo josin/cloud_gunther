@@ -14,7 +14,7 @@ describe AlgRunner do
     let(:bunny) { mock(Bunny) }
     let(:input_queue) { mock("queue").as_null_object }
     let(:output_queue) { mock("queue", {:publish => nil}).as_null_object }
-    let(:runner) { AlgRunner::Runner.new(bunny, input_queue, output_queue) }
+    let(:runner) { AlgRunner::Runner.new(bunny, input_queue, output_queue, Rails.logger) }
     
     describe "start! method" do
       pending

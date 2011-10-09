@@ -3,16 +3,22 @@
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
   <%= devise_error_messages! %>
 
-	<%= render :partial => "users/common_user_form", :locals => { :f => f } %>
+	<%= render :partial => "users/common_user_form", :locals => { :f => f } %>	
+	<%= render :partial => "users/password_form_fields", :locals => { :f => f } %>
 
-  <div class="field">
-		<%= f.label :current_password %> <em>(we need your current password to confirm your changes)</em><br />
-  	<%= f.password_field :current_password, :class => "text" %>
-	</div>
+	<fieldset id="confirmation_and_update" class="">
+		<legend>Confirmation and Update</legend>
+		
+	  <div class="field">
+			<%= f.label :current_password %> <em>(we need your current password to confirm your changes)</em><br />
+	  	<%= f.password_field :current_password, :class => "text" %>
+		</div>
 
-  <div class="actions">
-		<%= f.submit "Update" %> or <%= link_to "Cancel", :back %>
-	</div>
+	  <div class="actions">
+			<%= f.submit "Update" %> or <%= link_to "Cancel", :back %>
+		</div>
+	</fieldset>
+	
 <% end %>
 
 <h3>Cancel my account</h3>

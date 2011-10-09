@@ -19,8 +19,7 @@ describe CloudEnginesController do
 
   describe "GET index" do
     it "assigns all cloud_engines as @cloud_engines" do
-      # metasearch_mock = mock("metasearch", :all => [mock_cloud_engine])
-      # CloudEngine.stub(:metasearch) { metasearch_mock }
+      CloudEngine.stub_chain(:metasearch, :paginate).and_return([mock_cloud_engine])
       get :index
       assigns(:cloud_engines).should eq([mock_cloud_engine])
     end

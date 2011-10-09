@@ -1,32 +1,29 @@
-<div class="field">
-	<%= f.label :first_name %><br />
-  <%= f.text_field :first_name, :class => "text" %>
-</div>
-<div class="field">
-	<%= f.label :last_name %><br />
-	<%= f.text_field :last_name, :class => "text" %>
-</div>
-<div class="field">
-	<%= f.label :email %><br />
-  <%= f.text_field :email, :class => "text", :type => :email %>
-</div>
-<div class="field">
-	<%= f.label :unix_uid %><br />
-  <%= f.text_field :unix_uid, :class => "text" %>
-</div>
-<div class="field">
-	<%= f.label :unix_username %><br />
-  <%= f.text_field :unix_username, :class => "text" %>
-</div>
-<div class="field">
-	<%= f.label :password %> <em>(leave blank if you don't want to change it)</em><br />
-	<%= f.password_field :password, :class => "text" %>
-</div>
-<div class="field">
-	<%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation, :class => "text" %>
-</div>
-<div class="field">
-	<%= f.label :token_authentication_key %><br />
-	<%= f.text_field :authentication_token, :readonly => true, :class => "text" %>
-</div>
+<fieldset id="account_information" class="">
+	<legend>Account Information</legend>
+
+	<div class="field">
+		<%= f.label :first_name %><br />
+	  <%= f.text_field :first_name, :class => "text" %>
+	</div>
+	<div class="field">
+		<%= f.label :last_name %><br />
+		<%= f.text_field :last_name, :class => "text" %>
+	</div>
+	<div class="field">
+		<%= f.label :email %><br />
+	  <%= f.text_field :email, :class => "text", :type => :email %>
+	</div>
+	<div class="field">
+		<%= f.label :unix_uid %><br />
+	  <%= f.text_field :unix_uid, :class => "text" %>
+	</div>
+	<div class="field">
+		<%= f.label :unix_username %><br />
+	  <%= f.text_field :unix_username, :class => "text" %>
+	</div>
+	<div class="field">
+		<%= f.label :token_authentication_key %><br />
+		<%= f.text_field :authentication_token, :readonly => true, :class => "text" %>
+	</div>
+</fieldset>
+

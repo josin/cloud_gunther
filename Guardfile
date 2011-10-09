@@ -19,7 +19,7 @@ else
 end
 
 
-guard 'spork', :test_unit => false do
+guard 'spork', :test_unit => false, :wait => 60, :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAILS_ENV' => 'test' } do
   watch('config/application.rb')
   watch('config/environment.rb')
   watch(%r{^config/environments/.*\.rb$})

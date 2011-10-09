@@ -20,12 +20,11 @@ module AlgRunner
   
     attr_accessor :logger, :bunny, :input_queue, :output_queue
   
-    def initialize(bunny, input_queue, output_queue)
+    def initialize(bunny, input_queue, output_queue, logger = Logger.new(STDOUT))
       @bunny = bunny
       @input_queue = input_queue
       @output_queue = output_queue
-      
-      @logger ||= Logger.new(STDOUT)
+      @logger = logger
     end
   
     def start!
@@ -116,7 +115,7 @@ module AlgRunner
     def launch_algorithm(launch_cmd)
       begin
         launch_cmd = CGI::unescapeHTML(launch_cmd)
-        logger.debug { launch_cmd }
+        # logger.debug { launch_cmd }
         stdout, stderr = "", ""
         status = POpen4::popen4(launch_cmd) do |out, err, stdin, pid|
           out.each_line { |line| stdout << line }

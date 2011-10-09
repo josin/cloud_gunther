@@ -39,7 +39,7 @@ end
 group :development, :test do
   gem 'rspec-rails'
   gem 'spork', '~> 0.9.0.rc'
-  gem 'factory_girl'
+
   # gem 'cover_me', '~> 1.1.0'
   gem 'jasmine'
   gem 'cucumber-rails'

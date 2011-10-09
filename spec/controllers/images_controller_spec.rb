@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe ImagesController do
-  fixtures :users, :cloud_engines, :images
+  fixtures :users, :cloud_engines#, :images
   
   let(:user) { users(:test_user1) }
   let(:cloud_engine) { cloud_engines(:cloud_engine_1) }
@@ -17,9 +17,9 @@ describe ImagesController do
 
   describe "GET index" do
     it "assigns all images as @images" do
-      Image.stub(:all) { [mock_image] }
+      Image.stub_chain(:metasearch, :paginate).and_return([mock_image])
       get :index, base_path
-      assigns(:images).should eq(cloud_engine.images)
+      assigns(:images).should eq([mock_image])
     end
   end
 
