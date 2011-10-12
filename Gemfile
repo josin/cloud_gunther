@@ -5,7 +5,7 @@ gem 'rails', '3.0.9'
 gem 'mysql2', '0.2.7'
 
 gem 'devise'
-gem 'cancan'
+gem "cancan", "~> 1.6.7"
 
 gem 'paperclip'
 gem 'will_paginate', ">=3.0.pre2"

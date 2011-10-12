@@ -43,7 +43,7 @@ GEM
     bcrypt-ruby (3.0.1)
     builder (2.1.2)
     bunny (0.7.6)
-    cancan (1.6.6)
+    cancan (1.6.7)
     capistrano (2.9.0)
       highline
       net-scp (>= 1.0.0)
@@ -237,7 +237,7 @@ DEPENDENCIES
   amqp
   awesome_print
   bunny
-  cancan
+  cancan (~> 1.6.7)
   capistrano
   cucumber-rails
   daemons
