@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.9'
+gem 'rails', '3.0.10'
 
 gem 'mysql2', '0.2.7'
 
@@ -8,7 +8,7 @@ gem 'devise'
 gem "cancan", "~> 1.6.7"
 
 gem 'paperclip'
-gem 'will_paginate', ">=3.0.pre2"
+gem 'will_paginate', ">=3.0"
 gem 'simple-navigation'
 
 gem 'meta_where'
@@ -16,14 +16,13 @@ gem 'meta_search'
 
 gem 'amqp'
 gem 'bunny'
-# gem 'right_aws', '2.0.0'
-gem 'right_aws'
-gem 'delayed_job'
+gem 'right_aws' #, '2.0.0'
 
 gem 'net-ssh'
 gem 'net-scp'
 gem 'popen4'
 
+gem 'delayed_job' # https://github.com/collectiveidea/delayed_job
 gem 'daemons'
 gem 'whenever'
 
@@ -37,8 +36,8 @@ end
 
 
 group :development, :test do
-  gem 'rspec-rails'
-  gem 'spork', '~> 0.9.0.rc'
+  gem 'rspec-rails', '>= 2.6.0'
+  gem 'spork', '~> 0.9.0.rc8'
 
   # gem 'cover_me', '~> 1.1.0'
   gem 'jasmine'
@@ -54,8 +53,10 @@ group :development, :test do
   # gem 'guard-livereload'
 
   # FSEvent & Notifications for guard
-  gem 'rb-fsevent', :require => false
-  gem 'growl', :require => false
+  if RUBY_PLATFORM =~ /darwin/
+    gem 'rb-fsevent', :require => false
+    gem 'growl', :require => false
+  end
   
   # Instance service consumer
   gem 'sinatra'
@@ -63,6 +64,7 @@ end
 
 # App Servers
 gem 'passenger'
+gem 'thin'
 
 # Deploy with Capistrano
 gem 'capistrano'

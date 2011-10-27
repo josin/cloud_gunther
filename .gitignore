@@ -13,3 +13,7 @@ config/daemons.yml
 utils/user_data_service_simulator/tmp/restart.txt
 /coverage/
 coverage.data
+
+config/email.yml
+
+.rvmrc

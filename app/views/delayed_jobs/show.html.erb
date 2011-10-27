@@ -1,0 +1,41 @@
+<% content_for :header do %>
+	Delayed Job  #<%= @delayed_job.id %>
+<% end %>
+
+<div class="resource_detail">
+	<table>
+		<tr>
+			<th>Priority:</th>
+			<td><%= @delayed_job.priority %></td>
+			<th>Run at:</th>
+			<td><%= @delayed_job.run_at %></td>
+		</tr>
+		<tr>
+			<th>Locked at:</th>
+			<td><%= @delayed_job.locked_at %></td>
+			<th>Locked by:</th>
+			<td><%= @delayed_job.locked_by %></td>
+		</tr>
+		<tr>
+			<th>Failed at:</th>
+			<td><%= @delayed_job.failed_at %></td>
+			<th>Created at:</th>
+			<td><%= @delayed_job.created_at %></td>
+		</tr>
+		<tr>
+			<th>Updated at:</th>
+			<td><%= @delayed_job.updated_at %></td>
+			<th></th>
+			<td></td>
+		</tr>
+	</table>
+
+	<hr />
+	<div class="ap_container">
+		<p><span class="label">Handler:</span></p>
+		<div class="ap"><%= @delayed_job.handler %></div>
+	</div>
+</div>
+
+<%= link_to 'Back', delayed_jobs_path %> |
+<%= link_to 'Destroy', @delayed_job, :confirm => 'Are you sure?', :method => :delete %>

@@ -36,4 +36,8 @@ module ApplicationHelper
     # form.text_field :priority, :class => "text", :type => :number, :min => 0, :max => 9, :step => 1
     form.select :priority, options_for_select((1..9).to_a, selected_value), :include_blank => false
   end
+  
+  def l_if_exists(item)
+    l(item) if item
+  end
 end # of module

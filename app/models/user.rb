@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   end
   
   def real_priority
-    ([self.priority] + self.user_groups.map(&:priority)).max
+    ([self.priority] + self.user_groups.map(&:priority)).compact.max
   end
   
   private

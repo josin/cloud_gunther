@@ -11,7 +11,7 @@ describe User do
       user.state.should eq("new")
       user.locked_at.should_not be_nil
     end
-  
+    
     it "user should have authentication token" do
       user = User.new
       user.should_receive(:reset_authentication_token!)
@@ -46,6 +46,11 @@ describe User do
       it "should return users self priority" do
         user.priority = 10
         user.real_priority.should eq(10)
+      end
+      
+      it "should not raise exception when user priority is nil" do
+        user.priority = nil
+        expect { user.real_priority.should_not be_nil }.to_not raise_exception
       end
     end
   end

@@ -88,7 +88,7 @@ class Task < ActiveRecord::Base
     self.update_attribute(:state, STATES[:failed])
     self.outputs.create(:stderr => e.message)
   end
-  handle_asynchronously :run
+  handle_asynchronously :run, :priority => Proc.new { |i| i.user.real_priority }
   
   def task_queue_name
     "task-#{self.id}"

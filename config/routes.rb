@@ -1,5 +1,5 @@
 CloudGunther::Application.routes.draw do
-
+  
   root :to => "dashboard#index"
   match "/", :to => "dashboard#index", :as => :dashboard
   
@@ -24,6 +24,8 @@ CloudGunther::Application.routes.draw do
   end
   
   scope "/admin" do
+    resources :delayed_jobs, :only => [:index, :show, :destroy]
+    
     resources :users do
       collection do
         get :tokeninput

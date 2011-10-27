@@ -20,8 +20,8 @@
 			<td><%= l task.created_at %></td>
 			<td><%= task.user.name %></td>
 			<td><%= task.state %></td>
-			<td><%= l task.started_at if task.started_at %></td>
-			<td><%= l task.finished_at if task.finished_at %></td>
+			<td><%= l_if_exists task.started_at %></td>
+			<td><%= l_if_exists task.finished_at %></td>
 			<td>
 				<%= link_to 'Detail', task %>
 				<%= link_to 'Edit', edit_task_path(task) %>
