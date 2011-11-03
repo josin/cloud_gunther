@@ -58,6 +58,10 @@ class MacroProcesor
       context.secret_key
     end
     
+    def endpoint_url_macro(context)
+      context.endpoint_url
+    end
+    
     def logger
       Rails.logger
     end
