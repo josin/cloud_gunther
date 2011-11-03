@@ -29,5 +29,12 @@ class CloudEngine < ActiveRecord::Base
   def availability_zones_info_cmd
     MacroProcesor.process_macros(self.availability_zones_info, self, CloudEngine)
   end
-
+  
+  def eucalyptus?
+    self.engine_type == CloudEngine::ENGINE_TYPES[:eucalyptus]
+  end
+  
+  def aws?
+    self.engine_type == CloudEngine::ENGINE_TYPES[:aws]
+  end
 end

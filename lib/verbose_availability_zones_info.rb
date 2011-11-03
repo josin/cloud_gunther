@@ -21,8 +21,6 @@ module VerboseAvailabilityZonesInfo
   def self.get_info(cmd)
     raise "Availability zones command must be specified in Cloud Engine." if cmd.blank?
     
-    Rails.logger.info { `#{cmd}` }
-
     stdout, stderr = "", ""
     status = POpen4::popen4(cmd) do |out, err, stdin, pid|
       out.each_line { |line| stdout << line }
