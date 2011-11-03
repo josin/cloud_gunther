@@ -20,7 +20,15 @@ module VerboseAvailabilityZonesInfo
   
   def self.get_info(cmd)
     raise "Availability zones command must be specified in Cloud Engine." if cmd.blank?
-    stdout = IO.popen(cmd) { |f| f.readlines.join }
+
+    stdout, stderr = "", ""
+    status = POpen4::popen4(cmd) do |out, err, stdin, pid|
+      out.each_line { |line| stdout << line }
+      err.each_line { |line| stderr << line }
+    end
+    
+    raise "Error occured when fetching info about availability zones. Error: #{stderr}" unless stderr.blank? 
+
     VerboseAvailabilityZonesInfo::OutputParser.parse(stdout)
   end
   
