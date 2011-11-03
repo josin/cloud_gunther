@@ -1,0 +1,6 @@
+#!/bin/bash
+
+SAMPLE_OUTPUT="`dirname $0`/euca-describe-availability-zones-sample-output.txt"
+cat $SAMPLE_OUTPUT
+
+exit 0

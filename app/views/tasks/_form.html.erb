@@ -8,27 +8,25 @@
 	<fieldset>
 		<legend>Algorithm &amp; Cloud Engine</legend>
 		<div class="line">
-		  <div class="field unit size1of2">
+		  <div class="field unit size1of1">
 		    <%= f.label :algorithm_binary_id %><br />
 		    <%= f.select :algorithm_binary_id, grouped_options_for_select(active_binaries_for_select, @task.algorithm_binary_id) %>
 		  </div>
-		  <div class="field unit size2of2 lastUnit">
-				<div class="field">
-			    <%= f.label :cloud_engine_id %><br />
-			    <%= f.select :cloud_engine_id, options_from_collection_for_select(CloudEngine.all, :id, :title, @task.cloud_engine_id) %>
-				</div>
-				<div class="field">
-			    <%= f.label :image_id %><br />
-			    <%= f.select :image_id, options_from_collection_for_select(Image.all, :id, :title, @task.image_id) %>
-				</div>
+			<div class="field">
+		    <%= f.label :cloud_engine_id %><br />
+		    <%= f.select :cloud_engine_id, options_from_collection_for_select(CloudEngine.all, :id, :title, @task.cloud_engine_id) %>
+			</div>
+			<div class="field">
+		    <%= f.label :image_id %><br />
+		    <%= f.select :image_id, options_from_collection_for_select(Image.all, :id, :title, @task.image_id) %>
 		  </div>
+			<div class="field">
+		    <%= f.label :state %> <em>(Only for development)</em><br />
+		    <%= f.select :state, options_for_select(["", "new", "ready", "finished"], @task.state) %>
+		  </div> 
 		</div>
 	</fieldset>
 	
-	<div class="field">
-    <%= f.label :state %> <em>(Only for development)</em><br />
-    <%= f.select :state, options_for_select(["", "new", "ready", "finished"], @task.state) %>
-  </div> 
 	
 	<fieldset>
 		<legend>Inputs &amp; Params</legend>

@@ -35,6 +35,11 @@
 		<p><span class="label">Handler:</span></p>
 		<div class="ap"><%= @delayed_job.handler %></div>
 	</div>
+	<hr />
+	<div class="ap_container">
+		<p><span class="label">Last error:</span></p>
+		<div class="ap"><%= @delayed_job.last_error %></div>
+	</div>
 </div>
 
 <%= link_to 'Back', delayed_jobs_path %> |
