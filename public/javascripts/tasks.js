@@ -10,7 +10,7 @@ $(function() {
 		});
 	});
 	
-	$('#task_cloud_engine_id').change(function() {
+	$.fn.fetch_zones_info = function() {
 		var value = $(this).val();
 		
 		// load zone names
@@ -27,6 +27,11 @@ $(function() {
 		$.get($(this).data("cloud-engine-availability-zones-info-url"), { "cloud_engine_id" : value }, function(data, status, jqXHR) {
 			$(".zones_info_container").html(data);
 		}, "HTML");
+	}
+	
+	$('#task_cloud_engine_id').fetch_zones_info();
+	$('#task_cloud_engine_id').change(function() {
+		$(this).fetch_zones_info();
 	});
 	
 });
