@@ -14,7 +14,13 @@
 		  </div>
 			<div class="field">
 		    <%= f.label :cloud_engine_id %><br />
-		    <%= f.select :cloud_engine_id, options_from_collection_for_select(CloudEngine.all, :id, :title, @task.cloud_engine_id) %>
+		    <%= f.select :cloud_engine_id, 
+											options_from_collection_for_select(CloudEngine.all, :id, :title, @task.cloud_engine_id),
+											{ :include_blank => true },
+											{
+												"data-cloud-engine-availability-zones-info-url" => cloud_engine_availability_zones_info_tasks_path,
+												"data-cloud-engine-zones-url" => cloud_engine_zones_tasks_path,
+											} %>
 			</div>
 			<div class="field">
 		    <%= f.label :image_id %><br />
@@ -74,11 +80,10 @@
 	<fieldset id="instances_settings" class="">
 		<legend>Instances settings</legend>
 		<%= f.fields_for :task_params do |params_builder| %>
-		<% zones_info = VerboseAvailabilityZonesInfo.get_info %>
 		<div class="unit size1of2">
 			<div class="field">
 				<%= params_builder.label :zone_name %><br />
-				<%= params_builder.select :zone_name, options_for_select(zones_info.collect{ |i| i[:zone_name] }, @task.zone_name),
+				<%= params_builder.select :zone_name, options_for_select([], @task.zone_name),
 				 							:include_blank => false, :class => "text" %>
 			</div>
 			<div class="field">
@@ -92,8 +97,9 @@
 							:type => :number, :min => 1, :step => 1, :value => @task.instances_count %>
 			</div>
 		</div>
-		<div class="unit size2of2 lastUnit">
-			<%= render :partial => "shared/availability_zones_info", :locals => { :zones_info => zones_info } %>
+		<div class="zones_info_container unit size2of2 lastUnit">
+			<%# zones_info = VerboseAvailabilityZonesInfo.get_info %>
+			<%#= render :partial => "shared/availability_zones_info", :locals => { :zones_info => zones_info } %>
 		</div>
 	<% end %>		
 	</fieldset>

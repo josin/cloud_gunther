@@ -15,6 +15,7 @@ includes everything needed to create database-backed web applications according 
 ## TODO and future proposals (nice to have features)
 
 * Next/Previous button to slide over outputs in selected task.
+* Task#new => load images which are related to chosen cloud engine
 
 ## Project Structure
 

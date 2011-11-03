@@ -24,5 +24,10 @@ class CloudEngine < ActiveRecord::Base
   
   include ParamsReader
   def key_name; read_from_params(:params, :key_name); end
+  def availability_zones_info; read_from_params(:params, :availability_zones_info); end
+  
+  def availability_zones_info_cmd
+    MacroProcesor.process_macros(self.availability_zones_info, self, CloudEngine)
+  end
 
 end

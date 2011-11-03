@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :find_task, :except => [:index, :new, :create]
+  before_filter :find_task, :except => [:index, :new, :create, :cloud_engine_availability_zones_info, :cloud_engine_zones]
   before_filter :find_algorithms, :only => [:new, :edit]
   
   # GET /tasks
@@ -119,6 +119,26 @@ class TasksController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(@task, :notice => 'Task is running.') }
       format.xml  { head :ok }
+    end
+  end
+  
+  # GET /tasks/cloud_engine_availability_zones_info?cloud_engine_id
+  def cloud_engine_availability_zones_info
+    @cloud_engine = CloudEngine.find params[:cloud_engine_id]
+    zones_info = VerboseAvailabilityZonesInfo.get_info(@cloud_engine.availability_zones_info_cmd)
+    
+    respond_to do |format|
+      format.js { render :partial => "shared/availability_zones_info", :locals => { :zones_info => zones_info } }
+    end
+  end
+  
+  # GET /tasks/cloud_engine_zones?cloud_engine_id
+  def cloud_engine_zones
+    @cloud_engine = CloudEngine.find params[:cloud_engine_id]
+    zones_info = VerboseAvailabilityZonesInfo.get_info(@cloud_engine.availability_zones_info_cmd)
+
+    respond_to do |format|
+      format.json { render :json => zones_info.collect{ |i| i[:zone_name] } }
     end
   end
   

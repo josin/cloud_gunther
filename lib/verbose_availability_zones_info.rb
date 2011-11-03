@@ -16,10 +16,11 @@
 #   AVAILABILITYZONE  |- c1.xlarge  0000 / 0000   2   2560    32
 # 
 module VerboseAvailabilityZonesInfo
-  AVAILABILITY_ZONES_CMD = 'euca-describe-availability-zones verbose'
+  # AVAILABILITY_ZONES_CMD = 'euca-describe-availability-zones verbose'
   
-  def self.get_info
-    stdout = IO.popen(AVAILABILITY_ZONES_CMD) { |f| f.readlines.join }
+  def self.get_info(cmd)
+    raise "Availability zones command must be specified in Cloud Engine." if cmd.blank?
+    stdout = IO.popen(cmd) { |f| f.readlines.join }
     VerboseAvailabilityZonesInfo::OutputParser.parse(stdout)
   end
   

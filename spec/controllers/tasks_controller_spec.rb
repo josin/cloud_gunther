@@ -124,5 +124,17 @@ describe TasksController do
       response.should redirect_to(tasks_url)
     end
   end
+  
+  describe "GET cloud_engine_availability_zones_info" do
+    it "does something" do
+      pending
+    end
+  end
+  
+  describe "GET cloud_engine_zones" do
+    it "does something" do
+      pending
+    end
+  end
 
 end

@@ -3,8 +3,8 @@ class MacroProcesor
   MACRO_REGEXP = /\{{2}([^}]*)\}{2}/
   
   class << self
-    def process_macros(text, context)
-      raise "Task instance required as context for macro processing." unless context.is_a?(Task)
+    def process_macros(text, context, context_class = Task)
+      raise "#{context_class.to_s} instance required as context for macro processing." unless context.is_a?(context_class)
       # Rails.logger.debug { "Macro processing: '#{text}', '#{context}'" }
     
       text.gsub!(MACRO_REGEXP) do |m|
@@ -48,6 +48,14 @@ class MacroProcesor
 
     def unix_username_macro(context)
       context.user.unix_username
+    end
+    
+    def access_key_macro(context)
+      context.access_key
+    end
+    
+    def secret_key_macro(context)
+      context.secret_key
     end
     
     def logger

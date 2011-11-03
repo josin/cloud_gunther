@@ -13,6 +13,11 @@ CloudGunther::Application.routes.draw do
   match "/account" => redirect("/account/sign_in")
 
   resources :tasks do
+    collection do
+      get :cloud_engine_availability_zones_info
+      get :cloud_engine_zones
+    end
+    
     post :run
     resources :outputs, :only => [:index, :show, :destroy]
   end
