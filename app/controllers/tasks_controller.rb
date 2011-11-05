@@ -143,7 +143,7 @@ class TasksController < ApplicationController
   # GET /tasks/cloud_engine_zones?cloud_engine_id
   def cloud_engine_zones
     @cloud_engine = CloudEngine.find params[:cloud_engine_id]
-    zones_info = @cloud_engine.connect!.describe_availability_zones
+    zones_info = @cloud_engine.availability_zones
 
     respond_to do |format|
       format.json { render :json => zones_info.collect{ |i| i[:zone_name] } }

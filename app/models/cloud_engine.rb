@@ -37,4 +37,8 @@ class CloudEngine < ActiveRecord::Base
   def aws?
     self.engine_type == CloudEngine::ENGINE_TYPES[:aws]
   end
+  
+  def availability_zones
+    self.connect!.describe_availability_zones
+  end
 end

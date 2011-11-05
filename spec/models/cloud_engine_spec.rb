@@ -25,4 +25,10 @@ describe CloudEngine do
       cloud_engine.connect!
     end
   end
+  
+  describe "availability zones" do
+    it "is pending" do
+      pending
+    end
+  end
 end

@@ -16,7 +16,7 @@ gem 'meta_search'
 
 gem 'amqp'
 gem 'bunny'
-gem 'right_aws' #, '2.0.0'
+gem 'right_aws', '2.0.0'
 
 gem 'net-ssh'
 gem 'net-scp'
