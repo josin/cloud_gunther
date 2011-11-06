@@ -56,18 +56,17 @@ class InstancesDispatcher
 
     image_opts = @task.image.launch_params
     image_id = image_opts[:image_id].presence
-    key_pair = image_opts[:key_pair].presence || "cvut-euca"
-    instance_type = @task.task_params[:instance_type].presence || image_opts[:instance_type].presence || Image::INSTANCE_TYPES.first
-    
-    instances_count = @task.task_params[:instances_count]
-    
-    @instances = @connection.launch_instances(image_id, {
-      :min_count => instances_count || 1,
+
+    launch_params = {
+      :min_count => @task.task_params[:instances_count] || 1,
       :addressing_type => "private", # MUST HAVE
-      :key_name => key_pair, # MUST HAVE
+      :key_name => image_opts[:key_pair].presence || "cvut-euca", # MUST HAVE
       :user_data => create_user_data, # MUST HAVE
-      :instance_type => instance_type,
-    })
+      :instance_type => @task.task_params[:instance_type].presence || image_opts[:instance_type].presence || Image::INSTANCE_TYPES.first,
+    }
+    logger.debug "Launching instances with following params: #{launch_params}"
+    
+    @instances = @connection.launch_instances(image_id, launch_params)
     logger.debug @instances
     
     @task.task_params[:instances] = @instances.collect { |i| i[:aws_instance_id] }

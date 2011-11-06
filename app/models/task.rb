@@ -45,6 +45,7 @@ class Task < ActiveRecord::Base
   def instances_count; read_from_params(:task_params, :instances_count); end
   def instance_type; read_from_params(:task_params, :instance_type); end
   def zone_name; read_from_params(:task_params, :zone_name); end
+  def instances; read_from_params(:task_params, :instances); end
   
   attr_accessor :instance_id # attr helper for macro processing
   
@@ -95,8 +96,8 @@ class Task < ActiveRecord::Base
   end
   
   def fetch_instances_info
-    unless self.task_params[:instances].blank?
-      instances_info = self.cloud_engine.describe_instances(self.task_params[:instances]) 
+    unless self.instances.blank?
+      instances_info = self.cloud_engine.describe_instances(self.instances) 
     end
     
     instances_info || []
