@@ -55,7 +55,7 @@ module VerboseAvailabilityZonesInfo
         input.each_line { |line| lines << line }
         do_parse lines
         
-        puts @output.inspect  
+        # Rails.logger.debug @output.inspect  
         @output
       end
       

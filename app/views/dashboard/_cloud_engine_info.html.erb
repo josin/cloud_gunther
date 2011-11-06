@@ -1,6 +1,6 @@
 <h2>Cloud Engine Info</h2>
 
-<% form_tag("", {:class => "form"}) do %>
+<%= form_tag("", {:class => "form"}) do %>
   <%= label_tag :cloud_engine, "Select cloud engine:" %>
 	<%= select_tag :cloud_engine, cloud_engines_options_for_select, { :include_blank => true } %>
 <% end %>
