@@ -34,7 +34,13 @@ Spork.prefork do
     # If you're not using ActiveRecord, or you'd prefer not to run each of your
     # examples within a transaction, remove the following line or assign false
     # instead of true.
-    config.use_transactional_fixtures = false
+    config.use_transactional_fixtures = true
+    
+    begin
+      DatabaseCleaner.strategy = :transaction
+    rescue NameError
+      raise "You need to add database_cleaner to your Gemfile (in the :test group) if you wish to use it."
+    end
     
     # include Devise helper
     config.include Devise::TestHelpers, :type => :controller

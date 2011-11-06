@@ -122,34 +122,6 @@ class TasksController < ApplicationController
     end
   end
   
-  # GET /tasks/cloud_engine_availability_zones_info?cloud_engine_id
-  def cloud_engine_availability_zones_info
-    @cloud_engine = CloudEngine.find params[:cloud_engine_id]
-    
-    # TODO: works only for Eucalyptus
-    zones_info = VerboseAvailabilityZonesInfo.get_info(@cloud_engine.availability_zones_info_cmd) if @cloud_engine.eucalyptus?
-    
-    respond_to do |format|
-      format.js do
-        if zones_info
-          render :partial => "shared/eucalyptus_availability_zones_info", :locals => { :zones_info => zones_info }
-        else
-          render :text => "Availablity zones info not available."
-        end
-      end
-    end
-  end
-  
-  # GET /tasks/cloud_engine_zones?cloud_engine_id
-  def cloud_engine_zones
-    @cloud_engine = CloudEngine.find params[:cloud_engine_id]
-    zones_info = @cloud_engine.availability_zones
-
-    respond_to do |format|
-      format.json { render :json => zones_info.collect{ |i| i[:zone_name] } }
-    end
-  end
-  
   private
   def find_task
     task_id = params[:id] || params[:task_id]

@@ -14,13 +14,7 @@
 		  </div>
 			<div class="field">
 		    <%= f.label :cloud_engine_id %><br />
-		    <%= f.select :cloud_engine_id, 
-											options_from_collection_for_select(CloudEngine.all, :id, :title, @task.cloud_engine_id),
-											{ :include_blank => true },
-											{
-												"data-cloud-engine-availability-zones-info-url" => cloud_engine_availability_zones_info_tasks_path,
-												"data-cloud-engine-zones-url" => cloud_engine_zones_tasks_path,
-											} %>
+		    <%= f.select :cloud_engine_id, cloud_engines_options_for_select(@task.cloud_engine_id), { :include_blank => true } %>
 			</div>
 			<div class="field">
 		    <%= f.label :image_id %><br />

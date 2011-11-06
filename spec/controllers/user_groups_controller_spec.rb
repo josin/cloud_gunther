@@ -13,7 +13,7 @@ describe UserGroupsController do
   # UserGroup. As you add validations to UserGroup, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    { :name => "students", :priority => 1 }
   end
 
   describe "GET index" do

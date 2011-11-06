@@ -1,11 +1,11 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.10'
+gem 'rails', '3.0.9'
 
 gem 'mysql2', '0.2.7'
 
 gem 'devise'
-gem "cancan", "~> 1.6.7"
+gem "cancan", "1.6.5" # "~> 1.6.7"
 
 gem 'paperclip'
 gem 'will_paginate', ">=3.0"
@@ -34,9 +34,12 @@ group :development do
   gem 'ruby-debug' unless RUBY_VERSION == "1.9.2"
 end
 
+# group :test do
+#   gem 'factory_girl_rails'
+# end
 
 group :development, :test do
-  gem 'rspec-rails', '>= 2.6.0'
+  gem 'rspec-rails', '2.6.0'
   gem 'spork', '~> 0.9.0.rc8'
 
   # gem 'cover_me', '~> 1.1.0'

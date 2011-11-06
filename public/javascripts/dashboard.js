@@ -18,5 +18,10 @@ function update_queues_indicators() {
 
 $(function() {
 	// update_queues_indicators();
-   // setInterval(update_queues_indicators, 5000);
+	// setInterval(update_queues_indicators, 5000);
+	// $("#cloud_engine").fetch_zones_info(false, true);
+	$('#cloud_engine').change(function() {
+		$(this).fetch_zones_info(false, true);
+	});
+	
 });

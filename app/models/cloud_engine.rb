@@ -41,4 +41,9 @@ class CloudEngine < ActiveRecord::Base
   def availability_zones
     self.connect!.describe_availability_zones
   end
+  
+  def fetch_availability_zones_info
+    VerboseAvailabilityZonesInfo.get_info(self.availability_zones_info_cmd) if self.eucalyptus?
+  end
+  
 end

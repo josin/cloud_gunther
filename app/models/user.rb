@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
   
   validates_presence_of :first_name, :last_name, :email
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
-  validates_numericality_of :priority
+  # validates_numericality_of :priority
   
   has_many :tasks
   has_many :algorithms

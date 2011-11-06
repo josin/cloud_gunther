@@ -17,3 +17,5 @@ coverage.data
 config/email.yml
 
 .rvmrc
+
+cloud_gunther.todo
