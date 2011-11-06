@@ -94,6 +94,14 @@ class Task < ActiveRecord::Base
     "task-#{self.id}"
   end
   
+  def fetch_instances_info
+    unless self.task_params[:instances].blank?
+      instances_info = self.cloud_engine.describe_instances(self.task_params[:instances]) 
+    end
+    
+    instances_info || []
+  end
+  
   private
 
   # Returns xml of task definition with all information necessary for running it on cloud.

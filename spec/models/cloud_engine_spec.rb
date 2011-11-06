@@ -27,6 +27,30 @@ describe CloudEngine do
   end
   
   describe "availability zones" do
+    describe "availability_zones" do
+      it "is pending" do
+        pending
+      end
+    end
+    
+    describe "fetch_availability_zones_info" do
+      it "is pending" do
+        pending
+      end
+    end
+  end
+
+  describe "cloud engine type" do
+    it "is eucalyptus?" do
+      pending
+    end
+    
+    it "is aws?" do
+      pending
+    end
+  end
+
+  describe "describe_instances" do
     it "is pending" do
       pending
     end

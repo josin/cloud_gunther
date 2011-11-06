@@ -46,4 +46,10 @@ class CloudEngine < ActiveRecord::Base
     VerboseAvailabilityZonesInfo.get_info(self.availability_zones_info_cmd) if self.eucalyptus?
   end
   
+  def describe_instances(instances = [])
+    self.connect!.describe_instances(instances)
+  rescue
+    logger.error { "Could not connect to cloud engine id: #{task.cloud_engine.id}" }
+  end
+  
 end

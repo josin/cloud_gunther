@@ -35,6 +35,8 @@ class InstancesDispatcher
   
   def run_instances
     launch_instances
+    return unless AppConfig.config[:configure_instances]
+    
     wait_until_instances_ready
     prepare_instances
     run_task

@@ -29,7 +29,7 @@ class TasksController < ApplicationController
     
     @title << "##{@task.id}"
     
-    @instances = fetch_instances_info(@task)
+    @instances = @task.fetch_instances_info
     
     respond_to do |format|
       format.html # show.html.erb
@@ -132,14 +132,6 @@ class TasksController < ApplicationController
   def find_algorithms
     @algorithms = current_user.algorithms
     @algorithms = Algorithm.all if current_user.admin?
-  end
-  
-  def fetch_instances_info(task)
-    connection = task.cloud_engine.connect!
-    connection.describe_instances(@task.task_params[:instances])
-  rescue
-    logger.error { "Could not connect to cloud engine id: #{task.cloud_engine.id}" }
-    return []
   end
   
   def setup

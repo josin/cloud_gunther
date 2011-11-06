@@ -28,10 +28,21 @@ describe InstancesDispatcher do
   
   describe "run instances" do
     it "calls all methods used for launch and init instances" do
+      AppConfig.stub(:config).and_return({:configure_instances => true})
+      
       ic.should_receive(:launch_instances)
       ic.should_receive(:wait_until_instances_ready)
       ic.should_receive(:prepare_instances)
       ic.should_receive(:run_task)
+      
+      ic.run_instances.should be_nil
+    end
+    
+    it "launches instances when appconfig disables configure_instances" do
+      AppConfig.stub(:config).and_return({:configure_instances => false})
+      
+      ic.should_receive(:launch_instances)
+      ic.should_not_receive(:wait_until_instances_ready)
       
       ic.run_instances.should be_nil
     end
