@@ -30,6 +30,14 @@ describe CloudEnginesController do
     it "recognizes and generates #destroy" do
       { :delete => "/admin/cloud_engines/1" }.should route_to(:controller => "cloud_engines", :action => "destroy", :id => "1")
     end
+    
+    it "#availability_zones_info" do
+      { :get => "/admin/cloud_engines/1/availability_zones_info" }.should route_to(:controller => "cloud_engines", :action => "availability_zones_info", :id => "1")
+    end
+    
+    it "#availability_zones" do
+      { :get => "/admin/cloud_engines/1/availability_zones" }.should route_to(:controller => "cloud_engines", :action => "availability_zones", :id => "1")
+    end
 
   end
 end

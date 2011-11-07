@@ -16,14 +16,12 @@ describe RegistrationsController do
   end
   
   describe "POST create" do
-    pending
   end
 
   describe "GET edit" do
     before(:each) do
       sign_in user
     end
-    pending
   end
   
   
@@ -31,7 +29,6 @@ describe RegistrationsController do
     before(:each) do
       sign_in user
     end
-    pending
   end
 
 end

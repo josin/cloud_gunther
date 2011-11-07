@@ -14,6 +14,7 @@ end
 guard 'spork', :test_unit => false do
   watch('config/application.rb')
   watch('config/environment.rb')
+  watch('config/routes.rb')
   watch(%r{^config/environments/.*\.rb$})
   watch(%r{^config/initializers/.*\.rb$})
   watch('spec/spec_helper.rb')

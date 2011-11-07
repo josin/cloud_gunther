@@ -1,21 +1,13 @@
 require 'spec_helper'
 
 describe Task do
-  describe "run" do
-    it "pending" do
-      pending
-    end
-  end
-
-  describe "task queue name" do
-    it "pending" do
-      pending
-    end
+  let(:task) { Task.new(:id => 1) }
+  
+  it "tasks queue name" do
+    task.task_queue_name.should match(/#{task.id}/)
   end
   
   describe "fetch instances info" do
-    let(:task) { Task.new }
-    
     it "returns empty array when no instances are specified" do
       task.fetch_instances_info.should be_blank
     end
@@ -27,10 +19,12 @@ describe Task do
       task.fetch_instances_info.should eq(["instances", "description"])
     end
   end
+  
+  describe "run" do
+    pending
+  end
 
   describe "task2xml" do
-    it "pending" do
-      pending
-    end
+    pending
   end
 end

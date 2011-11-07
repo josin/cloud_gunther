@@ -30,6 +30,14 @@ describe TasksController do
     it "recognizes and generates #destroy" do
       { :delete => "/tasks/1" }.should route_to(:controller => "tasks", :action => "destroy", :id => "1")
     end
+    
+    it "#terminate_all_instances" do
+      { :post => "/tasks/1/terminate_all_instances" }.should route_to(:controller => "tasks", :action => "terminate_all_instances", :id => "1")
+    end
+    
+    it "#terminate_instance" do
+      { :post => "/tasks/1/terminate_instance?instance_id=i-123456" }.should route_to(:controller => "tasks", :action => "terminate_instance", :id => "1", :instance_id => "i-123456")
+    end
 
   end
 end
