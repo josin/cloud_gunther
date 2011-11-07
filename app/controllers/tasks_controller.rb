@@ -122,6 +122,25 @@ class TasksController < ApplicationController
     end
   end
   
+  # POST /tasks/:id/terminate_all_instances
+  def terminate_all_instances
+    @task.instances.each { |instance| @task.cloud_engine.terminate_instance [instance] }
+    
+    respond_to do |format|
+      format.html { redirect_to @task, :notice => "All instances are being terminated." }
+    end
+  end
+
+  # POST /tasks/:id/terminate_instance?instance_id=:instance_id
+  def terminate_instance
+    instance_id = params[:instance_id].presence
+    @task.cloud_engine.terminate_instance [instance_id]
+    
+    respond_to do |format|
+      format.html { redirect_to @task, :notice => "Instance #{instance_id} is being terminated." }
+    end
+  end
+  
   private
   def find_task
     task_id = params[:id] || params[:task_id]

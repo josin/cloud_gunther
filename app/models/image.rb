@@ -33,6 +33,6 @@ class Image < ActiveRecord::Base
     end
     
     ssh_cmd = lines.to_sentence(:words_connector => ";", :two_words_connector => ";", :last_word_connector => ";")
-    return MacroProcesor.process_macros(ssh_cmd, task)
+    return MacroProcessor.process_macros(ssh_cmd, task)
   end
 end

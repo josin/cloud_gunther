@@ -128,5 +128,19 @@ describe CloudEnginesController do
       response.should redirect_to(cloud_engines_url)
     end
   end
+  
+  describe "GET availability_zones_info" do
+    it "is pending" do
+      pending
+      post :availability_zones_info, :id => "1"
+    end
+  end
+  
+  describe "GET availability_zones" do
+    it "is pending" do
+      pending
+      post :availability_zones, :id => "1"
+    end
+  end
 
 end

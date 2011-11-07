@@ -67,7 +67,7 @@ class Task < ActiveRecord::Base
       self.instance_id = (index + 1)
       logger.debug { "Processing macros for instance id: #{self.instance_id}" }
 
-      launch_cmd = MacroProcesor.process_macros(options[:launch_cmd].clone, self)
+      launch_cmd = MacroProcessor.process_macros(options[:launch_cmd].clone, self)
       
       task_options = options.dup
       task_options.merge!(:instance_id => self.instance_id, :launch_cmd => launch_cmd)

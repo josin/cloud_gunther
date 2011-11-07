@@ -266,7 +266,7 @@ DEPENDENCIES
   popen4
   rails (= 3.0.9)
   rb-fsevent
-  right_aws (= 2.0.0)
+  right_aws
   rspec-rails (= 2.6.0)
   ruby-debug19
   simple-navigation

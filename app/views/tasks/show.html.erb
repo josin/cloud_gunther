@@ -43,7 +43,7 @@
 
 <%= render :partial => "tasks/instances_info" %>			
 
-<%= button_to "Run this task", task_run_path(@task), :disabled => (@task.state != Task::STATES[:new]) %>
+<%= button_to "Run this task", run_task_path(@task), :disabled => (@task.state != Task::STATES[:new]) %>
 
 <%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back to list', tasks_path %>

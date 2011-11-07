@@ -1,4 +1,4 @@
-class MacroProcesor
+class MacroProcessor
   
   MACRO_REGEXP = /\{{2}([^}]*)\}{2}/
   

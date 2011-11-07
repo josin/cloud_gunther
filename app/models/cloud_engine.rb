@@ -24,11 +24,7 @@ class CloudEngine < ActiveRecord::Base
   
   include ParamsReader
   def key_name; read_from_params(:params, :key_name); end
-  def availability_zones_info; read_from_params(:params, :availability_zones_info); end
-  
-  def availability_zones_info_cmd
-    MacroProcesor.process_macros(self.availability_zones_info, self, CloudEngine)
-  end
+  def availability_zones_info_cmd; read_from_params(:params, :availability_zones_info_cmd); end
   
   def eucalyptus?
     self.engine_type == CloudEngine::ENGINE_TYPES[:eucalyptus]
@@ -37,19 +33,26 @@ class CloudEngine < ActiveRecord::Base
   def aws?
     self.engine_type == CloudEngine::ENGINE_TYPES[:aws]
   end
-  
+
+  def fetch_availability_zones_info
+    macro_processed_cmd = MacroProcessor.process_macros(self.availability_zones_info_cmd, self, CloudEngine)
+    VerboseAvailabilityZonesInfo.get_info(macro_processed_cmd) if self.eucalyptus?
+  end
+
   def availability_zones
     self.connect!.describe_availability_zones
   end
   
-  def fetch_availability_zones_info
-    VerboseAvailabilityZonesInfo.get_info(self.availability_zones_info_cmd) if self.eucalyptus?
-  end
-  
   def describe_instances(instances = [])
     self.connect!.describe_instances(instances)
-  rescue
-    logger.error { "Could not connect to cloud engine id: #{task.cloud_engine.id}" }
+  rescue Exception => e
+    logger.error { "Could not connect to cloud engine id: #{task.cloud_engine.id}. Reason: #{e}" }
   end
   
+  def terminate_instance(instance = nil)
+    return if instance.blank?
+    self.connect!.terminate_instances([instance])
+  rescue Exception => e
+    logger.error { "Could not connect to cloud engine id: #{task.cloud_engine.id}. Reason: #{e}" }
+  end
 end

@@ -8,6 +8,7 @@
 				<th>Instance id</th>
 				<th>IP address</th>
 				<th>Status</th>
+				<th>Action</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -16,10 +17,20 @@
 				<td><%= instance[:aws_instance_id] %></td>
 				<td><%= instance[:dns_name] %></td>
 				<td><%= instance[:aws_state] %></td>
+				<td>
+					<%= link_to "Terminate", terminate_instance_task_path(@task, :instance_id => instance[:aws_instance_id]), :method => :post,
+					 			:confirm => "Do you really want to terminate instance #{instance[:aws_instance_id]}?" %>
+				</td>
 			</tr>
 		<% end %>
 		</tbody>
 	</table>
+	
+	<div class="right">
+		<%= link_to "Terminate all instances", terminate_all_instances_task_path(@task), :method => :post, 
+					:confirm => "Do you really want to terminate all instances?" %>
+	</div>
+	
 </div>
 <% else %>
 	<p>No running instances for this task.</p>

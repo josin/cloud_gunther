@@ -125,16 +125,15 @@ describe TasksController do
     end
   end
   
-  describe "GET cloud_engine_availability_zones_info" do
-    it "does something" do
+  describe "POST terminate_all_instances" do
+    it "is pending" do
       pending
     end
   end
   
-  describe "GET cloud_engine_zones" do
-    it "does something" do
+  describe "POST terminate_instance" do
+    it "is pending" do
       pending
     end
   end
-
 end

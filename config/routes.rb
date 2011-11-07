@@ -13,7 +13,11 @@ CloudGunther::Application.routes.draw do
   match "/account" => redirect("/account/sign_in")
 
   resources :tasks do
-    post :run
+    member do
+      post :run
+      post :terminate_instance
+      post :terminate_all_instances
+    end
     resources :outputs, :only => [:index, :show, :destroy]
   end
   
