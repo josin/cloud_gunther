@@ -17,9 +17,7 @@ gem 'meta_search'
 gem 'amqp'
 gem 'bunny'
 
-# Let's install right_aws as a plugin ...
-# gem 'right_aws', :git => "git://github.com/rightscale/right_aws.git"
-gem 'right_http_connection'
+gem 'right_aws', :git => "git://github.com/josin/right_aws.git"
 
 gem 'net-ssh'
 gem 'net-scp'

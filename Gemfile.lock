@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/josin/right_aws.git
+  revision: 554b944b58b1080fc7114ac918067106ab39f31b
+  specs:
+    right_aws (2.1.0)
+      right_http_connection (>= 1.2.5)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -272,7 +279,7 @@ DEPENDENCIES
   popen4
   rails (= 3.0.9)
   rb-fsevent
-  right_http_connection
+  right_aws!
   rspec-rails (= 2.6.0)
   ruby-debug
   ruby-debug19
