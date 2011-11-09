@@ -16,7 +16,10 @@ gem 'meta_search'
 
 gem 'amqp'
 gem 'bunny'
-gem 'right_aws', :git => "git://github.com/rightscale/right_aws.git"
+
+# Let's install right_aws as a plugin ...
+# gem 'right_aws', :git => "git://github.com/rightscale/right_aws.git"
+gem 'right_http_connection'
 
 gem 'net-ssh'
 gem 'net-scp'
@@ -30,8 +33,8 @@ gem 'awesome_print', :require => 'ap'
 
 group :development do
   # debugger
-  gem 'ruby-debug19' if RUBY_VERSION == "1.9.2"
-  gem 'ruby-debug' unless RUBY_VERSION == "1.9.2"
+  gem 'ruby-debug19', :platforms => :ruby_19
+  gem 'ruby-debug', :platforms => :ruby_18
 end
 
 # group :test do
