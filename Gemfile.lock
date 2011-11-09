@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/rightscale/right_aws.git
+  revision: 6e63ad89f6bbe29d7dc6120483f8b491c8846153
+  specs:
+    right_aws (2.1.0)
+      right_http_connection (>= 1.2.5)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -177,8 +184,6 @@ GEM
     rb-fsevent (0.4.3.1)
     rdoc (3.11)
       json (~> 1.4)
-    right_aws (2.0.0)
-      right_http_connection (>= 1.2.1)
     right_http_connection (1.3.0)
     rspec (2.6.0)
       rspec-core (~> 2.6.0)
@@ -266,7 +271,7 @@ DEPENDENCIES
   popen4
   rails (= 3.0.9)
   rb-fsevent
-  right_aws
+  right_aws!
   rspec-rails (= 2.6.0)
   ruby-debug19
   simple-navigation
