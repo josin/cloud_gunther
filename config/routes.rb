@@ -1,5 +1,4 @@
 CloudGunther::Application.routes.draw do
-  
   root :to => "dashboard#index"
   match "/", :to => "dashboard#index", :as => :dashboard
   
@@ -60,7 +59,11 @@ CloudGunther::Application.routes.draw do
         end
       end
     end
+    
+    mount Resque::Server, :at => "/resque"  
   end
+  
+  
   
 
   # The priority is based upon order of creation:

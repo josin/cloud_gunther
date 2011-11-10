@@ -52,7 +52,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :algorithms, 'Algorithms', algorithms_path, :highlights_on => /^\/algorithms/
     
     # Navigation only for admins
-    primary.item :users, 'Delayed Jobs', delayed_jobs_path, :highlights_on => /^\/admin\/delayed_jobs/, :if => Proc.new { current_user.admin? }, :class => "admin"
+    primary.item :users, 'Workers', resque_path, :if => Proc.new { current_user.admin? }, :class => "admin"
     primary.item :users, "Groups", user_groups_path, :highlights_on => /^\/admin\/user_groups/, :if => Proc.new { current_user.admin? }, :class => "admin"
     primary.item :users, "Users", users_path, :highlights_on => /^\/admin\/users/, :if => Proc.new { current_user.admin? }, :class => "admin"
     primary.item :users, "Cloud Engines", cloud_engines_path, :highlights_on => /^\/admin\/cloud_engines/, :if => Proc.new { current_user.admin? }, :class => "admin"

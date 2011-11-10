@@ -46,16 +46,20 @@ class Task < ActiveRecord::Base
   def instance_type; read_from_params(:task_params, :instance_type); end
   def zone_name; read_from_params(:task_params, :zone_name); end
   def instances; read_from_params(:task_params, :instances); end
+  def run_params; read_from_params(:task_params, :run_params); end
   
   attr_accessor :instance_id # attr helper for macro processing
   
   def run(*args)
+    run_opts = self.run_params
+    
     options = {
         :launch_cmd => self.algorithm_binary.prepare_launch_cmd,
         :instances_count => self.task_params[:instances_count],
         :task_id => self.id,
     }
-    options.merge!(args.extract_options!)
+    options.merge!(run_opts)
+    # options.merge!(args.extract_options!)
     
     amqp_config = AppConfig.amqp_config
     bunny = Bunny.new(amqp_config)
@@ -89,7 +93,6 @@ class Task < ActiveRecord::Base
     self.update_attribute(:state, STATES[:failed])
     self.outputs.create(:stderr => e.message)
   end
-  handle_asynchronously :run, :priority => Proc.new { |i| i.user.real_priority }
   
   def task_queue_name
     "task-#{self.id}"

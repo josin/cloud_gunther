@@ -23,9 +23,10 @@ gem 'net-ssh'
 gem 'net-scp'
 gem 'popen4'
 
-gem 'delayed_job' # https://github.com/collectiveidea/delayed_job
+# gem 'delayed_job' # https://github.com/collectiveidea/delayed_job
+# gem 'whenever'
+gem 'resque', :require => 'resque/server' 
 gem 'daemons'
-gem 'whenever'
 
 gem 'awesome_print', :require => 'ap'
 

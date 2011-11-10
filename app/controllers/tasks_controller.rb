@@ -110,12 +110,13 @@ class TasksController < ApplicationController
       run_opts[:algorithm_filename] = @task.algorithm_binary.attachment.data_file_name
     end    
     
-    @task.run(run_opts)
-    
+    @task.task_params[:run_params] = run_opts
     @task.state = Task::STATES[:ready]
     @task.started_at = Time.now
     @task.save
     
+    Resque.enqueue(TaskRunner, @task.id)
+
     respond_to do |format|
       format.html { redirect_to(@task, :notice => 'Task is running.') }
       format.xml  { head :ok }
