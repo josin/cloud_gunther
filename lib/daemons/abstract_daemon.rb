@@ -5,7 +5,12 @@ module Daemons
   class AbstractDaemon
     def run!(app_name = "cloud_gunther")
       @app_name = app_name
-      Daemons.run_proc "#{@app_name}_daemon", :monitor => true, &method(:run)
+      Daemons.run_proc "#{@app_name}_daemon", 
+        {
+          :monitor => true,
+          :singleton => true,
+          :sync_log => true,
+        }, &method(:run)
     end
     
     def run
