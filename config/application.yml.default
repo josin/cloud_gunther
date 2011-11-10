@@ -5,6 +5,7 @@ default: &default
   start_instances: false
   configure_instances: false
   per_page: 25
+  scheduler_interval: 5
 
 development:
   <<: *default

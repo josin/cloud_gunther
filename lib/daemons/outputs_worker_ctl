@@ -1,23 +1,46 @@
 #!/usr/bin/env ruby
-require 'rubygems'
-require "daemons"
-require 'yaml'
-require 'erb'
 
-gem 'activesupport'
-require 'active_support'
+require File.dirname(__FILE__) + "/../../config/application"
+require File.dirname(__FILE__) + "/../../lib/daemons/abstract_daemon"
+require 'daemons'
+require 'logger'
+require 'amqp'
 
-# For some reason, ActiveSupport 3.0.0 doesn't load.
-# Load needed extension directly for now.
-require "active_support/core_ext/object"
-require "active_support/core_ext/hash"
 
-options = YAML.load(
-  ERB.new(
-    IO.read(
-      File.dirname(__FILE__) + "/../../config/daemons.yml"
-  )).result).with_indifferent_access
+module Daemons
+  class OutputsWorker < Daemons::AbstractDaemon
+    OUTPUTS_QUEUE = "outputs"
     
-options[:dir_mode] = options[:dir_mode].to_sym
+    def run
+      init_rails_context
+      
+      logger.info "Starting outputs worker daemon."
+      
+      AMQP.start(AppConfig.amqp_config) do |connection|
+        channel = AMQP::Channel.new(connection)
+        outputs_queue = channel.queue(OUTPUTS_QUEUE)
+        
+        Signal.trap("INT") do
+          connection.close do
+            EM.stop { exit }
+          end
+        end
+        
+        outputs_queue.subscribe do |msg|
+          logger.info "task output: #{msg}"
+          
+          begin
+            output_hash = Hash.from_xml(msg)
+            obj = Output.create(output_hash["output"])
+            logger.info "Created output with id: #{obj.id}"
+          rescue Exception => e
+            # e.backtrace
+            logger.error e.message
+          end
+        end
+      end
+    end # of run
+  end # of class
+end # of module
 
-Daemons.run File.dirname(__FILE__) + "/outputs_worker.rb", options
+Daemons::OutputsWorker.new.run! "outputs_worker"

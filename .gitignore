@@ -12,3 +12,5 @@ utils/user_data_service_simulator/tmp/restart.txt
 coverage.data
 .rvmrc
 cloud_gunther.todo
+*.pid
+
