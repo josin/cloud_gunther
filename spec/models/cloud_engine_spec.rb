@@ -48,7 +48,7 @@ describe CloudEngine do
     
     it "fetchs availability zones info using command line tool" do
       cmd = "euca-describe-availability-zones"
-      cloud_engine.params = { :availability_zones_info_cmd => cmd }
+      cloud_engine.params = { "availability_zones_info_cmd" => cmd }
       cloud_engine.engine_type = CloudEngine::ENGINE_TYPES[:eucalyptus]
       
       MacroProcessor.should_receive(:process_macros).with(cmd, cloud_engine, cloud_engine.class).and_return(cmd)

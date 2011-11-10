@@ -36,7 +36,7 @@ describe TasksController do
     end
     
     it "#terminate_instance" do
-      { :post => "/tasks/1/terminate_instance?instance_id=i-123456" }.should route_to(:controller => "tasks", :action => "terminate_instance", :id => "1", :instance_id => "i-123456")
+      { :post => "/tasks/1/terminate_instance?instance_id=i-123456" }.should route_to(:controller => "tasks", :action => "terminate_instance", :id => "1")
     end
 
   end

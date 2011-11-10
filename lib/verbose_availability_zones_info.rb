@@ -2,6 +2,9 @@
 # right_aws gem or write simple parser to parse command from OS. This is the implementation of second choice. For 
 # successful run of this module, user must be able to run command 'euca-describe-availability-zones verbose'.
 #
+# ==== Commmand 
+#     euca-describe-availability-zones verbose
+# 
 # ==== Sample Outputs from euca-describe-availability-zones cmd
 # * without verbose param
 #   [{:zone_name=>"stud2", :zone_state=>"147.32.84.118"}, {:zone_name=>"ucebny", :zone_state=>"147.32.84.129"}]
@@ -16,8 +19,6 @@
 #   AVAILABILITYZONE  |- c1.xlarge  0000 / 0000   2   2560    32
 # 
 module VerboseAvailabilityZonesInfo
-  # AVAILABILITY_ZONES_CMD = 'euca-describe-availability-zones verbose'
-  
   def self.get_info(cmd)
     raise "Availability zones command must be specified in Cloud Engine." if cmd.blank?
     

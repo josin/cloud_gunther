@@ -13,7 +13,7 @@ describe Task do
     end
     
     it "returns instances description" do
-      task.task_params = { :instances => ["i-123456"] }
+      task.task_params = { "instances" => ["i-123456"] }
       task.stub_chain(:cloud_engine, :describe_instances).and_return(["instances", "description"])
       task.fetch_instances_info.should_not be_blank
       task.fetch_instances_info.should eq(["instances", "description"])
