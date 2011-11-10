@@ -62,8 +62,8 @@ group :development, :test do
     gem 'growl', :require => false
   end
   
-  # Instance service consumer
   gem 'sinatra'
+  gem 'foreman'
 end
 
 # App Servers
