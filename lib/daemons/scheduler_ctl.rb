@@ -8,7 +8,7 @@ require 'logger'
 require 'amqp'
 
 module Daemons
-  class Scheduler < Daemons::AbstractDaemon
+  class SchedulerCtl < Daemons::AbstractDaemon
     
     def run
       init_rails_context
@@ -32,4 +32,6 @@ module Daemons
   end
 end
 
-Daemons::Scheduler.new.run! "scheduler"
+unless defined?(Rails)
+  Daemons::SchedulerCtl.new.run! "scheduler"
+end
