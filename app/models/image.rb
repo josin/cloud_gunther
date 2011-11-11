@@ -16,13 +16,13 @@ class Image < ActiveRecord::Base
   
   def describe_image!
     connection = self.cloud_engine.connect!
-    connection.ec2_describe_images("ImageId" => self.launch_params[:image_id]).first
+    connection.ec2_describe_images("ImageId" => self.launch_params["image_id"]).first
   end
   
   include ParamsReader
-  def image_id; read_from_params(:launch_params, :image_id); end
-  def instance_type; read_from_params(:launch_params, :instance_type); end
-  def availability_zone; read_from_params(:launch_params, :availability_zone); end
+  def image_id; read_from_params(:launch_params, "image_id"); end
+  def instance_type; read_from_params(:launch_params, "instance_type"); end
+  def availability_zone; read_from_params(:launch_params, "availability_zone"); end
   
   def start_up_script_for_ssh(task)
     lines = []

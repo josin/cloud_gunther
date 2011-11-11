@@ -23,8 +23,8 @@ class CloudEngine < ActiveRecord::Base
   end
   
   include ParamsReader
-  def key_name; read_from_params(:params, :key_name); end
-  def availability_zones_info_cmd; read_from_params(:params, :availability_zones_info_cmd); end
+  def key_name; read_from_params(:params, "key_name"); end
+  def availability_zones_info_cmd; read_from_params(:params, "availability_zones_info_cmd"); end
   
   def eucalyptus?
     self.engine_type == CloudEngine::ENGINE_TYPES[:eucalyptus]

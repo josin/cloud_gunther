@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Image do
   let(:image) { Image.new }
-  let(:launch_params) { {:image_id => "emi-123456"} }
+  let(:launch_params) { {"image_id" => "emi-123456"} }
   let(:task) { mock_model(Task).as_null_object }
   
   it "should return image description from server" do

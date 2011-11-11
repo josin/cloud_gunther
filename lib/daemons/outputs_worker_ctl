@@ -8,7 +8,7 @@ require 'amqp'
 
 
 module Daemons
-  class OutputsWorkerCtl < Daemons::AbstractDaemon
+  class OutputsWorker < Daemons::AbstractDaemon
     OUTPUTS_QUEUE = "outputs"
     
     def run
@@ -43,6 +43,4 @@ module Daemons
   end # of class
 end # of module
 
-unless defined?(Rails)
-  Daemons::OutputsWorkerCtl.new.run! "outputs_worker"
-end
+Daemons::OutputsWorker.new.run! "outputs_worker"

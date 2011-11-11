@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe InstancesDispatcher do
   
-  let(:image) { mock_model(Image, :launch_params => {:image_id => "emi-123", :key_pair => "kp"}).as_null_object }
+  let(:image) { mock_model(Image, :launch_params => {"image_id" => "emi-123", "key_pair" => "kp"}).as_null_object }
   let(:cloud_engine) { mock_model(CloudEngine).as_null_object }
-  let(:task) { mock_model(Task, :image => image, :cloud_engine => cloud_engine, :task_params => {:instances_count => 3}).as_null_object }                  
+  let(:task) { mock_model(Task, :image => image, :cloud_engine => cloud_engine, :task_params => {"instances_count" => 3}).as_null_object }                  
   let(:ic) { InstancesDispatcher.new(task) }
   let(:connection) { mock("connection", :describe_instances => [{:aws_state => "pending", :aws_instance_id => "i123"}]).as_null_object }
   let(:instances) { [{:aws_instance_id => "i-123456789", :aws_state => "pending"}] }
@@ -57,8 +57,8 @@ describe InstancesDispatcher do
         and_return(instances)
 
       ic.send(:launch_instances)
-      task.task_params.should have_key(:instances)
-      task.task_params[:instances].should include(instances.first[:aws_instance_id])
+      task.task_params.should have_key("instances")
+      task.task_params["instances"].should include(instances.first[:aws_instance_id])
     end
   end
   

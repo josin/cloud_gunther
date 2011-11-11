@@ -6,7 +6,7 @@ require 'daemons'
 require 'logger'
 
 module Daemons
-  class ResqueWorkerCtl < Daemons::AbstractDaemon
+  class ResqueWorker < Daemons::AbstractDaemon
     
     def run
       init_rails_context
@@ -26,6 +26,4 @@ module Daemons
   end
 end
 
-unless defined?(Rails)
-  Daemons::ResqueWorkerCtl.new.run! "resque_worker"
-end
+Daemons::ResqueWorker.new.run! "resque_worker"

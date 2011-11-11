@@ -3,13 +3,15 @@ require 'logger'
 
 module Daemons
   class AbstractDaemon
+    # TODO: how to set path for pid file to tmp/pids/ and then kill daemons from there?
     def run!(app_name = "cloud_gunther")
       @app_name = app_name
       Daemons.run_proc "#{@app_name}_daemon", 
         {
           :monitor => true,
           :singleton => true,
-          :sync_log => true,
+          :dir_mode => :normal,
+          :dir => "/tmp",
         }, &method(:run)
     end
     

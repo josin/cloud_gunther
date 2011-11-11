@@ -7,7 +7,7 @@ require 'logger'
 require 'amqp'
 
 module Daemons
-  class InstanceServiceCtl < Daemons::AbstractDaemon
+  class InstanceService < Daemons::AbstractDaemon
     INSTANCE_SERVICE_QUEUE = "instance_service"
 
     def run
@@ -40,10 +40,9 @@ module Daemons
           end
         end
       end
+
     end
   end # of InstanceService class
 end # of module
 
-unless defined?(Rails)
-  Daemons::InstanceServiceCtl.new.run! "instance_service"
-end
+Daemons::InstanceService.new.run! "instance_service"

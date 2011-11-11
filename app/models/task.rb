@@ -42,16 +42,16 @@ class Task < ActiveRecord::Base
   serialize :task_params
   
   include ParamsReader
-  def instances_count; read_from_params(:task_params, :instances_count); end
-  def instance_type; read_from_params(:task_params, :instance_type); end
-  def zone_name; read_from_params(:task_params, :zone_name); end
-  def instances; read_from_params(:task_params, :instances); end
-  def run_params; read_from_params(:task_params, :run_params); end
+  def instances_count; read_from_params(:task_params, "instances_count"); end
+  def instance_type; read_from_params(:task_params, "instance_type"); end
+  def zone_name; read_from_params(:task_params, "zone_name"); end
+  def instances; read_from_params(:task_params, "instances"); end
+  def run_params; read_from_params(:task_params, "run_params"); end
   
   attr_accessor :instance_id # attr helper for macro processing
   
   def run(*args)
-    run_opts = self.run_params
+    run_opts = self.task_params["run_params"].presence || {}
     
     options = {
         :launch_cmd => self.algorithm_binary.prepare_launch_cmd,
@@ -89,7 +89,7 @@ class Task < ActiveRecord::Base
     
     self.update_attribute(:state, STATES[:running])
   rescue Exception => e
-    logger.error { "Running task #{self.id} failed due to: #{e.message}" }
+    logger.error { "Running task #{self.id} failed due to: #{e.message}\n#{e.backtrace.join('\n')}" }
     self.update_attribute(:state, STATES[:failed])
     self.outputs.create(:stderr => e.message)
   end
