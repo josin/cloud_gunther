@@ -145,7 +145,7 @@ module AlgRunner
       instance_id = AlgRunner.fetch_url(INSTANCE_ID_URL)
 
       logger.info { "Requesting terminating for #{instance_id}" }
-      @bunny.queue(INSTANCE_SERVICE_QUEUE).publish(instance_id.to_s)
+      @bunny.queue(INSTANCE_SERVICE_QUEUE).publish({:instance_id => instance_id.to_s, :action => :termination}.to_yaml)
       # @bunny.queue(INSTANCE_SERVICE_QUEUE).publish({ :instance_id => instance_id }.to_s)
     end
   end # of class

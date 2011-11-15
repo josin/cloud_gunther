@@ -29,11 +29,13 @@ module Daemons
         
         instance_service_queue.subscribe do |msg|
           logger.info "Request for terminating instance: #{msg}"
+          
+          msg_hash = YAML::load(msg)
 
           begin
             # terminate instances
             connection = CloudEngine.where(:engine_type => CloudEngine::ENGINE_TYPES[:eucalyptus]).first.connect!
-            connection.terminate_instances([msg])
+            connection.terminate_instances([msg_hash[:instance_id]])
           rescue Exception => e
             # e.backtrace
             logger.error e.message

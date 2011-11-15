@@ -23,8 +23,6 @@ gem 'net-ssh'
 gem 'net-scp'
 gem 'popen4'
 
-# gem 'delayed_job' # https://github.com/collectiveidea/delayed_job
-# gem 'whenever'
 gem 'resque', :require => 'resque/server' 
 gem 'daemons'
 
@@ -35,10 +33,6 @@ group :development do
   gem 'ruby-debug19', :platforms => :ruby_19
   gem 'ruby-debug', :platforms => :ruby_18
 end
-
-# group :test do
-#   gem 'factory_girl_rails'
-# end
 
 group :development, :test do
   gem 'rspec-rails', '2.6.0'

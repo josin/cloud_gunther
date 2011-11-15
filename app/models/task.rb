@@ -90,6 +90,7 @@ class Task < ActiveRecord::Base
     self.update_attribute(:state, STATES[:running])
   rescue Exception => e
     logger.error { "Running task #{self.id} failed due to: #{e.message}\n#{e.backtrace.join('\n')}" }
+    self.cloud_engine.terminate_instances(self.instances)
     self.update_attribute(:state, STATES[:failed])
     self.outputs.create(:stderr => e.message)
   end
