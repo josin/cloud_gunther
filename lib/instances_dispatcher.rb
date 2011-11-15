@@ -58,7 +58,7 @@ class InstancesDispatcher
     image_id = image_opts["image_id"].presence
 
     launch_params = {
-      :min_count => @task.task_params[:instances_count] || 1,
+      :min_count => @task.task_params["instances_count"] || 1,
       :addressing_type => "private", # MUST HAVE
       :key_name => image_opts["key_pair"].presence || "cvut-euca", # MUST HAVE
       :user_data => create_user_data, # MUST HAVE
