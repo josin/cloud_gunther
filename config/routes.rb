@@ -35,6 +35,7 @@ CloudGunther::Application.routes.draw do
         get :registrations
       end
       member do
+        get :change_password
         post :approve
         post :reject
       end

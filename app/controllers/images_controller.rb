@@ -94,7 +94,7 @@ class ImagesController < ApplicationController
     
     begin
       image_description = @image.describe_image!
-      @output = "Image description: #{image_description.pretty_inspect}"
+      @output = "Image description: #{image_description}"
     rescue Exception => e
       @error = true
       @output = "Image could not be estabilished due to following errors: #{e.message}"

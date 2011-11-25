@@ -24,6 +24,7 @@
 		    <%= link_to 'Detail', user_path(user) %>
 		    <%= link_to 'Edit', edit_user_path(user) %>
 		    <%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %>
+				<%= link_to 'Change password', change_password_user_path(user) %>
 			</td>
 	  </tr>
 	<% end %>

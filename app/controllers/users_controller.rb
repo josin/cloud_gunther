@@ -53,6 +53,11 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  # GET /users/1/change_password
+  def change_password
+    @user = User.find(params[:id])
+  end
+
   # POST /users
   # POST /users.xml
   def create
