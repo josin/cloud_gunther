@@ -28,8 +28,9 @@ module Daemons
       Rails.logger.auto_flushing = true
     end
     
-    def logger
-      Rails.logger
+    
+    def logger(level, msg)
+      Rails.logger.send level,  "#{Time.now} #{level} #{msg.to_s}"
     end
   end
 end

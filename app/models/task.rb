@@ -65,7 +65,6 @@ class Task < ActiveRecord::Base
     bunny = Bunny.new(amqp_config)
     status = bunny.start
     raise "Could not connect to MQ broker." unless status == :connected
-    queue = bunny.queue(self.task_queue_name)
     
     self.task_params[:instances_count].to_i.times do |index|
       self.instance_id = (index + 1)
@@ -78,7 +77,7 @@ class Task < ActiveRecord::Base
       
       task_xml = task2xml(task_options)
       logger.debug { "Task's XML: #{task_xml}" }
-      queue.publish task_xml
+      bunny.exchange('').publish task_xml, :key => self.task_queue_name
     end
 
     # run instances
@@ -89,10 +88,10 @@ class Task < ActiveRecord::Base
     
     self.update_attribute(:state, STATES[:running])
   rescue Exception => e
-    logger.error { "Running task #{self.id} failed due to: #{e.message}\n#{e.backtrace.join('\n')}" }
-    self.cloud_engine.terminate_instances(self.instances)
     self.update_attribute(:state, STATES[:failed])
     self.outputs.create(:stderr => e.message)
+    self.cloud_engine.terminate_instance(self.instances)
+    logger.error { "Running task #{self.id} failed due to: #{e.message}\n#{e.backtrace.join('\n')}" }
   end
   
   def task_queue_name

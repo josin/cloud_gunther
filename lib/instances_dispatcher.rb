@@ -18,6 +18,7 @@ class InstancesDispatcher
   
   TIMEOUT_LIMIT = 1024 # sec
   WAIT_STEP = 20 # sec
+  OS_BOOT_TIME = 120
   
   attr_reader :task
   attr_accessor :instances, :connection
@@ -104,6 +105,9 @@ class InstancesDispatcher
   
   # run init scripts, inject ruby runner
   def prepare_instances
+    logger.info "Waiting #{OS_BOOT_TIME} sec until OS gets ready."
+    sleep OS_BOOT_TIME
+    
     @instances.each do |instance|
       ssh_host = instance[:dns_name]
       

@@ -26,7 +26,8 @@ describe AlgRunner do
   
     describe "send_output method" do
       it "should publish result set from algorithm to output queue" do
-        output_queue.should_receive(:publish).with(instance_of(String))
+        bunny.should_receive(:exchange).and_return(output_queue)
+        output_queue.should_receive(:publish).with(instance_of(String), instance_of(Hash))
         runner.send :send_output, "<output />"
       end
     end

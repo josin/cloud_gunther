@@ -3,6 +3,7 @@ config/*.yml
 /log/
 /public/system/attachments/
 /tmp/
+/doc/
 /.idea/
 .DS_Store
 .rspec
