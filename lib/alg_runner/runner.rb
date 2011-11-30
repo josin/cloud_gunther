@@ -104,7 +104,7 @@ module AlgRunner
     end
   
     def send_output(task_output_xml)
-      @bunny.exchange('').publish(task_output_xml, :key => @output_queue)
+      @bunny.exchange('').publish(task_output_xml, :key => @output_queue, :routing_key => @output_queue)
     end
   
     def download_binary(filename, binary_url)
@@ -145,7 +145,11 @@ module AlgRunner
       instance_id = AlgRunner.fetch_url(INSTANCE_ID_URL)
 
       logger.info { "Requesting terminating for #{instance_id}" }
-      @bunny.exchange('').publish({:instance_id => instance_id.to_s, :action => :termination}.to_yaml, :key => INSTANCE_SERVICE_QUEUE)
+      @bunny.queue INSTANCE_SERVICE_QUEUE
+      @bunny.exchange('').publish(
+        { :instance_id => instance_id.to_s, :action => :termination }.to_yaml, 
+        :key => INSTANCE_SERVICE_QUEUE, :routing_key => INSTANCE_SERVICE_QUEUE
+      )
     end
   end # of class
   
@@ -164,6 +168,7 @@ module AlgRunner
     bunny.start # TODO: check if :connected otherwise ... what?
     input_queue = bunny.queue(input_queue)
     # output_queue = bunny.queue(output_queue)
+    bunny.queue(output_queue)
     
     [bunny, input_queue, output_queue]
   end

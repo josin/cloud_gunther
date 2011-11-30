@@ -1,7 +1,7 @@
 # Custom application configs
 
 default: &default
-  host: 127.0.0.1
+  host: localhost:3000
   start_instances: false
   configure_instances: false
   per_page: 25

@@ -154,7 +154,7 @@ GEM
       activesupport (>= 2.3.2)
       cocaine (>= 0.0.2)
       mime-types
-    passenger (3.0.9)
+    passenger (3.0.11)
       daemon_controller (>= 0.2.5)
       fastthread (>= 1.0.1)
       rack

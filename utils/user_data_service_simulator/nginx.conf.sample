@@ -1,0 +1,29 @@
+#user  nobody;
+worker_processes  1;
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    default_type  application/octet-stream;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+		passenger_ruby /Users/josin/.rvm/wrappers/ruby-1.9.2-p290@cloud_gunther/ruby;
+		passenger_root /Users/josin/.rvm/gems/ruby-1.9.2-p290@cloud_gunther/gems/passenger-3.0.9;
+
+		server {
+			listen	80;
+			server_name localhost;
+			root /Users/josin/dev/cloud_gunther/utils/user_data_service_simulator/public;
+      passenger_enabled on;
+		}
+}

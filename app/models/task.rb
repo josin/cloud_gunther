@@ -55,7 +55,7 @@ class Task < ActiveRecord::Base
     
     options = {
         :launch_cmd => self.algorithm_binary.prepare_launch_cmd,
-        :instances_count => self.task_params[:instances_count],
+        :instances_count => self.instances_count,
         :task_id => self.id,
     }
     options.merge!(run_opts)
@@ -65,10 +65,11 @@ class Task < ActiveRecord::Base
     bunny = Bunny.new(amqp_config)
     status = bunny.start
     raise "Could not connect to MQ broker." unless status == :connected
+    bunny.queue(self.task_queue_name)
     
-    self.task_params[:instances_count].to_i.times do |index|
+    self.instances_count.to_i.times do |index|
       self.instance_id = (index + 1)
-      logger.debug { "Processing macros for instance id: #{self.instance_id}" }
+      logger.info { "Processing macros for instance id: #{self.instance_id}" }
 
       launch_cmd = MacroProcessor.process_macros(options[:launch_cmd].clone, self)
       
@@ -76,8 +77,8 @@ class Task < ActiveRecord::Base
       task_options.merge!(:instance_id => self.instance_id, :launch_cmd => launch_cmd)
       
       task_xml = task2xml(task_options)
-      logger.debug { "Task's XML: #{task_xml}" }
-      bunny.exchange('').publish task_xml, :key => self.task_queue_name
+      logger.info { "Task's XML: #{task_xml}" }
+      bunny.exchange('').publish task_xml, :key => self.task_queue_name, :routing_key => self.task_queue_name
     end
 
     # run instances
@@ -95,7 +96,8 @@ class Task < ActiveRecord::Base
   end
   
   def task_queue_name
-    "task-#{self.id}"
+    # "task-#{self.id}"
+    "inputs"
   end
   
   def fetch_instances_info

@@ -15,8 +15,8 @@ def user_data
     :amqp_config => {
       :host => "localhost", 
       :port => 5672, 
-      :user => "josin", 
-      :pass => "josin", 
+      :user => "guest", 
+      :pass => "guest", 
       :vhost => "/", 
       :timeout => 3600, 
       :logging => false, 

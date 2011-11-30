@@ -15,3 +15,7 @@ coverage.data
 cloud_gunther.todo
 *.pid
 *.log
+
+utils/user_data_service_simulator/nginx.conf
+
+Procfile
