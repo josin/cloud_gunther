@@ -113,10 +113,11 @@ class TasksController < ApplicationController
     @task.task_params["run_params"] = run_opts
     @task.state = Task::STATES[:ready]
     @task.started_at = Time.now
+    @task.priority = @task.user.real_priority
     @task.save
     
     # @task.run
-    Resque.enqueue(TaskRunner, @task.id)
+    # Resque.enqueue(TaskRunner, @task.id)
 
     respond_to do |format|
       format.html { redirect_to(@task, :notice => 'Task is running.') }

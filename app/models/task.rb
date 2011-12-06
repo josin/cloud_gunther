@@ -2,7 +2,7 @@
 # Table name: tasks
 # Fields: id, started_at, finished_at, params, inputs, 
 #         state, user_id, algorithm_binary_id, created_at, updated_at, 
-#         cloud_engine_id, task_params, image_id, #
+#         cloud_engine_id, task_params, image_id, priority, #
 
 require "builder/xmlmarkup"
 
