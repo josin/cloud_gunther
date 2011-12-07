@@ -13,3 +13,4 @@ task_1:
   state: new
   user_id: test_user1
   algorithm_binary_id: binary_1
+  attempts: 0
