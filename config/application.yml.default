@@ -6,6 +6,7 @@ default: &default
   configure_instances: false
   per_page: 25
   scheduler_interval: 5
+  attempts_to_rerun_task: 5
 
 development:
   <<: *default

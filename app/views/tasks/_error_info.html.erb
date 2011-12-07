@@ -1,0 +1,3 @@
+<% if @task.state == Task::STATES[:failed] %>
+	<div class="error">Task failed at <%= l @task.failed_at %> due to: <%= @task.error_msg %></div>
+<% end %>

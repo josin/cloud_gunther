@@ -2,7 +2,8 @@
 # Table name: tasks
 # Fields: id, started_at, finished_at, params, inputs, 
 #         state, user_id, algorithm_binary_id, created_at, updated_at, 
-#         cloud_engine_id, task_params, image_id, priority, #
+#         cloud_engine_id, task_params, image_id, priority, attempts, 
+#         error_msg, failed_at, #
 
 require "builder/xmlmarkup"
 
@@ -89,8 +90,7 @@ class Task < ActiveRecord::Base
     
     self.update_attribute(:state, STATES[:running])
   rescue Exception => e
-    self.update_attribute(:state, STATES[:failed])
-    self.outputs.create(:stderr => e.message)
+    self.update_attributes!({:state => STATES[:failed], :error_msg => e.message, :failed_at => Time.now})
     self.cloud_engine.terminate_instance(self.instances)
     logger.error { "Running task #{self.id} failed due to: #{e.message}\n#{e.backtrace.join('\n')}" }
   end

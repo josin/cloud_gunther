@@ -41,6 +41,8 @@
 	</div>
 </div>
 
+<%= render :partial => "tasks/error_info" %>
+
 <%= render :partial => "tasks/instances_info" %>			
 
 <%= button_to "Run this task", run_task_path(@task), :disabled => ((@task.state != Task::STATES[:new]) && Rails.env != "development") %>
