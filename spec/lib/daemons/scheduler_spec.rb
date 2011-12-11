@@ -110,4 +110,22 @@ describe Daemons::Scheduler do
       scheduler.send(:available_resources_for_task?, task).should be_false
     end
   end
+  
+  describe "any_running_instances? method" do
+    let(:instances_info) { [{aws_state:"terminated"},{aws_state:"shutting-down"}] }
+
+    it "returns false if all instances are in state shutting-down or terminated" do
+      scheduler.send(:any_running_instance?, instances_info).should be_false
+    end
+    
+    it "returns true if at least one of instances isn't in state stutting-down or terminated" do
+      instances_info << {aws_state:"running"}
+      scheduler.send(:any_running_instance?, instances_info).should be_true
+    end
+    
+    it "returns nil when key :aws_state is not present" do
+      scheduler.send(:any_running_instance?, [{state:"running"}]).should be_nil
+    end
+  end
+  
 end

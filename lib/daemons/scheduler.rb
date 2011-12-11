@@ -32,7 +32,7 @@ module Daemons
       if @task
         logger :info, "Scheduling task##{@task.id}..."
         if @task.attempts >= AppConfig.config[:attempts_to_rerun_task].to_i
-          @task.update_attributes({:state => Task::STATES[:failed], :error_msg => "Maximum limit to reschedule task reached. (#{@task.attempts})", :failed_at => Time.now})
+          @task.failure! "Maximum limit to reschedule task reached. (#{@task.attempts})"
         else
           # run the task
           if available_resources_for_task?(@task)
@@ -63,7 +63,42 @@ module Daemons
     end
     
     def check_finished_tasks
-      raise "Not implemented yet."
+      logger :info, "Checking finished tasks..."
+      
+      running_tasks = Task.running
+      logger :info, "Found #{running_tasks.size} tasks..."
+      
+      running_tasks.each do |task|
+        next if (Time.now.to_i - task.updated_at.to_i) < 60
+        
+        if task.instances.blank?
+          # Task is running and has no instance after 1.minute? => failed
+          logger :info, "Task##{task.id} failed."
+          task.failure! "Internal cloud engine error - running task has no running instances..."
+        else
+          instances_info = task.fetch_instances_info
+          
+          # None of registered instances is running => finish
+          # go through instances => if all of them are shutting-down or terminated => task.finish!
+          if instances_info.blank? or !any_running_instance?(instances_info)
+            logger :info, "Task##{task.id} finished."
+            task.finish! 
+          end
+        end
+      end
+      
+      logger :info, "Finished tasks check finished."
     end
+    
+    private
+    def any_running_instance?(instances_info)
+      running_instances = false
+      instances_info.each do |instance|
+        return nil unless instance[:aws_state].present?
+        running_instances = true unless ["terminated", "shutting-down"].include?(instance[:aws_state])
+      end
+      running_instances
+    end
+    
   end
 end

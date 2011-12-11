@@ -7,7 +7,6 @@
 
 task_1:
   started_at: <%= Time.now %>
-  finished_at: <%= Time.now %>
   params: --debug
   inputs: /Users/deployer/.ssh
   state: new

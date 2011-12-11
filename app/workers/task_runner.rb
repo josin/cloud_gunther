@@ -6,8 +6,8 @@ class TaskRunner
     begin
       task.run
     rescue Exception => e
-      task.update_attributes!({:state => STATES[:failed], :error_msg => e.message, :failed_at => Time.now})
-      logger.error { "Error when running task##{task.id}: #{e.message}\n#{e.backtrace}" }
+      task.failure! e.message
+      logger.error { "Error when running task##{task.id}: #{e.message}\n#{e.backtrace.join('\n')}" }
     end
   end
 end

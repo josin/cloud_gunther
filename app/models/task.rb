@@ -38,7 +38,7 @@ class Task < ActiveRecord::Base
   validates_presence_of :user_id, :on => :create
   validates_presence_of :state, :on => :save
 
-  scope :running, where((:state - [STATES[:new], STATES[:finished]]))
+  scope :running, where(:state => STATES[:running])
 
   serialize :task_params
   
@@ -90,7 +90,7 @@ class Task < ActiveRecord::Base
     
     self.update_attribute(:state, STATES[:running])
   rescue Exception => e
-    self.update_attributes!({:state => STATES[:failed], :error_msg => e.message, :failed_at => Time.now})
+    self.failure e.message
     self.cloud_engine.terminate_instance(self.instances)
     logger.error { "Running task #{self.id} failed due to: #{e.message}\n#{e.backtrace.join('\n')}" }
   end
@@ -106,6 +106,14 @@ class Task < ActiveRecord::Base
     end
     
     instances_info || []
+  end
+  
+  def failure!(error_msg = "", failed_at = Time.now)
+    self.update_attributes({ :state => STATES[:failed], :error_msg => error_msg, :failed_at => failed_at })
+  end
+  
+  def finish!
+    self.update_attributes({:finished_at => Time.now, :state => Task::STATES[:finished]})
   end
   
   private
