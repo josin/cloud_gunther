@@ -52,8 +52,10 @@ class Task < ActiveRecord::Base
   attr_accessor :instance_id # attr helper for macro processing
   
   def run(*args)
-    run_opts = self.task_params["run_params"].presence || {}
+    # change state to :running
+    self.update_attribute(:state, STATES[:running])
     
+    run_opts = self.task_params["run_params"].presence || {}
     options = {
         :launch_cmd => self.algorithm_binary.prepare_launch_cmd,
         :instances_count => self.instances_count,
@@ -87,8 +89,6 @@ class Task < ActiveRecord::Base
       instances_controller = InstancesDispatcher.new(self)
       instances_controller.run_instances
     end
-    
-    self.update_attribute(:state, STATES[:running])
   rescue Exception => e
     self.failure! e.message
     self.cloud_engine.terminate_instance(self.instances)
