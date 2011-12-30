@@ -36,7 +36,7 @@ module Daemons
         else
           # run the task
           if available_resources_for_task?(@task)
-            @task.update_attribute(:state, STATES[:running])
+            @task.update_attribute(:state, Task::STATES[:running])
             Resque.enqueue(TaskRunner, @task.id) 
           else
             @task.update_attribute(:attempts, @task.attempts + 1)
