@@ -120,7 +120,7 @@ class TasksController < ApplicationController
     # Resque.enqueue(TaskRunner, @task.id)
 
     respond_to do |format|
-      format.html { redirect_to(@task, :notice => 'Task is running.') }
+      format.html { redirect_to(@task, :notice => 'Task is scheduled to run.') }
       format.xml  { head :ok }
     end
   end

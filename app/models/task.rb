@@ -53,8 +53,6 @@ class Task < ActiveRecord::Base
   
   def run(*args)
     # change state to :running
-    self.update_attribute(:state, STATES[:running])
-    
     run_opts = self.task_params["run_params"].presence || {}
     options = {
         :launch_cmd => self.algorithm_binary.prepare_launch_cmd,
