@@ -22,6 +22,18 @@
 			<th>Finished at:</th>
 			<td><%= l @task.finished_at if @task.finished_at %></td>
 		</tr>
+		<tr>
+			<th>Cloud Engine:</th>
+			<td><%= link_to @task.cloud_engine.title, cloud_engine_path(@task.cloud_engine) %></td>
+			<th></th>
+			<td></td>
+		</tr>
+		<tr>
+			<th>Image:</th>
+			<td><%= link_to @task.image.title, cloud_engine_image_path(@task.image) %></td>
+			<th></th>
+			<td></td>
+		</tr>
 	</table>
 
 	<hr />
