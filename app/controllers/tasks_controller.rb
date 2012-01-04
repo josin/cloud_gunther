@@ -98,25 +98,9 @@ class TasksController < ApplicationController
   # POST /tasks/1/run
   def run
     # TODO: validation. Is task ready to run?
+    @task.update_attributes({ :state => Task::STATES[:ready], :priority => @task.user.real_priority })
     
-    # => run is asynchronous method via delayed_job
-    run_opts = {}
-
-    if @task.algorithm_binary.attachment
-      run_opts[:algorithm_url] = url_for(attachment_path(:id => @task.algorithm_binary.attachment.id, 
-                                                         :auth_token => current_user.authentication_token,
-                                                         :host => AppConfig.config[:host],
-                                                         :only_path => false))
-      run_opts[:algorithm_filename] = @task.algorithm_binary.attachment.data_file_name
-    end    
-    
-    @task.task_params["run_params"] = run_opts
-    @task.state = Task::STATES[:ready]
-    @task.started_at = Time.now
-    @task.priority = @task.user.real_priority
-    @task.save
-    
-    # @task.run
+    # @task.update_attributes({:state => Task::STATES[:running], :started_at => Time.now})
     # Resque.enqueue(TaskRunner, @task.id)
 
     respond_to do |format|

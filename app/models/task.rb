@@ -8,6 +8,8 @@
 require "builder/xmlmarkup"
 
 class Task < ActiveRecord::Base
+  include Rails.application.routes.url_helpers
+  
   STATES = {
       :new => "new",
       :ready => "ready",
@@ -52,15 +54,22 @@ class Task < ActiveRecord::Base
   attr_accessor :instance_id # attr helper for macro processing
   
   def run(*args)
-    # change state to :running
-    run_opts = self.task_params["run_params"].presence || {}
     options = {
         :launch_cmd => self.algorithm_binary.prepare_launch_cmd,
         :instances_count => self.instances_count,
         :task_id => self.id,
     }
-    options.merge!(run_opts)
-    # options.merge!(args.extract_options!)
+    
+    if self.algorithm_binary.attachment
+      options[:algorithm_url] = url_for(attachment_path(:id => self.algorithm_binary.attachment.id,
+                                                        :auth_token => self.user.authentication_token,
+                                                        :host => AppConfig.config[:host],
+                                                        :only_path => false))
+      options[:algorithm_filename] = self.algorithm_binary.attachment.data_file_name
+    end    
+    
+    self.task_params["run_params"] = options
+    self.save
     
     amqp_config = AppConfig.amqp_config
     bunny = Bunny.new(amqp_config)
@@ -90,7 +99,7 @@ class Task < ActiveRecord::Base
   rescue Exception => e
     self.failure! e.message
     self.cloud_engine.terminate_instance(self.instances)
-    logger.error { "Running task #{self.id} failed due to: #{e.message}\n#{e.backtrace.join('\n')}" }
+    logger.error { "Running task #{self.id} failed due to: #{e.message}\n#{e.backtrace.join("\n")}" }
   end
   
   def task_queue_name
