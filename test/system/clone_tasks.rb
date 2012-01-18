@@ -1,4 +1,6 @@
 # Rails runner script
+# How to run this script?
+# => TASK_ID=100 CLONES=1000 (bundle exec) rails runner PATH_TO-clone_tasks.rb
 
 @task_id = ENV["TASK_ID"] || 1
 @clones = ENV["CLONES"] || 10
