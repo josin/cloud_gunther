@@ -17,4 +17,5 @@ cloud_gunther.todo
 *.log
 utils/user_data_service_simulator/nginx.conf
 Procfile
+.secret
 
